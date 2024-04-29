@@ -1,7 +1,6 @@
 ﻿
 namespace TextRPG
-{
-    public enum ItemTypes {Default ,Attack, Defence }
+{ 
     public class Item // 아이템 정보가 담긴 클래스
     {
         private bool isSell = false; // 아이템이 팔렸는 지

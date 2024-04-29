@@ -3,7 +3,6 @@ using Newtonsoft.Json.Linq;
 
 namespace TextRPG
 {
-    public enum PlayerClass { defalut, Warrior, Archer, Thief, Magician }
     public class Player
     {
         // 캐릭터 정보
