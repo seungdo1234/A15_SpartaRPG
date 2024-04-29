@@ -20,13 +20,13 @@
 
 ## :bulb: 프로젝트  
 
-#### `Info` **C#을 이용하여 만든 턴제 Text RPG**
+ `Info` **C#을 이용하여 만든 턴제 Text RPG**
 
-#### `Stack` **C#**   
+ `Stack` **C#**   
 
-#### `Made by` **A-15조** 
+ `Made by` **A-15조** 
  
-####  `Team Notion`   [SA 페이지](https://www.notion.so/teamsparta/15-1c24062ca6b64910843483d1ec282867)
+`Team Notion`  **[SA 페이지](https://www.notion.so/teamsparta/15-1c24062ca6b64910843483d1ec282867)** 
 
 ---
 
