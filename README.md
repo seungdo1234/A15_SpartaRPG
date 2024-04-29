@@ -28,3 +28,13 @@
  
 ####  `Team Notion`   [SA 페이지](https://www.notion.so/teamsparta/15-1c24062ca6b64910843483d1ec282867)
 
+---
+
+## :bulb: 작업 내용
+
+     
+--- 
+
+## :bulb: 플레이 영상
+
+---
