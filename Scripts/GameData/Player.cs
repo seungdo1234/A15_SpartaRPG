@@ -5,57 +5,41 @@ namespace TextRPG
 {
     public class Player
     {
-        // 캐릭터 정보
-        private PlayerClass playerClass;
-        private string name;
-        private int level;
-        private float atk;
-        private float def;
-        private int health;
-        private int maxHealth;
-        private int gold;
-
+    
         // 플레이어 경험치
-        private int exp; // 현재 경험치
         private int[] levelExp = new int[10] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; // 레벨 별 경험치 통
 
-        // 플레이어가 장착한 장비
-        private Item equipAtkItem;
-        private Item equipDefItem;
-
-        public PlayerClass PlayerClass { get => playerClass; set { playerClass = value; } }
-        public string Name { get => name; set { name = value; } }
-        public int Level { get => level; set { level = value; } }
-
-        public float Atk{ get => atk; set { atk = value; }}
-        public float Def { get => def; set { def = value; } }
-
-        public int Health { get => health; set { health = value; } }
-        public int MaxHealth { get => maxHealth; set { maxHealth = value; } }
-        public int Gold { get => gold; set { gold = value; } }
-        public int Exp { get => exp; set { exp = value; } }
-        public Item EquipAtkItem { get => equipAtkItem; set { equipAtkItem = value; } }
-        public Item EquipDefItem { get => equipDefItem; set { equipDefItem = value; } }
+        public PlayerClass PlayerClass { get;  set; }
+        [JsonProperty] public string Name { get; private set; }
+        [JsonProperty] public int Level { get; private set; }
+        [JsonProperty] public float Atk { get; private set; }
+        [JsonProperty]  public float Def { get; private set; }
+        [JsonProperty]  public int Health { get; private set; }
+        [JsonProperty] public int MaxHealth { get; private set; }
+        public int Gold { get; set; }
+        [JsonProperty] public int Exp { get; private set; }
+        public Item EquipAtkItem { get; set; }
+        public Item EquipDefItem { get; set; }
 
         public Player(string name)
         {
-            this.name = name;
-            level = 1;
-            atk = 10;
-            def = 5;
-            maxHealth = 100;
-            health = maxHealth;
-            gold = 10000;
+            Name = name;
+            Level = 1;
+            Atk = 10;
+            Def = 5;
+            MaxHealth = 100;
+            Health = MaxHealth;
+            Gold = 10000;
         }
 
         public string GetPlayerClass(PlayerClass _playerClass) // 플레이어의 직업 별 이름 반환 
         {
             string playerClass = _playerClass switch
             {
-                PlayerClass.Warrior => "전사",
-                PlayerClass.Archer => "궁수",
-                PlayerClass.Thief => "도적",
-                PlayerClass.Magician => "마법사",
+                PlayerClass.WARRIOR => "전사",
+                PlayerClass.ARCHER => "궁수",
+                PlayerClass.THIEF => "도적",
+                PlayerClass.MAGICIAN => "마법사",
                 _ => "직업이 존재하지 않습니다." // default
             };
 
@@ -63,57 +47,57 @@ namespace TextRPG
         }
         public float GetAtkValue() // 전체 공격력 반환
         {
-            if (equipAtkItem == null)
+            if (EquipAtkItem == null)
             {
-                return atk;
+                return Atk;
             }
             else
             {
-                return atk + equipAtkItem.Value;
+                return Atk + EquipAtkItem.Value;
             }
         }
         public float GetDefValue() // 전체 방어력 반환
         {
-            if (equipDefItem == null)
+            if (EquipDefItem == null)
             {
-                return def;
+                return Def;
             }
             else
             {
-                return def + equipDefItem.Value;
+                return Def + EquipDefItem.Value;
             }
         }
 
         public void OnDamaged(int health) // 피격
         {
-            this.health -= health;
+            this.Health -= health;
         }
 
         public void RecoveryHealth(int health)
         {
-            if (this.health + health > maxHealth)
+            if (this.Health + health > MaxHealth)
             {
-                this.health = maxHealth;
+                this.Health = MaxHealth;
             }
             else
             {
-                this.health += health;
+                this.Health += health;
             }
         }
         public void ExpUp() // 경험치 상승
         {
-            if (++exp == levelExp[level - 1])
+            if (++Exp == levelExp[Level - 1])
             {
                 LevelUp();
-                level++;
-                exp = 0;
+                Level++;
+                Exp = 0;
             }
         }
 
         private void LevelUp() // 레벨업 
         {
-            atk += 0.5f;
-            def += 1;
+            Atk += 0.5f;
+            Def += 1;
         }
     }
 }

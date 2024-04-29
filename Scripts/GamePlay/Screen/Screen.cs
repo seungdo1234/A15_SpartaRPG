@@ -17,7 +17,7 @@ namespace TextRPG
         protected void InventoryItemText(Item item)
         {
             string equip = item.IsEquip ? "[E]" : "";
-            string itemType = item.Itemtype == ItemTypes.Attack ? "공격력" : "방어력";
+            string itemType = item.Itemtype == ItemTypes.WEAPON ? "공격력" : "방어력";
             Console.WriteLine($"{equip}{item.ItemName}\t| {itemType} {item.Value} |\t{item.Desc}");
         }
 
