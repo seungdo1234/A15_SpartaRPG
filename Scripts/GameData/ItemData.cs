@@ -6,7 +6,6 @@ namespace TextRPG
     public class Item // 아이템 정보가 담긴 클래스
     {
 
-        [JsonProperty]
         public bool IsSell { get;  set;  }
         public bool IsEquip { get; set; }
         public string ItemName { get; private set; }
