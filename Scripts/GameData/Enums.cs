@@ -1,5 +1,7 @@
 
-public enum PlayerClass { defalut, Warrior, Archer, Thief, Magician }
+namespace TextRPG
+{
+    public enum PlayerClass { DEFAULT, WARRIOR, ARCHER, THIEF, MAGICIAN }
 
-
-public enum ItemTypes { Default, Attack, Defence }
+    public enum ItemTypes { DEFAULT, WEAPON, ARMOR }
+}

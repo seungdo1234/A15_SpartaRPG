@@ -28,7 +28,7 @@ namespace TextRPG
 
                     if (item.IsEquip) // 장착 중인 아이템을 팔 경우 장착 해제
                     {
-                        if(item.Itemtype == ItemTypes.Attack)
+                        if(item.Itemtype == ItemTypes.WEAPON)
                         {
                             gm.Player.EquipAtkItem = null;
                         }
@@ -69,7 +69,7 @@ namespace TextRPG
             for (int i = 0; i < dm.PlayerItemsCount(); i++) // 판매 목록 출력
             {
                 Item item = dm.GetPlayerItem(i);
-                string itemType = item.Itemtype == ItemTypes.Attack ? "공격력" : "방어력";
+                string itemType = item.Itemtype == ItemTypes.WEAPON ? "공격력" : "방어력";
                 Console.WriteLine($"- {i + 1} {item.ItemName}\t| {itemType} +{item.Value} |\t{item.Desc} | {(int)((float)item.Gold * 0.8f)} G");
             }
 
