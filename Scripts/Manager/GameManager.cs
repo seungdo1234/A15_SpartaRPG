@@ -5,20 +5,16 @@ namespace TextRPG
     {
         public static GameManager instance = new GameManager();
 
-        private Player player;
-        public Player Player { get => player; set { player = value; } }
 
-        private DungeonData dungeonData;
-        public DungeonData DungeonData { get => dungeonData; }
-
-
-        private SaveSystem saveSystem;
-        public SaveSystem SaveSystem { get => saveSystem; }
+        // 4.30 J / 자동구현 프로퍼티로 변경 
+        public Player Player { get;  set; }
+        public DungeonManager Dungeon { get; private set; }
+        public SaveSystem SaveSystem  { get; private set; }
 
         public void Init() // 객체 초기화
         {
-            dungeonData = new DungeonData();
-            saveSystem = new SaveSystem();
+            Dungeon = new DungeonManager();
+            SaveSystem = new SaveSystem();
         }
     }
 }
