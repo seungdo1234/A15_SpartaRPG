@@ -1,6 +1,7 @@
 ﻿
 using Newtonsoft.Json;
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TextRPG
 {
@@ -34,16 +35,23 @@ namespace TextRPG
             return true;
         }
 
-        public virtual int Attack()
+        public virtual (int damage, bool isCrit) Attack() // bool 반환형 = 치명타 여부
         {
-            int per = random.Next(0, 101);
+            int critRate = random.Next(0, 101); // 치명타 확률
+            int atkRange = random.Next(0, 21); // 공격력 오차범위
+            float damage = Atk * (100 + (atkRange - 10)) * 0.01f; // 오차범위 적용한 데미지
 
-            if (per <= CriticalChance)
+            if (critRate <= CriticalChance)
             {
-                return (int)(Atk * CriticalDamage);
+                return (Convert.ToInt32(Math.Round((damage * CriticalDamage))), true);
             }
 
-            return (int)Atk;
+            return (Convert.ToInt32(Math.Round(damage)), false);
+        }
+
+        public virtual void CostMana(int cost)
+        {
+            Mana -= cost;
         }
     }
 }
