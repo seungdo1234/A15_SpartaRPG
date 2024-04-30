@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 
 namespace TextRPG
 {
@@ -14,6 +15,8 @@ namespace TextRPG
         [JsonProperty] public int Exp { get; private set; }
         public Item EquipAtkItem { get; set; }
         public Item EquipDefItem { get; set; }
+
+        private Random random = new Random();
 
         public Player(string name)
         {
@@ -65,11 +68,6 @@ namespace TextRPG
             }
         }
 
-        public void OnDamaged(int health) // 피격
-        {
-            this.Health -= health;
-        }
-
         public void RecoveryHealth(int health)
         {
             if (this.Health + health > MaxHealth)
@@ -97,6 +95,30 @@ namespace TextRPG
             Def += 1;
         }
 
+        public override bool IsDamaged(int damage) // 피격시 true 회피시 false
+        {
+            int per = random.Next(0, 101);
 
+            if (per <= AvoidChance) // 회피 성공 시 
+            {
+                return false;
+            }
+
+            Health -= (damage - GetDefValue()) > 0 ? (int)(damage - GetDefValue()) : 0;
+
+            return true;            
+        }
+
+        public override int Attack()
+        {
+            int per = random.Next(0, 101);
+
+            if (per <= CriticalChance)
+            {
+                return (int)(GetAtkValue() * per * 0.01f);
+            }
+
+            return (int)GetAtkValue();
+        }
     }
 }
