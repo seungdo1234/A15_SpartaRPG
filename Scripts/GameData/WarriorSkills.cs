@@ -11,8 +11,8 @@ namespace TextRPG
             AddSkill(new SkillData("강베기", 1, false, 10, "적 하나에게 무기로 강력한 일격을 날립니다."));
             AddSkill(new SkillData("가로베기", 3, true, 20, "무기를 크게 휘둘러 최대 3명의 적을 공격합니다."));
             AddSkill(new SkillData("위기모면", 1, false, 30, "적 하나에게 잃은 체력 비례 피해를 2회 가격합니다."));
-        }
-
+        }       
+        
         public override List<(int damage, bool isCrit)>? GetSkillDamages(int id, Unit unit, int enemyCount)
         {
             SkillData? skill = SkillList.Find(x => x.ID == id);

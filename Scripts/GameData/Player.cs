@@ -126,32 +126,31 @@ namespace TextRPG
             Def += 1;
         }
 
-        public override bool IsDamaged(int damage) // 피격시 true 회피시 false
+        public override void OnDamaged(int damage) // 회피시 0
         {
             int per = random.Next(0, 101);
 
             if (per <= AvoidChance) // 회피 성공 시 
             {
-                return false;
+                return;
             }
 
-            Health -= (damage - GetDefValue()) > 0 ? (int)(damage - GetDefValue()) : 0;
-
-            return true;            
+            Health -= (damage - GetDefValue()) > 0 ? (int)(damage - GetDefValue()) : 1;            
         }
 
-        public override (int damage, bool isCrit) Attack()
-        {
-            int critRate = random.Next(0, 101); // 치명타 확률
+        public override bool Attack(Unit unit)
+        {   
             int atkRange = random.Next(0, 21); // 공격력 오차범위
             float damage = GetAtkValue() * (100 + (atkRange - 10)) * 0.01f; // 오차범위 적용한 데미지
 
-            if (critRate <= CriticalChance)
+            if (IsCriticalHit())
             {
-                return (Convert.ToInt32(Math.Round((damage * CriticalDamage))), true);
+                unit.OnDamaged(Convert.ToInt32(Math.Round(damage * CriticalDamage)));
+                return true;
             }
 
-            return (Convert.ToInt32(Math.Round(damage)), false);
+            unit.OnDamaged(Convert.ToInt32(Math.Round(damage)));
+            return false;
         }
     }
 }
