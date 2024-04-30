@@ -15,6 +15,7 @@ namespace TextRPG
         [JsonProperty] public int Exp { get; private set; }
         public Item EquipAtkItem { get; set; }
         public Item EquipDefItem { get; set; }
+        public Skills PlayerSkills { get; private set; }
         
         public Player(string name)
         {
@@ -41,6 +42,7 @@ namespace TextRPG
                 case PlayerClass.WARRIOR:
                     Health += 50;
                     Def += 5;
+                    PlayerSkills = new WarriorSkills();
                     break;
                 case PlayerClass.ARCHER:
                     CriticalChance += 9;
@@ -133,16 +135,18 @@ namespace TextRPG
             return true;            
         }
 
-        public override int Attack()
+        public override (int damage, bool isCrit) Attack()
         {
-            int per = random.Next(0, 101);
+            int critRate = random.Next(0, 101); // 치명타 확률
+            int atkRange = random.Next(0, 21); // 공격력 오차범위
+            float damage = GetAtkValue() * (100 + (atkRange - 10)) * 0.01f; // 오차범위 적용한 데미지
 
-            if (per <= CriticalChance)
+            if (critRate <= CriticalChance)
             {
-                return (int)(GetAtkValue() * CriticalDamage);
+                return (Convert.ToInt32(Math.Round((damage * CriticalDamage))), true);
             }
 
-            return (int)GetAtkValue();
+            return (Convert.ToInt32(Math.Round(damage)), false);
         }
     }
 }
