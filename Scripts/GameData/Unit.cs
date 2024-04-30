@@ -21,15 +21,8 @@ namespace TextRPG
         [JsonProperty] public int MaxMana { get; protected set; }
 
         protected Random random = new Random();
-        public virtual void OnDamaged(int damage) // 회피시 0 반환
-        {
-            int per = random.Next(0, 101);
-
-            if(per <= AvoidChance)
-            {
-                return;
-            }
-
+        public virtual void OnDamaged(int damage) // 최소 데미지 1
+        {   
             Health -= (damage - Def) > 0 ? (int)(damage - Def) : 1;           
         }
 
@@ -44,9 +37,15 @@ namespace TextRPG
         }
 
         public virtual bool Attack(Unit unit) // bool 반환형 = 치명타 여부
-        {   
+        {
             int atkRange = random.Next(0, 21); // 공격력 오차범위
             float damage = Atk * (100 + (atkRange - 10)) * 0.01f; // 오차범위 적용한 데미지
+            int avoidRange = random.Next(0, 101); // 회피 범위
+
+            if (avoidRange <= AvoidChance) // 회피 시 리턴
+            {
+                return false;
+            }
 
             if (IsCriticalHit())
             {

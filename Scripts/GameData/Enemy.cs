@@ -1,6 +1,4 @@
 ﻿
-using TextRPG.Scripts.GameData;
-
 namespace TextRPG
 {
     public class Enemy : Unit
