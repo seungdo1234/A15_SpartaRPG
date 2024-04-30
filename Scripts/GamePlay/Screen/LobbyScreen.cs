@@ -6,14 +6,14 @@ namespace TextRPG
         private StatusScreen statusScreen;
         private InventoryScreen inventoryScreen;
         private ShopScreen shopScreen;
-        private DungeonScreen dungeonScreen;
+        private DungeonResultScreen dungeonScreen;
         private RestScreen restScreen;
         public LobbyScreen()
         {
             statusScreen = new StatusScreen();
             inventoryScreen = new InventoryScreen();
             shopScreen = new ShopScreen();
-            dungeonScreen = new DungeonScreen();
+            dungeonScreen = new DungeonResultScreen();
             restScreen = new RestScreen();
         }
 
@@ -45,7 +45,7 @@ namespace TextRPG
                             shopScreen.ShopScreenOn();
                             break;
                         case 4:
-                            dungeonScreen.DungeonScreenOn();
+                            dungeonScreen.DungeonResultScreenOn(DungeonResultType.VICTORY , DungeonDifficulty.HARD);
                             break;
                         case 5:
                             restScreen.RestScreenOn();
