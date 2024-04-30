@@ -14,10 +14,30 @@ namespace TextRPG
             exp = 5;
         }
     }
+
+    public struct MonsterEncount
+    {
+        public List<Enemy> spawnMonsters;
+
+        public MonsterEncount(int CurrentDungeonLevel)
+        {
+            EnemyDataManager.instance.Init();
+
+            spawnMonsters = EnemyDataManager.instance.GetSpawnMonsters(CurrentDungeonLevel);
+        }
+    }
+
     public class DungeonManager : DungeonData
     {
         protected Random random = new Random();
+        
+        //랜덤 몬스터리스트 가져오는 함수
+        public static List<Enemy> GetMonsterEncount(int CurrentDungeonLevel)
+        {
+            MonsterEncount monsterEncount = new MonsterEncount(CurrentDungeonLevel);
 
+            return monsterEncount.spawnMonsters;
+        }
 
         // 던전 보상 만드는 함수
         public Reward GetDungeonReward(DungeonDifficulty dif)
