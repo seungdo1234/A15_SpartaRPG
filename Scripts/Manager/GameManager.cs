@@ -5,20 +5,16 @@ namespace TextRPG
     {
         public static GameManager instance = new GameManager();
 
-        private Player player;
-        public Player Player { get => player; set { player = value; } }
+        public Player Player { get;  set; }
 
-        private DungeonData dungeonData;
-        public DungeonData DungeonData { get => dungeonData; }
+        public DungeonManager Dungeon { get; private set; }
 
-
-        private SaveSystem saveSystem;
-        public SaveSystem SaveSystem { get => saveSystem; }
+        public SaveSystem SaveSystem  { get; private set; }
 
         public void Init() // 객체 초기화
         {
-            dungeonData = new DungeonData();
-            saveSystem = new SaveSystem();
+            Dungeon = new DungeonManager();
+            SaveSystem = new SaveSystem();
         }
     }
 }
