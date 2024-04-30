@@ -23,6 +23,7 @@ namespace TextRPG
         {
             player = new Player("Tester");
             dungeonManager = new DungeonManager(); // 인스턴스 생성
+            enemies = new List<Enemy>();  // 몬스터를 저장할 리스트 초기화
         }
 
         public void CheckforBattle()
@@ -64,8 +65,9 @@ namespace TextRPG
         public void BattleStart()
         {
             AppearEnemy();
-            if (enemy != null)
+            if (enemies.Any()) // 리스트가 비어 있지 않은 경우 전투 시작
             {
+                enemy = enemies[0];
                 dungeonBattle(); // 전투 시작
             }
             else
@@ -77,32 +79,50 @@ namespace TextRPG
         public void dungeonBattle()
         {
             Console.Clear();
-            while (true)
+            currentEnemyIndex = 0;
+
+            while (currentEnemyIndex < enemies.Count)
             {
-                BattleText();
-                string choice = Console.ReadLine();
-
-                switch (choice)
+                enemy = enemies[currentEnemyIndex]; // 현재 적 업데이트
+                while (enemy.Health > 0 && player.Health > 0)
                 {
-                    case "1":
-                        PlayerTurn();
-                        EnemyTurn();
-                        break;
+                    BattleText(enemy);
+                    string choice = Console.ReadLine();
 
+                    switch (choice)
+                    {
+                        case "1":
+                            PlayerTurn(enemy);
+                            if (enemy.Health <= 0)
+                            {
+                                BettlePlayerWinEnd();
+                                break; // 내부 while 루프 벗어남
+                            }
+                            EnemyTurn(enemy);
+                            break;
 
-                    default:
-                        Console.WriteLine("잘못 된 입력입니다.");
-                        break;
+                        default:
+                            Console.WriteLine("잘못된 입력입니다.");
+                            break;
+                    }
+
+                    if (player.Health <= 0)
+                    {
+                        BettlePlayerLoseEnd();
+                        return;  // 전투 종료
+                    }
                 }
 
-                if (enemy.Health <= 0 || player.Health <= 0)
+                currentEnemyIndex++; // 다음 적으로 이동
+                if (currentEnemyIndex >= enemies.Count)
                 {
-                    return;  // 전투 종료 조건
+                    Console.WriteLine("모든 적이 패배했습니다. 마을로 돌아갑니다.");
+                    return; // 모든 적이 사망했으므로 메소드 종료
                 }
             }
         }
 
-        public void PlayerTurn()
+        public void PlayerTurn(Enemy enemy)
         {
             Console.WriteLine($"{player.Name}의 공격!");
 
@@ -125,28 +145,25 @@ namespace TextRPG
             Console.Clear();
         }
 
-        public void EnemyTurn()
+        public void EnemyTurn(Enemy enemy)
         {
-            foreach (var enemy in enemies)
+            if (enemy.Health > 0)
             {
-                if (enemy.Health > 0)
+                Console.WriteLine($"{enemy.Name}의 공격!");
+                int enemyAttackDamage = enemy.Attack(); // Attack() 메소드는 적의 공격력에 기반한 데미지를 반환합니다.
+
+                player.IsDamaged(enemyAttackDamage);
+                Console.WriteLine($"{player.Name}은(는) {enemyAttackDamage}의 피해를 받았습니다!");
+
+                if (player.Health <= 0)
                 {
-                    Console.WriteLine($"{enemy.Name}의 공격!");
-                    int enemyAttackDamage = enemy.Attack();  // Attack() 메소드는 적의 공격력에 기반한 데미지를 반환합니다.
-
-                    player.IsDamaged(enemyAttackDamage);
-                    Console.WriteLine($"{player.Name}은(는) {enemyAttackDamage}의 피해를 받았습니다!");
-
-                    if (player.Health <= 0)
-                    {
-                        BettlePlayerLoseEnd();
-                        return;  // 플레이어가 사망한 경우 전투 종료
-                    }
+                    BettlePlayerLoseEnd();
+                    return; // 플레이어가 사망한 경우 전투 종료
                 }
             }
         }
 
-        private void BattleText()
+        private void BattleText(Enemy enemy)
         {
             Console.WriteLine("몬스터");
             Console.WriteLine($"몬스터: {enemy.Name}");
