@@ -1,12 +1,13 @@
-﻿namespace TextRPG
+﻿using System.Reflection.Emit;
+
+namespace TextRPG
 {
-    public class DungeonBattle : Unit
+    public class DungeonBattle
     {
         public Player player;
         private Enemy enemy;
-      //  private List<Enemy> enemies;
-     //   private DungeonData dungeonData;
-      //  private EnemyDataManager enemyDataManager;
+        private DungeonResultScreen dungeonResultScreen;
+
 
         private int currentEnemyIndex;
 
@@ -15,52 +16,21 @@
         public event Action EnemyDied;
 
         public DungeonBattle()
-        {           
-            player = new Player("Screen");
-         //   enemies = new List<Enemy>();
-        //    dungeonData = new DungeonData();
-         //   enemyDataManager = new EnemyDataManager();
+        {
+            player = new Player("Tester");
         }
         public void BattleStart()
         {
-
-            //   currentEnemyIndex = dungeonData.CurrentDungeonLevel;
-            /*
-               enemies = EnemyDataManager.instance.GetSpawnMonsters(currentEnemyIndex);  // 해당 던전 레벨에 맞는 몬스터 로드
-               if (enemies == null || enemies.Count == 0)
-               {
-                   Console.WriteLine("적을 생성할 수 없습니다.");
-                   return; // 더 이상 진행하지 않고 종료
-               }
-               Random random = new Random();
-               currentEnemyIndex = random.Next(enemies.Count);
-            */
             enemy = new Enemy();
             dungeonBattle();
         }
 
         public void dungeonBattle()
         {
+            Console.Clear();
             while (true)
             {
-                Console.WriteLine("몬스터");
-                Console.WriteLine($"몬스터: {enemy.Name}");
-                Console.WriteLine($"HP: {enemy.Health}/{enemy.MaxHealth}");
-                Console.WriteLine($"공격력: {enemy.Atk}");
-
-                Console.WriteLine();
-                Console.WriteLine();
-
-                Console.WriteLine("[내정보]");
-                Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.ePlayerClass})");
-                Console.WriteLine($"HP {player.Health}/{player.MaxHealth}");
-
-                Console.WriteLine("1. 공격");
-                Console.WriteLine();
-
-                Console.WriteLine("원하시는 행동을 입력해 주세요");
-                Console.WriteLine(">> ");
-
+                BattleText();
                 string choice = Console.ReadLine();
 
 
@@ -91,22 +61,20 @@
             if (player.Health > 0)
             {
                 int playerONAtackDamage = player.Attack();
+
                 enemy.IsDamaged(playerONAtackDamage);
 
                 if (enemy.Health <= 0)
                 {
-                    Console.WriteLine("승리");
-                    Console.WriteLine($"남은 체력: {player.Health}");
-                    EnemyDied?.Invoke();
+                    BettlePlayerWinEnd();
                 }
             }
 
             else
             {
-                Console.WriteLine("힘이 다했다.");
-                PlayerDied?.Invoke();
+                BettlePlayerLoseEnd();
             }
-
+            Console.Clear();
         }
 
         public void EnemyTurn()
@@ -118,10 +86,50 @@
 
                 if (player.Health <= 0)
                 {
-                    Console.WriteLine("힘이 다했다.");
-                    PlayerDied?.Invoke();
+                    BettlePlayerWinEnd();
                 }
             }
+
+            else
+            {
+                BettlePlayerLoseEnd();
+            }
+        }
+
+        private void BattleText()
+        {
+            Console.WriteLine("몬스터");
+            Console.WriteLine($"몬스터: {enemy.Name}");
+            Console.WriteLine($"HP: {enemy.Health}/{enemy.MaxHealth}");
+            Console.WriteLine($"공격력: {enemy.Atk}");
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            Console.WriteLine("[내정보]");
+            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.ePlayerClass})");
+            Console.WriteLine($"HP {player.Health}/{player.MaxHealth}");
+
+            Console.WriteLine("1. 공격");
+            Console.WriteLine();
+
+            Console.WriteLine("원하시는 행동을 입력해 주세요");
+            Console.WriteLine(">> ");
+
+        }
+
+        private void BettlePlayerWinEnd()
+        {
+            Console.WriteLine($"{player.Name}이(가) 승리 하였습니다. 마을로 돌아갑니다.");
+            Thread.Sleep(500);
+            EnemyDied?.Invoke();
+        }
+
+        private void BettlePlayerLoseEnd()
+        {
+            Console.WriteLine($"{player.Name}이(가) 패배 하였습니다. 마을로 돌아갑니다.");
+            Thread.Sleep(500);
+            PlayerDied?.Invoke();
         }
     }
 }
