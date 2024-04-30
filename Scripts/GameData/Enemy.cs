@@ -47,9 +47,9 @@ namespace TextRPG
             }
         }
 
-        public void AddMonsterSkill()
+        public void AddMonsterSkill(EnemySkill enemySkill)
         {
-
+            SkillList.Add(enemySkill);
         }
     }
 }

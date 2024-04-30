@@ -15,6 +15,7 @@ namespace TextRPG
         //스테이지별 몬스터 리스트
         private List<Enemy> SpawnMonsters;
         private Enemy BossMonster;
+        
 
         public void Init()
         {
@@ -22,15 +23,44 @@ namespace TextRPG
             SpawnMonsters = new List<Enemy>();
 
             MonsterDB.Add(new Enemy("사나운 토끼", 1, 5, 0, 20));
+            MonsterDB[0].AddMonsterSkill(new EnemySkill("앞니물기", 10, 
+                "그 앞니는 당신의 목을 노린다.")); //공격력 2배.
+
             MonsterDB.Add(new Enemy("노을의 늑대개", 2, 10, 3, 30));
+            MonsterDB[0].AddMonsterSkill(new EnemySkill("앞니물기", 10,
+                "그 앞니는 당신의 목을 노린다.")); //공격력 2배.
+
             MonsterDB.Add(new Enemy("강을 건넌 사람", 3, 15, 6, 40));
+            MonsterDB[0].AddMonsterSkill(new EnemySkill("앞니물기", 10,
+                "그 앞니는 당신의 목을 노린다.")); //공격력 2배.
+
             MonsterDB.Add(new Enemy("흐느끼는 유령", 4, 20, 9, 50));
+            MonsterDB[0].AddMonsterSkill(new EnemySkill("앞니물기", 10,
+                "그 앞니는 당신의 목을 노린다.")); //공격력 2배.
+
             MonsterDB.Add(new Enemy("늘어나는 그림자", 5, 25, 12, 60));
+            MonsterDB[0].AddMonsterSkill(new EnemySkill("앞니물기", 10,
+                "그 앞니는 당신의 목을 노린다.")); //공격력 2배.
+
             MonsterDB.Add(new Enemy("노래하는 물고기", 6, 30, 15, 70));
+            MonsterDB[0].AddMonsterSkill(new EnemySkill("앞니물기", 10,
+                "그 앞니는 당신의 목을 노린다.")); //공격력 2배.
+
             MonsterDB.Add(new Enemy("외로운 불귀신", 7, 35, 18, 80));
+            MonsterDB[0].AddMonsterSkill(new EnemySkill("앞니물기", 10,
+                "그 앞니는 당신의 목을 노린다.")); //공격력 2배.
+
             MonsterDB.Add(new Enemy("독수리사자", 8, 40, 21, 90));
+            MonsterDB[0].AddMonsterSkill(new EnemySkill("앞니물기", 10,
+                "그 앞니는 당신의 목을 노린다.")); //공격력 2배.
+
             MonsterDB.Add(new Enemy("흰머리 호랑이", 9, 45, 24, 100));
+            MonsterDB[0].AddMonsterSkill(new EnemySkill("앞니물기", 10,
+                "그 앞니는 당신의 목을 노린다.")); //공격력 2배.
+
             MonsterDB.Add(new Enemy("녹안의 악마", 10, 50, 27, 120));
+            MonsterDB[0].AddMonsterSkill(new EnemySkill("앞니물기", 10,
+                "그 앞니는 당신의 목을 노린다.")); //공격력 2배.
 
             BossMonster = (new Enemy("휘몰아치는 강철이", 0, 100, 50, 1000));  //보스lv은 특수처리.
         }
