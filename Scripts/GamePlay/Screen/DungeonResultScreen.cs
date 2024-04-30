@@ -39,8 +39,6 @@ namespace TextRPG
                 // 1, 2, 3만 입력 받을 수 있게 함 
                 if (int.TryParse(Console.ReadLine(), out int input) && (input == 0 || (input == 1 && resultType == DungeonResultType.VICTORY)))
                 {
-
-
                     if (input == 0) // 되돌아 가기
                     {
                         return;
@@ -62,9 +60,9 @@ namespace TextRPG
         {
             reward = gm.Dungeon.GetDungeonReward(dif);
 
-            dm.AddPlayerItem(reward.dungeonRewardItem);
+            dm.DungeonDropItem(reward.dungeonRewardItem);
             gm.Player.Gold += reward.gold;
-           // gm.Player.ExpUp(reward.exp); 경험치 추가
+            gm.Player.ExpUp(reward.exp); 
 
         }
        

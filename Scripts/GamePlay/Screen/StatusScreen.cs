@@ -36,9 +36,15 @@ namespace TextRPG
             Console.WriteLine("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.\n");
 
-            Console.WriteLine($"이름 ( {gm.Player.Name} )");
-            Console.WriteLine($"Lv.{gm.Player.Level}");
+            Console.WriteLine($"Lv.{gm.Player.Level}  ( {gm.Player.Name} )");
             Console.WriteLine($"직업 ( {gm.Player.GetPlayerClass(gm.Player.ePlayerClass)} )");
+
+            Console.WriteLine();
+
+            Console.WriteLine($"체력 : {gm.Player.Health}/{gm.Player.MaxHealth}");
+            Console.WriteLine($"마나 : {gm.Player.Mana}/{gm.Player.MaxMana}");
+
+            Console.WriteLine();
 
             // 현재 장착중인 장비 능력치 적용
             Console.Write($"공격력 : {gm.Player.GetAtkValue():F1}");
@@ -53,10 +59,14 @@ namespace TextRPG
             {
                 Console.Write($" (+{gm.Player.EquipDefItem.Value:F1})");
             }
+            Console.WriteLine("\n");
+
+            Console.WriteLine($"치명타 확률 : {gm.Player.CriticalChance}%");
+            Console.WriteLine($"치명타 데미지 : {gm.Player.CriticalDamage * 100}%");
+            Console.WriteLine($"회피율 : {gm.Player.AvoidChance}%");
+
             Console.WriteLine();
 
-
-            Console.WriteLine($"체력 : {gm.Player.Health}");
             Console.WriteLine($"Gold : {gm.Player.Gold} G");
 
             Console.WriteLine("\n0. 나가기\n");

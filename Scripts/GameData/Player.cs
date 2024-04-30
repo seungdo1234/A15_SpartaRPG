@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Reflection.Emit;
 using System.Xml.Linq;
 
 namespace TextRPG
@@ -9,13 +10,13 @@ namespace TextRPG
     {
     
         // 플레이어 경험치
-        private int[] levelExp = new int[10] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; // 레벨 별 경험치 통
+        private int[] levelExp = new int[10] { 5, 7, 10, 12, 15, 20, 25, 30, 40, 50 }; // 레벨 별 경험치 통
 
         public PlayerClass ePlayerClass { get;  set; }
         public int Gold { get; set; }
         [JsonProperty] public int Exp { get; private set; }
         public Item EquipAtkItem { get; set; }
-        public Item EquipDefItem { get; set; }
+        public Item EquipDefItem { get; set; }        
         
         public Player(string name)
         {
@@ -33,15 +34,17 @@ namespace TextRPG
             Mana = MaxMana;
         }
 
-        public void ChangePlayerClass(PlayerClass playerClass)
+        public void ChangePlayerClass(PlayerClass ePlayerClass)
         {
-            this.ePlayerClass = playerClass;
+            // 플레이어의 직업에 따라 추가스탯 배정
+            this.ePlayerClass = ePlayerClass;
 
-            switch (playerClass)
+            switch (ePlayerClass)
             {
                 case PlayerClass.WARRIOR:
                     Health += 50;
                     Def += 5;
+                    //PlayerSkills = new WarriorSkills();
                     break;
                 case PlayerClass.ARCHER:
                     CriticalChance += 9;
@@ -57,9 +60,9 @@ namespace TextRPG
             }
         }
 
-        public string GetPlayerClass(PlayerClass _playerClass) // 플레이어의 직업 별 이름 반환 
+        public string GetPlayerClass(PlayerClass ePlayerClass) // 플레이어의 직업 별 이름 반환 
         {
-            string playerClass = _playerClass switch
+            string playerClass = ePlayerClass switch
             {
                 PlayerClass.WARRIOR => "전사",
                 PlayerClass.ARCHER => "궁수",
@@ -104,13 +107,16 @@ namespace TextRPG
                 this.Health += health;
             }
         }
-        public void ExpUp() // 경험치 상승
+        public void ExpUp(int exp) // 경험치 상승
         {
-            if (++Exp == levelExp[Level - 1])
+            // 4.30 J => 경험치 상승 수정
+            Exp += exp;
+
+            if(Exp >= levelExp[Level - 1])
             {
-                LevelUp();
+                Exp-= levelExp[Level-1];
                 Level++;
-                Exp = 0;
+                LevelUp();
             }
         }
 
@@ -120,30 +126,30 @@ namespace TextRPG
             Def += 1;
         }
 
-        public override bool IsDamaged(int damage) // 피격시 true 회피시 false
+        public override void OnDamaged(int damage) // 회피시 0
         {
-            int per = random.Next(0, 101);
+            Health -= (damage - GetDefValue()) > 0 ? (int)(damage - GetDefValue()) : 1;            
+        }
 
-            if (per <= AvoidChance) // 회피 성공 시 
+        public override bool Attack(Unit unit)
+        {   
+            int atkRange = random.Next(0, 21); // 공격력 오차범위
+            float damage = GetAtkValue() * (100 + (atkRange - 10)) * 0.01f; // 오차범위 적용한 데미지
+            int avoidRange = random.Next(0, 101); // 회피 범위
+
+            if (avoidRange <= AvoidChance) // 회피 시 리턴
             {
                 return false;
             }
 
-            Health -= (damage - GetDefValue()) > 0 ? (int)(damage - GetDefValue()) : 0;
-
-            return true;            
-        }
-
-        public override int Attack()
-        {
-            int per = random.Next(0, 101);
-
-            if (per <= CriticalChance)
+            if (IsCriticalHit())
             {
-                return (int)(GetAtkValue() * CriticalDamage);
+                unit.OnDamaged(Convert.ToInt32(Math.Round(damage * CriticalDamage)));
+                return true;
             }
 
-            return (int)GetAtkValue();
+            unit.OnDamaged(Convert.ToInt32(Math.Round(damage)));
+            return false;
         }
     }
 }

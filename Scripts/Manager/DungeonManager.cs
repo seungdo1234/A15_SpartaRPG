@@ -44,7 +44,7 @@ namespace TextRPG
         {
             Reward reward = new Reward();
 
-            
+            // 난이도 별 랜덤 보상 로직 추가
 
             return reward;
         }
