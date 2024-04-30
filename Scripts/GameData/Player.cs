@@ -15,8 +15,7 @@ namespace TextRPG
         public int Gold { get; set; }
         [JsonProperty] public int Exp { get; private set; }
         public Item EquipAtkItem { get; set; }
-        public Item EquipDefItem { get; set; }
-        public Skills PlayerSkills { get; private set; }
+        public Item EquipDefItem { get; set; }        
         
         public Player(string name)
         {
@@ -44,7 +43,7 @@ namespace TextRPG
                 case PlayerClass.WARRIOR:
                     Health += 50;
                     Def += 5;
-                    PlayerSkills = new WarriorSkills();
+                    //PlayerSkills = new WarriorSkills();
                     break;
                 case PlayerClass.ARCHER:
                     CriticalChance += 9;
@@ -128,13 +127,6 @@ namespace TextRPG
 
         public override void OnDamaged(int damage) // 회피시 0
         {
-            int per = random.Next(0, 101);
-
-            if (per <= AvoidChance) // 회피 성공 시 
-            {
-                return;
-            }
-
             Health -= (damage - GetDefValue()) > 0 ? (int)(damage - GetDefValue()) : 1;            
         }
 
@@ -142,6 +134,12 @@ namespace TextRPG
         {   
             int atkRange = random.Next(0, 21); // 공격력 오차범위
             float damage = GetAtkValue() * (100 + (atkRange - 10)) * 0.01f; // 오차범위 적용한 데미지
+            int avoidRange = random.Next(0, 101); // 회피 범위
+
+            if (avoidRange <= AvoidChance) // 회피 시 리턴
+            {
+                return false;
+            }
 
             if (IsCriticalHit())
             {
