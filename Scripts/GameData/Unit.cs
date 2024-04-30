@@ -18,7 +18,7 @@ namespace TextRPG
         [JsonProperty] public float CriticalDamage { get; protected set; }
 
 
-        private Random random = new Random();
+        protected Random random = new Random();
         public virtual bool IsDamaged(int damage) // 피격
         {
             int per = random.Next(0, 101);

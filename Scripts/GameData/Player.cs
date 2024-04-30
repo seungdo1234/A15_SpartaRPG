@@ -15,9 +15,7 @@ namespace TextRPG
         [JsonProperty] public int Exp { get; private set; }
         public Item EquipAtkItem { get; set; }
         public Item EquipDefItem { get; set; }
-
-        private Random random = new Random();
-
+        
         public Player(string name)
         {
             Name = name;
