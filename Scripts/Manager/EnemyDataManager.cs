@@ -28,21 +28,29 @@ namespace TextRPG
                 1, 1, 1));
             MonsterDB.Add(new Enemy("흐느끼는 유령", 4, 20, 9, 50,
                 1, 1, 1));
-            MonsterDB.Add(new Enemy("작은 어둑시니", 5, 25, 12, 60,
+            MonsterDB.Add(new Enemy("늘어나는 그림자", 5, 25, 12, 60,
                 1, 1, 1));
-            MonsterDB.Add(new Enemy("", 6, 30, 15, 70,
+            MonsterDB.Add(new Enemy("노래하는 물고기", 6, 30, 15, 70,
                 1, 1, 1));
-            MonsterDB.Add(new Enemy("ㅇ", 7, 35, 18, 80,
+            MonsterDB.Add(new Enemy("외로운 불귀신", 7, 35, 18, 80,
                 1, 1, 1));
-            MonsterDB.Add(new Enemy("", 8, 40, 21, 90,
+            MonsterDB.Add(new Enemy("독수리사자", 8, 40, 21, 90,
                 1, 1, 1));
             MonsterDB.Add(new Enemy("흰머리 호랑이", 9, 45, 24, 100,
                 1, 1, 1));
-            MonsterDB.Add(new Enemy("a", 10, 50, 27, 120,
+            MonsterDB.Add(new Enemy("녹안의 악마", 10, 50, 27, 120,
                 1, 1, 1));
 
             MonsterDB.Add(new Enemy("휘몰아치는 강철이", 20, 100, 50, 500,
                 1, 1, 1));
+        }
+
+        
+        public List<Enemy> GetSpawnMonsters(int stage)
+        {
+            
+
+            return SpawnMonsters;
         }
     }
 }

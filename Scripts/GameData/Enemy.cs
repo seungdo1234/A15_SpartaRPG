@@ -3,9 +3,6 @@ namespace TextRPG
 {
     public class Enemy : Unit
     {
-
-
-
         public Enemy()
         {
             Name = "더미";
@@ -26,12 +23,13 @@ namespace TextRPG
             this.Level = Level;
             this.Atk = Atk;
             this.Def = Def;
-            this.MaxHealth = MaxHealth; //몬스터 회복 기믹...?
-            this.Health = MaxHealth;
+            this.MaxHealth = MaxHealth; 
+            Health = MaxHealth;
             this.AvoidChance = AvoidChance;
             this.CriticalChance = CriticalChance;
             this.CriticalDamage = CriticalDamage;
         }
+
 
         public override string ToString()
         {
@@ -43,8 +41,6 @@ namespace TextRPG
             {
                 return $"Lv.{Level}  {Name}\tHP {Health}/{MaxHealth}";
             }
-
-            
         }
     }
 }
