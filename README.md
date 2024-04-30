@@ -30,6 +30,11 @@
 
 ---
 
+## :bulb: 깃 컨벤션
+![image](https://github.com/seungdo1234/A15_SpartaRPG/assets/86179438/5c83be13-05a5-4319-9a03-7ce9ffd0063c)
+
+---
+
 ## :bulb: 작업 내용
 
      
