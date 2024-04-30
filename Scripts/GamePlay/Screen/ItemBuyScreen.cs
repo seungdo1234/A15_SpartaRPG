@@ -35,7 +35,7 @@ namespace TextRPG
                         if(gm.Player.Gold >= item.Gold) // 아이템 구매
                         {
                             Console.WriteLine("구매를 완료했습니다. \n");
-                            dm.AddPlayerItem(item);
+                            dm.BuyShopItem(item);
                         }
                         else // 실패
                         {
