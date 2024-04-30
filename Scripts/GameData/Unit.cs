@@ -16,7 +16,8 @@ namespace TextRPG
         [JsonProperty] public int AvoidChance { get; protected set; }
         [JsonProperty] public int CriticalChance { get; protected set; }
         [JsonProperty] public float CriticalDamage { get; protected set; }
-
+        [JsonProperty] public int Mana { get; protected set; }
+        [JsonProperty] public int MaxMana { get; protected set; }
 
         protected Random random = new Random();
         public virtual bool IsDamaged(int damage) // 피격
@@ -39,7 +40,7 @@ namespace TextRPG
 
             if (per <= CriticalChance)
             {
-                return (int)(Atk * per * 0.01f);
+                return (int)(Atk * CriticalDamage);
             }
 
             return (int)Atk;
