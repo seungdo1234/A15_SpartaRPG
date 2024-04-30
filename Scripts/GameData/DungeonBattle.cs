@@ -40,7 +40,15 @@ namespace TextRPG
                 switch(choice)
                 {
                     case "1":
-                        BattleStart();
+                        AppearEnemy();
+                        if (enemies.Any())  // 몬스터가 있는지 확인 후 전투 시작
+                        {
+                            BattleStart();
+                        }
+                        else
+                        {
+                            Console.WriteLine("전투할 몬스터가 없습니다.");
+                        }
                         break;
 
                     default:
@@ -64,16 +72,7 @@ namespace TextRPG
 
         public void BattleStart()
         {
-            AppearEnemy();
-            if (enemies.Any()) // 리스트가 비어 있지 않은 경우 전투 시작
-            {
-                enemy = enemies[0];
-                dungeonBattle(); // 전투 시작
-            }
-            else
-            {
-                Console.WriteLine("전투할 몬스터가 없습니다.");
-            }
+            dungeonBattle(); // 전투 시작
         }
 
         public void dungeonBattle()
@@ -128,20 +127,19 @@ namespace TextRPG
 
             if (player.Health > 0)
             {
-                int playerONAtackDamage = player.Attack();
+                // 플레이어의 공격이 성공적으로 적을 타격하면 true, 회피되면 false를 반환
+                bool hitSuccess = player.Attack(enemy);
 
-                enemy.IsDamaged(playerONAtackDamage);
-
-                if (enemy.Health <= 0)
+                if (hitSuccess && enemy.Health <= 0)
                 {
                     BettlePlayerWinEnd();
                 }
             }
-
             else
             {
                 BettlePlayerLoseEnd();
             }
+
             Console.Clear();
         }
 
@@ -150,13 +148,18 @@ namespace TextRPG
             if (enemy.Health > 0)
             {
                 Console.WriteLine($"{enemy.Name}의 공격!");
-                int enemyAttackDamage = enemy.Attack(); // Attack() 메소드는 적의 공격력에 기반한 데미지를 반환합니다.
 
-                player.IsDamaged(enemyAttackDamage);
-                Console.WriteLine($"{player.Name}은(는) {enemyAttackDamage}의 피해를 받았습니다!");
+                bool hitSuccess = enemy.Attack(player);
 
-                if (player.Health <= 0)
+                if (!hitSuccess)
                 {
+                    Console.WriteLine($"{player.Name}은(는) 공격을 회피했습니다!");
+                }
+
+                // 공격이 성공했을 때만 피해를 출력합니다.
+                if (hitSuccess && player.Health <= 0)
+                {
+                    Console.WriteLine($"{player.Name}은(는) 사망했습니다!");
                     BettlePlayerLoseEnd();
                     return; // 플레이어가 사망한 경우 전투 종료
                 }
