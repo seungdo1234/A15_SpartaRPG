@@ -6,6 +6,7 @@ namespace TextRPG
         private StatusScreen statusScreen;
         private InventoryScreen inventoryScreen;
         private ShopScreen shopScreen;
+      //  private DungeonResultScreen dungeonScreen; 추후 추가
         private RestScreen restScreen;
 
         // 던전 전투 초기화
@@ -15,6 +16,7 @@ namespace TextRPG
             statusScreen = new StatusScreen();
             inventoryScreen = new InventoryScreen();
             shopScreen = new ShopScreen();
+        //    dungeonScreen = new DungeonResultScreen();
             restScreen = new RestScreen();
 
             // 던전 배틀 초기화 및 이벤트
@@ -52,7 +54,7 @@ namespace TextRPG
                             shopScreen.ShopScreenOn();
                             break;
                         case 4:
-                            dungeonBattle.BattleStart();
+                      //      dungeonScreen.DungeonResultScreenOn(DungeonResultType.VICTORY , DungeonDifficulty.HARD);
                             break;
                         case 5:
                             restScreen.RestScreenOn();

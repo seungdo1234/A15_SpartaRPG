@@ -8,7 +8,7 @@ namespace TextRPG
 
         public bool IsSell { get;  set;  }
         public bool IsEquip { get; set; }
-        public string ItemName { get; private set; }
+         public string ItemName { get; private set; }
         public ItemTypes Itemtype { get; private set; }
         public float Value { get; private set; }
         public string Desc { get; private set; }

@@ -7,5 +7,5 @@ namespace TextRPG
 
     public enum DungeonDifficulty { DEFAULT, EASY, NORMAL, HARD }
 
-    public enum DungeonResultType { DEFAULT, VICTORY, RETIRE, RETURN }
+    public enum DungeonResultType { DEFAULT, VICTORY, RETIRE }
 }

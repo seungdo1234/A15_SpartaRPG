@@ -32,7 +32,7 @@ namespace TextRPG
         protected Random random = new Random();
         
         //랜덤 몬스터리스트 가져오는 함수
-        public static List<Enemy> GetMonsterEncount(int CurrentDungeonLevel)
+        public List<Enemy> GetMonsterEncount(int CurrentDungeonLevel)
         {
             MonsterEncount monsterEncount = new MonsterEncount(CurrentDungeonLevel);
 
