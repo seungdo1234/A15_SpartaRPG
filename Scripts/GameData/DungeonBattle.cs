@@ -11,13 +11,13 @@
 
         public DungeonBattle()
         {
-            player = new Player(this.Name);
+            player = new Player(Name);
             enemy = new Enemy();
         }
         public void BattleStart()
         {
             enemy = new Enemy();  // 새 적 생성
-            player = new Player(this.Name);
+            player = new Player(Name);
             dungeonBattle();
         }
 

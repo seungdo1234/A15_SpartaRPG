@@ -28,6 +28,32 @@ namespace TextRPG
             AvoidChance = 10;
             CriticalChance = 16;
             CriticalDamage = 1.6f;
+            MaxMana = 100;
+            Mana = MaxMana;
+        }
+
+        public void ChangePlayerClass(PlayerClass playerClass)
+        {
+            this.PlayerClass = playerClass;
+
+            switch (playerClass)
+            {
+                case PlayerClass.WARRIOR:
+                    Health += 50;
+                    Def += 5;
+                    break;
+                case PlayerClass.ARCHER:
+                    CriticalChance += 9;
+                    CriticalDamage += 0.9f;
+                    break;
+                case PlayerClass.THIEF:
+                    AvoidChance += 10;
+                    break;
+                case PlayerClass.MAGICIAN:
+                    MaxMana += 50;
+                    Mana += 50;
+                    break;
+            }
         }
 
         public string GetPlayerClass(PlayerClass _playerClass) // 플레이어의 직업 별 이름 반환 
@@ -113,7 +139,7 @@ namespace TextRPG
 
             if (per <= CriticalChance)
             {
-                return (int)(GetAtkValue() * per * 0.01f);
+                return (int)(GetAtkValue() * CriticalDamage);
             }
 
             return (int)GetAtkValue();
