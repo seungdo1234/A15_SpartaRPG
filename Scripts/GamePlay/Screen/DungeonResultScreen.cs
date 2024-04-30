@@ -44,34 +44,5 @@ namespace TextRPG
         }
         
 
-        private void SuccessText()
-        {
-            Console.WriteLine();
-
-            Console.WriteLine("Victory");
-            Console.WriteLine();
-
-            Console.WriteLine($"던전에서 몬스터 n마리를 잡았습니다.");
-            Console.WriteLine();
-
-            Console.WriteLine("[캐릭터 정보]");
-            Console.WriteLine($"Lv.{gm.Player.Level} {gm.Player.Name}-> Lv.{gm.Player.Level} {gm.Player.Name}");
-            Console.WriteLine($"HP {prevHealth} ->  {gm.Player.Health}");
-            Console.WriteLine($"exp {prevExp} ->  {gm.Player.Exp}");
-
-            Console.WriteLine();
-
-            Console.WriteLine("[획득 아이템]");
-            Console.WriteLine($"{reward.gold} Gold");
-
-            if(reward.dungeonRewardItem != null)
-            {
-                Console.WriteLine($"{reward.dungeonRewardItem} - 1");
-            }
-
-            Console.WriteLine();
-
-            Console.WriteLine("0. 다음");
-        }
     }
 }
