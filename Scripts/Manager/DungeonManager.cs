@@ -14,7 +14,7 @@ namespace TextRPG
 
         public Reward GetDungeonReward(DungeonDifficulty dif)
         {
-            Reward reward = new Reward;
+            Reward reward = new Reward();
 
 
 
