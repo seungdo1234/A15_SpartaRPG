@@ -1,8 +1,12 @@
 ﻿
+using TextRPG.Scripts.GameData;
+
 namespace TextRPG
 {
     public class Enemy : Unit
     {
+        private List<EnemySkill> SkillList {  get; set; }
+
         public Enemy()
         {
             Name = "더미";
@@ -17,7 +21,7 @@ namespace TextRPG
         }
 
         public Enemy(string Name, int Level, float Atk, float Def,
-            int MaxHealth, int AvoidChance, int CriticalChance, float CriticalDamage)
+            int MaxHealth, int AvoidChance = 10, int CriticalChance = 10, float CriticalDamage = 1.6f)
         {
             this.Name = Name;
             this.Level = Level;
@@ -25,22 +29,27 @@ namespace TextRPG
             this.Def = Def;
             this.MaxHealth = MaxHealth; 
             Health = MaxHealth;
-            this.AvoidChance = AvoidChance;
-            this.CriticalChance = CriticalChance;
-            this.CriticalDamage = CriticalDamage;
         }
-
 
         public override string ToString()
         {
-            if (Level > 9)
+            if (Level == 0)
+            {
+                return $"Lv.Max {Name}\tHP {Health}/{MaxHealth}";
+            }
+            else if (Level > 9)
             {
                 return $"Lv.{Level} {Name}\tHP {Health}/{MaxHealth}";
             }
-            else
+            else 
             {
                 return $"Lv.{Level}  {Name}\tHP {Health}/{MaxHealth}";
             }
+        }
+
+        public void AddMonsterSkill(EnemySkill enemySkill)
+        {
+            SkillList.Add(enemySkill);
         }
     }
 }
