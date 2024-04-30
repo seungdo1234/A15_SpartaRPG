@@ -4,8 +4,6 @@ namespace TextRPG
     public class Enemy : Unit
     {
 
-
-
         public Enemy()
         {
             Name = "더미";
@@ -16,8 +14,13 @@ namespace TextRPG
             Health = MaxHealth;
             AvoidChance = 10;
             CriticalChance = 16;
+
             CriticalDamage = 1.6f;
         }
 
+
+
+
     }
 }
+

@@ -51,7 +51,7 @@ namespace TextRPG
             Console.WriteLine("Victory");
             Console.WriteLine();
 
-            Console.WriteLine("던전에서 몬스터 n마리를 잡았습니다.");
+            Console.WriteLine($"던전에서 몬스터 n마리를 잡았습니다.");
             Console.WriteLine();
 
             Console.WriteLine("[캐릭터 정보]");
@@ -63,12 +63,15 @@ namespace TextRPG
 
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{reward.gold} Gold");
-            Console.WriteLine($"{reward.dungeonResultItem}");
-            Console.WriteLine($"Gold {prevGold} G -> {gm.Player.Gold} G");
+
+            if(reward.dungeonRewardItem != null)
+            {
+                Console.WriteLine($"{reward.dungeonRewardItem} - 1");
+            }
 
             Console.WriteLine();
 
-            Console.WriteLine("0. 나가기");
+            Console.WriteLine("0. 다음");
         }
     }
 }
