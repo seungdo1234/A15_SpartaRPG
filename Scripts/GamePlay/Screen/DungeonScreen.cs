@@ -27,7 +27,7 @@
                         return;
                     }
 
-                    dungeonResultScreen.DungeonResultScreenOn((DungeonDifficulty)input);
+                    dungeonResultScreen.DungeonResultScreenOn(input - 1);
 
 
                     Console.Clear();
