@@ -51,9 +51,9 @@
 
             Console.WriteLine();
 
-            Console.WriteLine($"1. {gm.DungeonData.GetDungeonName(0)}\t | 방어력 {gm.DungeonData.GetRecommandedDef(0)} 이상 권장");
-            Console.WriteLine($"2. {gm.DungeonData.GetDungeonName(1)}\t | 방어력 {gm.DungeonData.GetRecommandedDef(1)} 이상 권장");
-            Console.WriteLine($"3. {gm.DungeonData.GetDungeonName(2)}\t | 방어력 {gm.DungeonData.GetRecommandedDef(2)} 이상 권장");
+            Console.WriteLine($"1. {gm.Dungeon.GetDungeonName(0)}\t | 방어력 {gm.Dungeon.GetRecommandedDef(0)} 이상 권장");
+            Console.WriteLine($"2. {gm.Dungeon.GetDungeonName(1)}\t | 방어력 {gm.Dungeon.GetRecommandedDef(1)} 이상 권장");
+            Console.WriteLine($"3. {gm.Dungeon.GetDungeonName(2)}\t | 방어력 {gm.Dungeon.GetRecommandedDef(2)} 이상 권장");
             Console.WriteLine("0. 나가기");
 
             Console.WriteLine();

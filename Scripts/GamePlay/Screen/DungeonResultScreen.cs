@@ -56,7 +56,7 @@ namespace TextRPG
         {
             prevHealth = gm.Player.Health; // 현재 체력 저장
 
-            if (gm.Player.Def >= gm.DungeonData.GetRecommandedDef(dif)) // 클리어
+            if (gm.Player.Def >= gm.Dungeon.GetRecommandedDef(dif)) // 클리어
             {
                 DungeonClearReward();
                 return true;
@@ -80,11 +80,11 @@ namespace TextRPG
 
         private void DungeonClearReward() // 던전 클리어 보상 지급 함수
         {
-            int reduce = rand.Next(20, 36) + (gm.DungeonData.GetRecommandedDef(dif) - (int)gm.Player.Def );
-           // gm.Player.OnDamaged(reduce);
+            int reduce = rand.Next(20, 36) + (gm.Dungeon.GetRecommandedDef(dif) - (int)gm.Player.Def );
+            gm.Player.OnDamaged(reduce);
             
             prevGold = gm.Player.Gold; 
-            gm.Player.Gold += gm.DungeonData.GetDungeonReward(dif) + (gm.DungeonData.GetDungeonReward(dif) * (int)(gm.Player.Atk * 100) / 10000);
+            gm.Player.Gold += gm.Dungeon.GetDungeonReward(dif) + (gm.Dungeon.GetDungeonReward(dif) * (int)(gm.Player.Atk * 100) / 10000);
 
             prevLevel = gm.Player.Level;
             gm.Player.ExpUp(); // 경험치 상승
@@ -97,7 +97,7 @@ namespace TextRPG
 
             Console.WriteLine("던전 클리어 실패");
             Console.WriteLine("적이 너무 강했습니다...");
-            Console.WriteLine($"{gm.DungeonData.GetDungeonName(dif)}을 클리어하지 못했습니다.");
+            Console.WriteLine($"{gm.Dungeon.GetDungeonName(dif)}을 클리어하지 못했습니다.");
 
             Console.WriteLine();
 
@@ -115,7 +115,7 @@ namespace TextRPG
 
             Console.WriteLine("던전 클리어");
             Console.WriteLine("축하합니다 !!");
-            Console.WriteLine($"{gm.DungeonData.GetDungeonName(dif)}을 클리어 하였습니다.");
+            Console.WriteLine($"{gm.Dungeon.GetDungeonName(dif)}을 클리어 하였습니다.");
 
             Console.WriteLine();
 
