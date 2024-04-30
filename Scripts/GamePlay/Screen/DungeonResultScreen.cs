@@ -81,7 +81,7 @@ namespace TextRPG
         private void DungeonClearReward() // 던전 클리어 보상 지급 함수
         {
             int reduce = rand.Next(20, 36) + (gm.Dungeon.GetRecommandedDef(dif) - (int)gm.Player.Def );
-            gm.Player.OnDamaged(reduce);
+      //      gm.Player.OnDamaged(reduce);
             
             prevGold = gm.Player.Gold; 
             gm.Player.Gold += gm.Dungeon.GetDungeonReward(dif) + (gm.Dungeon.GetDungeonReward(dif) * (int)(gm.Player.Atk * 100) / 10000);
