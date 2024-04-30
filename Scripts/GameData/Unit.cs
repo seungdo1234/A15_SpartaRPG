@@ -21,32 +21,41 @@ namespace TextRPG
         [JsonProperty] public int MaxMana { get; protected set; }
 
         protected Random random = new Random();
-        public virtual bool IsDamaged(int damage) // 피격
+        public virtual void OnDamaged(int damage) // 회피시 0 반환
         {
             int per = random.Next(0, 101);
 
             if(per <= AvoidChance)
             {
-                return false;
+                return;
             }
 
-            Health -= (damage - Def) > 0 ? (int)(damage - Def) : 0;
-
-            return true;
+            Health -= (damage - Def) > 0 ? (int)(damage - Def) : 1;           
         }
 
-        public virtual (int damage, bool isCrit) Attack() // bool 반환형 = 치명타 여부
+        public bool IsCriticalHit()
         {
             int critRate = random.Next(0, 101); // 치명타 확률
+            if (critRate <= CriticalChance)
+            {                
+                return true;
+            }
+            return false;
+        }
+
+        public virtual bool Attack(Unit unit) // bool 반환형 = 치명타 여부
+        {   
             int atkRange = random.Next(0, 21); // 공격력 오차범위
             float damage = Atk * (100 + (atkRange - 10)) * 0.01f; // 오차범위 적용한 데미지
 
-            if (critRate <= CriticalChance)
+            if (IsCriticalHit())
             {
-                return (Convert.ToInt32(Math.Round((damage * CriticalDamage))), true);
+                unit.OnDamaged(Convert.ToInt32(Math.Round(damage * CriticalDamage)));
+                return true;
             }
 
-            return (Convert.ToInt32(Math.Round(damage)), false);
+            unit.OnDamaged(Convert.ToInt32(Math.Round(damage)));
+            return false;
         }
 
         public virtual void CostMana(int cost)
