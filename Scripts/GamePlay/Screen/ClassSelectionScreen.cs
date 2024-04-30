@@ -16,7 +16,7 @@ namespace TextRPG
                 // 직업을 선택
                 if (int.TryParse(Console.ReadLine(), out int input) && input >= 1 && input < Enum.GetNames(typeof(PlayerClass)).Length)
                 {
-                    gm.Player.PlayerClass = (PlayerClass)input;
+                    gm.Player.ePlayerClass = (PlayerClass)input;
 
                     Console.Clear();
 

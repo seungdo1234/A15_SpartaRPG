@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Xml.Linq;
 
 namespace TextRPG
 {
@@ -10,7 +11,7 @@ namespace TextRPG
         // 플레이어 경험치
         private int[] levelExp = new int[10] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; // 레벨 별 경험치 통
 
-        public PlayerClass PlayerClass { get;  set; }
+        public PlayerClass ePlayerClass { get;  set; }
         public int Gold { get; set; }
         [JsonProperty] public int Exp { get; private set; }
         public Item EquipAtkItem { get; set; }
@@ -22,7 +23,7 @@ namespace TextRPG
             Level = 1;
             Atk = 10;
             Def = 5;
-            MaxHealth = 100;
+            MaxHealth = 10000;
             Health = MaxHealth;
             Gold = 10000;
             AvoidChance = 10;
@@ -34,7 +35,7 @@ namespace TextRPG
 
         public void ChangePlayerClass(PlayerClass playerClass)
         {
-            this.PlayerClass = playerClass;
+            this.ePlayerClass = playerClass;
 
             switch (playerClass)
             {

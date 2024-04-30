@@ -38,7 +38,7 @@ namespace TextRPG
 
             Console.WriteLine($"이름 ( {gm.Player.Name} )");
             Console.WriteLine($"Lv.{gm.Player.Level}");
-            Console.WriteLine($"직업 ( {gm.Player.GetPlayerClass(gm.Player.PlayerClass)} )");
+            Console.WriteLine($"직업 ( {gm.Player.GetPlayerClass(gm.Player.ePlayerClass)} )");
 
             // 현재 장착중인 장비 능력치 적용
             Console.Write($"공격력 : {gm.Player.GetAtkValue():F1}");
