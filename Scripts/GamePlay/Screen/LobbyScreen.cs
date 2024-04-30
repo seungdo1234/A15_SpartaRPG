@@ -57,7 +57,7 @@ namespace TextRPG
                       //      dungeonScreen.DungeonResultScreenOn(DungeonResultType.VICTORY , DungeonDifficulty.HARD);
                             break;
                         case 6:
-                            dungeonBattle.BattleStart();
+                            dungeonBattle.CheckforBattle();
                             break;
                         case 5:
                             restScreen.RestScreenOn();

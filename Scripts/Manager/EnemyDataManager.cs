@@ -45,7 +45,34 @@ namespace TextRPG
             //    1, 1, 1)); 보스라서 일단 주석처리.
         }
 
-        
+        /*내가 만든 것
+        public List<Enemy> GetSpawnMonsters(int CurrentDungeonLevel)
+        {
+            SpawnMonsters.Clear(); // 이전에 선택된 몬스터들을 클리어
+            Random random = new Random();
+
+            // 현재 던전 레벨에 따라 선택 가능한 최대 몬스터 레벨을 계산
+            int maxAvailableLevel = CurrentDungeonLevel * 2;
+
+            // 몬스터 수를 랜덤으로 결정 (예: 1~3)
+            int numberOfMonsters = random.Next(1, 4);
+
+            for (int i = 0; i < numberOfMonsters; i++)
+            {
+                // 선택 가능한 몬스터들 중에서 랜덤으로 하나를 선택
+                List<Enemy> availableMonsters = MonsterDB.Where(monster => monster.Level <= maxAvailableLevel).ToList();
+                if (availableMonsters.Count > 0)
+                {
+                    Enemy selectedMonster = availableMonsters[random.Next(availableMonsters.Count)];
+                    // 선택된 몬스터를 스폰 몬스터 목록에 추가
+                    SpawnMonsters.Add(selectedMonster);
+                }
+            }
+
+            return SpawnMonsters;
+        }
+        */
+
         public List<Enemy> GetSpawnMonsters(int CurrentDungeonLevel)
         {
             int totalLevelLimit = CurrentDungeonLevel * 2;
@@ -61,6 +88,7 @@ namespace TextRPG
 
             return SpawnMonsters;
         }
+        
 
         private int[] randomMonsterEncount(int totalLevelLimit, int maxLevel)
         {
