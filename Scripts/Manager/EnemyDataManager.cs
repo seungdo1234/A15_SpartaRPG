@@ -46,11 +46,42 @@ namespace TextRPG
         }
 
         
-        public List<Enemy> GetSpawnMonsters(int stage)
+        public List<Enemy> GetSpawnMonsters(int CurrentDungeonLevel)
         {
-            
+            int totalLevelLimit = CurrentDungeonLevel + 2;
+            int[] monsterLevels = randomMonsterEncount(totalLevelLimit);
+
+            for (int i = 0; i < monsterLevels.Length; i++)
+            {
+                SpawnMonsters.Add(MonsterDB[i + 1]);
+            }
+
+
 
             return SpawnMonsters;
+        }
+
+        private int[] randomMonsterEncount(int totalLevelLimit)
+        {
+            List<int[]> levelCombinations = new List<int[]>();
+            int[] selectedCombination;
+            Random random = new Random();
+
+            for (int i = 0; i <= totalLevelLimit; i++)
+            {
+                for (int j = 0; i + j <= totalLevelLimit; j++)
+                {
+                    for (int k = 0; i + j + k <= totalLevelLimit; k++)
+                    {
+                        int l = totalLevelLimit - (i + j + k);
+                        if (l <= totalLevelLimit)
+                            levelCombinations.Add(new int[] { i, j, k, l});
+                    }
+                }
+            }
+
+            selectedCombination = levelCombinations[random.Next(levelCombinations.Count)];
+            return selectedCombination;
         }
     }
 }
