@@ -4,6 +4,8 @@ namespace TextRPG
     public class Enemy : Unit
     {
 
+
+
         public Enemy()
         {
             Name = "더미";
@@ -16,12 +18,5 @@ namespace TextRPG
             CriticalChance = 16;
             CriticalDamage = 1.6f;
         }
-
-
-        public void EnemyOnDamage(int damage)
-        {
-            this.Health -= damage - (int)this.Def;
-        }
-
     }
 }

@@ -8,6 +8,9 @@ namespace TextRPG
         private ShopScreen shopScreen;
         private DungeonScreen dungeonScreen;
         private RestScreen restScreen;
+
+        // 던전 전투 초기화
+        private DungeonBattle dungeonBattle;
         public LobbyScreen()
         {
             statusScreen = new StatusScreen();
@@ -15,6 +18,11 @@ namespace TextRPG
             shopScreen = new ShopScreen();
             dungeonScreen = new DungeonScreen();
             restScreen = new RestScreen();
+
+            // 던전 배틀 초기화 및 이벤트
+            dungeonBattle = new DungeonBattle();
+            dungeonBattle.PlayerDied += PlayerDiedHandler;
+            dungeonBattle.EnemyDied += EnemyDiedHandler;
         }
 
         // 로비 화면
@@ -27,8 +35,8 @@ namespace TextRPG
                 LobbyText();
                 MyActionText();
 
-                // 1, 2, 3만 입력 받을 수 있게 함 
-                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input < 6)
+                // 1, 2, 3만 입력 받을 수 있게 함 , 테스트를 위해 범위를 6 에서 7로 조정
+                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input < 7)
                 {
                     switch (input)
                     {
@@ -49,6 +57,9 @@ namespace TextRPG
                             break;
                         case 5:
                             restScreen.RestScreenOn();
+                            break;
+                        case 6:
+                            dungeonBattle.BattleStart();
                             break;
                     }
                     Console.Clear();
@@ -80,6 +91,20 @@ namespace TextRPG
             Console.WriteLine("0. 저장 및 나가기");
 
             Console.WriteLine();
+        }
+
+
+
+        // 사망, 적처리 이벤트
+
+        private void PlayerDiedHandler()
+        {
+            LobbyScreenOn();
+        }
+
+        private void EnemyDiedHandler()
+        {
+            LobbyScreenOn();
         }
 
     }
