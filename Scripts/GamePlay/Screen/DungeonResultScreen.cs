@@ -67,7 +67,7 @@ namespace TextRPG
 
                 if (per <= 40) // 실패
                 {
-                    gm.Player.OnDamaged(prevHealth / 2);
+                //    gm.Player.OnDamaged(prevHealth / 2);
                     return false;
                 }
                 else // 클리어
@@ -81,7 +81,7 @@ namespace TextRPG
         private void DungeonClearReward() // 던전 클리어 보상 지급 함수
         {
             int reduce = rand.Next(20, 36) + (gm.DungeonData.GetRecommandedDef(dif) - (int)gm.Player.Def );
-            gm.Player.OnDamaged(reduce);
+           // gm.Player.OnDamaged(reduce);
             
             prevGold = gm.Player.Gold; 
             gm.Player.Gold += gm.DungeonData.GetDungeonReward(dif) + (gm.DungeonData.GetDungeonReward(dif) * (int)(gm.Player.Atk * 100) / 10000);
