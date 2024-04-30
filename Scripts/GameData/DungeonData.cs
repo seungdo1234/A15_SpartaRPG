@@ -5,9 +5,8 @@ namespace TextRPG
     {
         // 4.30 J / 레벨 및 난이도 별 던전 데이터가 나오게 수정 
         public int MaxDungeonLevel { get; private set; }
-        public int CurrentDungeonLevel { get; private set; }
+        public int CurrentDungeonLevel { get; protected set; }
         public List <Item> DungeonRewards { get; private set; }
-
 
         // 전에 있던 던전 데이터 클래스 구성 요소
         private string[] dungeonNames;
