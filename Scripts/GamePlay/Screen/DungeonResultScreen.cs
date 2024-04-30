@@ -42,25 +42,7 @@ namespace TextRPG
 
             }
         }
-
-        // Text
-        private void FailText()
-        {
-            Console.WriteLine();
-
-            Console.WriteLine("던전 클리어 실패");
-            Console.WriteLine("적이 너무 강했습니다...");
-            Console.WriteLine($"{gm.Dungeon.GetDungeonName(dif)}을 클리어하지 못했습니다.");
-
-            Console.WriteLine();
-
-            Console.WriteLine("[탐험 결과]");
-            Console.WriteLine($"체력 {prevHealth} -> {gm.Player.Health}");
-
-            Console.WriteLine();
-
-            Console.WriteLine("0. 나가기");
-        }
+        
 
         private void SuccessText()
         {
