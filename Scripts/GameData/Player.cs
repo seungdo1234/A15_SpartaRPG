@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Reflection.Emit;
 
 namespace TextRPG
 {
@@ -8,9 +9,9 @@ namespace TextRPG
     {
     
         // 플레이어 경험치
-        private int[] levelExp = new int[10] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; // 레벨 별 경험치 통
+        private int[] levelExp = new int[10] { 5, 7, 10, 12, 15, 20, 25, 30, 40, 50 }; // 레벨 별 경험치 통
 
-        public PlayerClass PlayerClass { get;  set; }
+        public PlayerClass ePlayerClass { get;  set; }
         public int Gold { get; set; }
         [JsonProperty] public int Exp { get; private set; }
         public Item EquipAtkItem { get; set; }
@@ -33,11 +34,12 @@ namespace TextRPG
             Mana = MaxMana;
         }
 
-        public void ChangePlayerClass(PlayerClass playerClass)
+        public void ChangePlayerClass(PlayerClass ePlayerClass)
         {
-            this.PlayerClass = playerClass;
+            // 플레이어의 직업에 따라 추가스탯 배정
+            this.ePlayerClass = ePlayerClass;
 
-            switch (playerClass)
+            switch (ePlayerClass)
             {
                 case PlayerClass.WARRIOR:
                     Health += 50;
@@ -58,9 +60,9 @@ namespace TextRPG
             }
         }
 
-        public string GetPlayerClass(PlayerClass _playerClass) // 플레이어의 직업 별 이름 반환 
+        public string GetPlayerClass(PlayerClass ePlayerClass) // 플레이어의 직업 별 이름 반환 
         {
-            string playerClass = _playerClass switch
+            string playerClass = ePlayerClass switch
             {
                 PlayerClass.WARRIOR => "전사",
                 PlayerClass.ARCHER => "궁수",
@@ -105,13 +107,16 @@ namespace TextRPG
                 this.Health += health;
             }
         }
-        public void ExpUp() // 경험치 상승
+        public void ExpUp(int exp) // 경험치 상승
         {
-            if (++Exp == levelExp[Level - 1])
+            // 4.30 J => 경험치 상승 수정
+            Exp += exp;
+
+            if(Exp >= levelExp[Level - 1])
             {
-                LevelUp();
+                Exp-= levelExp[Level-1];
                 Level++;
-                Exp = 0;
+                LevelUp();
             }
         }
 

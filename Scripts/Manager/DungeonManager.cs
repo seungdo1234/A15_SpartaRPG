@@ -39,13 +39,21 @@ namespace TextRPG
             return monsterEncount.spawnMonsters;
         }
 
+        // 던전 보상 만드는 함수
         public Reward GetDungeonReward(DungeonDifficulty dif)
         {
             Reward reward = new Reward();
 
-
+            // 난이도 별 랜덤 보상 로직 추가
 
             return reward;
         }
+
+        public void DungeonLevelUp(DungeonDifficulty dif)
+        {
+            CurrentDungeonLevel += (int)dif;
+        }
+
+
     }
 }
