@@ -9,7 +9,7 @@ namespace TextRPG
 
         public Reward()
         {
-            dungeonRewardItem = new Item("낡은 검", ItemTypes.WEAPON, 2, "쉽게 볼 수 있는 낡은 검 입니다.", 600);
+            dungeonRewardItem = new Item("낡은 검", EItemType.WEAPON, 2, "쉽게 볼 수 있는 낡은 검 입니다.", 600);
             gold = 500;
             exp = 5;
         }
@@ -43,7 +43,7 @@ namespace TextRPG
         }
 
         // 던전 보상 만드는 함수
-        public Reward GetDungeonReward(DungeonDifficulty dif)
+        public Reward GetDungeonReward(EDungeonDifficulty dif)
         {
             Reward reward = new Reward();
 
@@ -52,7 +52,7 @@ namespace TextRPG
             return reward;
         }
 
-        public void DungeonLevelUp(DungeonDifficulty dif)
+        public void DungeonLevelUp(EDungeonDifficulty dif)
         {
             CurrentDungeonLevel += (int)dif;
         }

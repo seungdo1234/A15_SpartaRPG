@@ -1,9 +1,9 @@
 ﻿
 namespace TextRPG
 {
-    public class CrisisEvasion : SkillData
+    public class Assassination : SkillData
     {
-        public CrisisEvasion(int id) : base(id)
+        public Assassination(int id) : base(id)
         {
         }
 
@@ -12,10 +12,18 @@ namespace TextRPG
             string result;
             string? critStr = caster.IsCriticalHit();
             float critRate = critStr != null ? caster.CriticalDamage : 1f;
-            float skillRate = (caster.MaxHealth - caster.Health) > 0 ? (caster.MaxHealth - caster.Health) * 0.01f : 1f;
-            skillRate += 1.5f;
+            float skillRate = (target.Health / target.MaxHealth) > 0.2f ? 1.5f : 0;
             int damage = caster.GetDamagePerHit();
-                        
+
+            if (skillRate == 0)
+            {
+                damage = target.Health;
+                target.OnDamaged(damage);
+                result = $"[데미지 {damage}] ";
+
+                return result;
+            }
+
             damage = Convert.ToInt32(Math.Round(damage * skillRate * critRate));
             target.OnDamaged(damage);
             result = $"[데미지 {damage}] " + critRate;
@@ -24,3 +32,4 @@ namespace TextRPG
         }
     }
 }
+
