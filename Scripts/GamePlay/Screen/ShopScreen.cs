@@ -81,6 +81,7 @@ namespace TextRPG
                 string sell = equipItem.IsSell ? "구매 완료" : $"{equipItem.Gold} G";
 
                 Console.WriteLine($"|\t{equipItem.Desc} | {sell}");
+
             }
 
             Console.WriteLine();

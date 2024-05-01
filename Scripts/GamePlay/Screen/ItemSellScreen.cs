@@ -86,6 +86,7 @@ namespace TextRPG
                 }
 
                 Console.WriteLine($"|\t{equipItem.Desc} | {MathF.Floor((float)equipItem.Gold * 0.8f)} G ");
+
             }
 
             Console.WriteLine();

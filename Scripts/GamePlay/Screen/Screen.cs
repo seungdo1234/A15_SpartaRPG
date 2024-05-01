@@ -33,6 +33,7 @@ namespace TextRPG
             }
 
             Console.WriteLine($"|\t{equipItem.Desc}");
+
         }
 
 

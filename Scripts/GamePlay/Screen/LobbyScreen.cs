@@ -7,14 +7,24 @@ namespace TextRPG
         private InventoryScreen inventoryScreen;
         private ShopScreen shopScreen;
         private DungeonResultScreen dungeonScreen;
-        private RestScreen restScreen;
+        private QuestScreen questScreen;
+
+        // 던전 전투 초기화
+        private DungeonBattle dungeonBattle;
         public LobbyScreen()
         {
             statusScreen = new StatusScreen();
             inventoryScreen = new InventoryScreen();
             shopScreen = new ShopScreen();
             dungeonScreen = new DungeonResultScreen();
-            restScreen = new RestScreen();
+            questScreen = new QuestScreen();
+
+            /* 배틀 초기화 주석처리
+            // 던전 배틀 초기화 및 이벤트
+            dungeonBattle = new DungeonBattle();
+            dungeonBattle.PlayerDied += PlayerDiedHandler;
+            dungeonBattle.EnemyDied += EnemyDiedHandler;
+            */
         }
 
         // 로비 화면
@@ -27,8 +37,8 @@ namespace TextRPG
                 LobbyText();
                 MyActionText();
 
-                // 1, 2, 3만 입력 받을 수 있게 함 
-                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input < 6)
+                // 1, 2, 3만 입력 받을 수 있게 함 , 테스트를 위해 범위를 6 에서 7로 조정
+                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input < 7)
                 {
                     switch (input)
                     {
@@ -48,8 +58,13 @@ namespace TextRPG
                             dungeonScreen.DungeonResultScreenOn(EDungeonResultType.VICTORY , EDungeonDifficulty.HARD);
                             break;
                         case 5:
-                            restScreen.RestScreenOn();
+                            questScreen.QuestScreenOn();
                             break;
+                        /* 던전 위치 이동
+                        case 6:
+                            dungeonBattle.CheckforBattle();
+                            break;
+                        */
                     }
                     Console.Clear();
                 }
@@ -73,7 +88,7 @@ namespace TextRPG
             Console.WriteLine("2. 인벤토리");
             Console.WriteLine("3. 상점");
             Console.WriteLine("4. 던전입장");
-            Console.WriteLine("5. 휴식하기");
+            Console.WriteLine("5. 퀘스트");
 
             Console.WriteLine();
 
@@ -82,5 +97,18 @@ namespace TextRPG
             Console.WriteLine();
         }
 
+
+        /* // 주석처리
+        // 사망, 적처리 이벤트
+        private void PlayerDiedHandler()
+        {
+            LobbyScreenOn();
+        }
+
+        private void EnemyDiedHandler()
+        {
+            LobbyScreenOn();
+        }
+        */
     }
 }

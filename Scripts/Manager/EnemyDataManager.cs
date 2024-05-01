@@ -47,6 +47,7 @@ namespace TextRPG
 
             return SpawnMonsters;
         }
+        
 
         private int[] randomMonsterEncount(int totalLevelLimit, int maxLevel)
         {
