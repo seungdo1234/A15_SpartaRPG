@@ -14,14 +14,14 @@ namespace TextRPG
                 ClassSelectionText();
 
                 // 직업을 선택
-                if (int.TryParse(Console.ReadLine(), out int input) && input >= 1 && input < Enum.GetNames(typeof(UnitType)).Length - 1 )
+                if (int.TryParse(Console.ReadLine(), out int input) && input >= 1 && input < Enum.GetNames(typeof(EUnitType)).Length - 1 )
                 {
                     // 4.30 J => 플레이어 직업 선택 수정
-                    gm.Player.ChangePlayerClass((UnitType)input);
+                    gm.Player.ChangePlayerClass((EUnitType)input);
 
                     Console.Clear();
 
-                    Console.WriteLine($"\n{gm.Player.GetPlayerClass((UnitType)input)}를 선택하셨습니다. ");
+                    Console.WriteLine($"\n{gm.Player.GetPlayerClass((EUnitType)input)}를 선택하셨습니다. ");
                     Console.WriteLine("\n게임을 시작합니다...") ;
 
                     Thread.Sleep(1000);
@@ -47,9 +47,9 @@ namespace TextRPG
             Console.Write($"플레이하실 직업을 선택해주세요. ");
 
             Console.Write("( ");
-            for ( int i = 1; i < Enum.GetNames(typeof(UnitType)).Length - 1; i++)
+            for ( int i = 1; i < Enum.GetNames(typeof(EUnitType)).Length - 1; i++)
             {
-                Console.Write($"{i}.{gm.Player.GetPlayerClass((UnitType)i) } ");
+                Console.Write($"{i}.{gm.Player.GetPlayerClass((EUnitType)i) } ");
             }
             Console.Write(" )");
 

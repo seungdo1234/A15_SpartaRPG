@@ -1,0 +1,62 @@
+[
+  {
+    "ItemRank": 1,
+    "ItemName": "수련자 갑옷",
+    "Itemtype": 2,
+    "Value": 5,
+    "Desc": "\"수련에 도움을 주는 갑옷입니다\"",
+    "Gold": 1000,
+    "IsEquip": false,
+    "IsSell": false
+  },
+  {
+    "ItemRank": 2,
+    "ItemName": "무쇠 갑옷",
+    "Itemtype": 2,
+    "Value": 9,
+    "Desc": "무쇠로 만들어져 튼튼한 갑옷입니다.",
+    "Gold": 1500,
+    "IsEquip": false,
+    "IsSell": false
+  },
+  {
+    "ItemRank": 3,
+    "ItemName": "스파르타의 갑옷",
+    "Itemtype": 2,
+    "Value": 15,
+    "Desc": "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.",
+    "Gold": 3500,
+    "IsEquip": false,
+    "IsSell": false
+  },
+  {
+    "ItemRank": 3,
+    "ItemName": "스파르타 창",
+    "Itemtype": 1,
+    "Value": 7,
+    "Desc": "스파르타의 전사들이 사용했다는 전설의 창입니다.",
+    "Gold": 3000,
+    "IsEquip": false,
+    "IsSell": false
+  },
+  {
+    "ItemRank": 1,
+    "ItemName": "낡은 검",
+    "Itemtype": 1,
+    "Value": 2,
+    "Desc": "쉽게 볼 수 있는 낡은 검 입니다.",
+    "Gold": 600,
+    "IsEquip": false,
+    "IsSell": false
+  },
+  {
+    "ItemRank": 2,
+    "ItemName": "청동 도끼",
+    "Itemtype": 1,
+    "Value": 5,
+    "Desc": "어디선가 사용됐던거 같은 도끼입니다.",
+    "Gold": 1500,
+    "IsEquip": false,
+    "IsSell": false
+  }
+]

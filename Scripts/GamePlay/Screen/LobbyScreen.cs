@@ -45,7 +45,7 @@ namespace TextRPG
                             shopScreen.ShopScreenOn();
                             break;
                         case 4:
-                            dungeonScreen.DungeonResultScreenOn(DungeonResultType.VICTORY , DungeonDifficulty.HARD);
+                            dungeonScreen.DungeonResultScreenOn(EDungeonResultType.VICTORY , EDungeonDifficulty.HARD);
                             break;
                         case 5:
                             restScreen.RestScreenOn();

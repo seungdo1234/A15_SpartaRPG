@@ -4,10 +4,7 @@
     {
         public static ItemDataManager instance = new ItemDataManager();
 
-        public List<Item> CommonItemDB { get; private set; }
-        public List<Item> RareItemDB { get; private set; }
-        public List<Item> EpicItemDB { get; private set; }
-
+        public List<Item> ItemDB { get; private set; }
         // 플레이어, 상점 아이템 리스트
         public List<Item> PlayerItems {  get; private set; }
         public List<Item> ShopItems { get; private set; }
@@ -17,16 +14,20 @@
         {
             PlayerItems = new List<Item>();
             ShopItems = new List<Item>();
-            CommonItemDB = new List<Item>();
-            RareItemDB = new List<Item>();
-            EpicItemDB = new List<Item>();
+            ItemDB = new List<Item>();
         }
 
-        public void SetAlItems(List<Item> shopItems, List<Item> playerItems)
+        public void SetItems( List<Item> shopItems, List<Item> playerItems)
         {
             PlayerItems= playerItems;
             ShopItems= shopItems;
         }
+
+        public void SetItemDB(List<Item> itemDB)
+        {
+            ItemDB = itemDB;
+        }
+
 
         // 4.30 J => 플레이어 아이템 추가 로직 변경 (상점 구매, 던전 드랍 아이템)
         // 아이템 구매
