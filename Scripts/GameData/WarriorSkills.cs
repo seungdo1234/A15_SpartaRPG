@@ -1,70 +1,66 @@
-﻿
-using System.Xml.XPath;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace TextRPG
+﻿namespace textrpg
 {
-    public class WarriorSkills
+    public class warriorskills
     {
-        //public WarriorSkills()
+        //public warriorskills()
         //{
-        //    AddSkill(new SkillData("강베기", 1, false, 10, "적 하나에게 무기로 강력한 일격을 날립니다."));
-        //    AddSkill(new SkillData("가로베기", 3, true, 20, "무기를 크게 휘둘러 최대 3명의 적을 공격합니다."));
-        //    AddSkill(new SkillData("위기모면", 1, false, 30, "적 하나에게 잃은 체력 비례 피해를 2회 가격합니다."));
-        //}       
-        
-        //public override List<(int damage, bool isCrit)>? GetSkillDamages(int id, Unit unit, int enemyCount)
+        //    addskill(new skilldata("강베기", 1, false, 10, "적 하나에게 무기로 강력한 일격을 날립니다."));
+        //    addskill(new skilldata("가로베기", 3, true, 20, "무기를 크게 휘둘러 최대 3명의 적을 공격합니다."));
+        //    addskill(new skilldata("위기모면", 1, false, 30, "적 하나에게 잃은 체력 비례 피해를 2회 가격합니다."));
+        //}
+
+        //public override list<(int damage, bool iscrit)>? getskilldamages(int id, unit unit, int enemycount)
         //{
-        //    SkillData? skill = SkillList.Find(x => x.ID == id);
-        //    if (skill == null) return null; // 스킬ID에 해당하는 스킬이 없으면 null 반환            
+        //    skilldata? skill = skilllist.find(x => x.id == id);
+        //    if (skill == null) return null; // 스킬id에 해당하는 스킬이 없으면 null 반환            
 
         //    return null;
         //}
 
-        //private bool StrongStrike(int id, Unit player)
+        //private bool strongstrike(int id, unit player)
         //{
-        //    SkillData skill = SkillList.Find(x => x.ID == id);
-        //    List<(int damage, bool isCrit)> result = new List<(int damage, bool isCrit)>();
+        //    skilldata skill = skilllist.find(x => x.id == id);
+        //    list<(int damage, bool iscrit)> result = new list<(int damage, bool iscrit)>();
 
-        //    player.CostMana(skill.ManaCost); // 마나소모
-        //    (int damage, bool isCrit) hit = player.Attack(); // 1회 타격정보
+        //    player.costmana(skill.manacost); // 마나소모
+        //    (int damage, bool iscrit) hit = player.attack(); // 1회 타격정보
         //    hit.damage = hit.damage * 2; // 스킬 데미지 계산
 
-        //    result.Add(hit);
+        //    result.add(hit);
 
         //    return result;
         //}
 
-        //private List<(int damage, bool isCrit)> HorizontalStrike(int id, Unit player, int enemyCount)
+        //private list<(int damage, bool iscrit)> horizontalstrike(int id, unit player, int enemycount)
         //{
-        //    SkillData skill = SkillList.Find(x => x.ID == id);
-        //    List<(int damage, bool isCrit)> result = new List<(int damage, bool isCrit)>();
-        //    int count = skill.MaxTargetCount > enemyCount ? enemyCount : skill.MaxTargetCount;
+        //    skilldata skill = skilllist.find(x => x.id == id);
+        //    list<(int damage, bool iscrit)> result = new list<(int damage, bool iscrit)>();
+        //    int count = skill.maxtargetcount > enemycount ? enemycount : skill.maxtargetcount;
 
-        //    player.CostMana(skill.ManaCost); 
+        //    player.costmana(skill.manacost);
         //    for (int i = 0; i < count; i++)
         //    {
-        //        (int damage, bool isCrit) hit = player.Attack(); // 1회 타격정보
-        //        hit.damage = Convert.ToInt32(Math.Round(hit.damage * 1.5f)); 
-        //        result.Add(hit);
-        //    }                        
+        //        (int damage, bool iscrit) hit = player.attack(); // 1회 타격정보
+        //        hit.damage = convert.toint32(math.round(hit.damage * 1.5f));
+        //        result.add(hit);
+        //    }
 
         //    return result;
         //}
 
-        //private List<(int damage, bool isCrit)> CrisisEvasion(int id, Unit player)
+        //private list<(int damage, bool iscrit)> crisisevasion(int id, unit player)
         //{
-        //    SkillData skill = SkillList.Find(x => x.ID == id);
-        //    List<(int damage, bool isCrit)> result = new List<(int damage, bool isCrit)>();
+        //    skilldata skill = skilllist.find(x => x.id == id);
+        //    list<(int damage, bool iscrit)> result = new list<(int damage, bool iscrit)>();
 
-        //    player.CostMana(skill.ManaCost); 
+        //    player.costmana(skill.manacost);
         //    for (int i = 0; i < 2; i++)
         //    {
-        //        (int damage, bool isCrit) hit = player.Attack(); 
-        //        float skillRate = (player.MaxHealth - player.Health + 150) * 0.01f; // 스킬 계수 계산
-        //        hit.damage = Convert.ToInt32(Math.Round(hit.damage * skillRate));  // 스킬 데미지 계산
-        //        result.Add(hit);
-        //    }                       
+        //        (int damage, bool iscrit) hit = player.attack();
+        //        float skillrate = (player.maxhealth - player.health + 150) * 0.01f; // 스킬 계수 계산
+        //        hit.damage = convert.toint32(math.round(hit.damage * skillrate));  // 스킬 데미지 계산
+        //        result.add(hit);
+        //    }
 
         //    return result;
         //}
