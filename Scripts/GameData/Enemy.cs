@@ -13,17 +13,17 @@ namespace TextRPG
             CriticalDamage = 1.6f;
         }
 
-        public Enemy(string Name, int Level, float Atk, float Def, int MaxHealth)
+        public Enemy(Enemy e)
         {
-            this.Name = Name;
-            this.Level = Level;
-            this.Atk = Atk;
-            this.Def = Def;
-            this.MaxHealth = MaxHealth; 
-            Health = MaxHealth;
-            AvoidChance = 10;
-            CriticalChance = 16;
-            CriticalDamage = 1.6f;
+            Name = e.Name;
+            Level = e.Level;
+            Atk = e.Atk;
+            Def = e.Def;
+            Health = e.Health;
+            MaxHealth = e.MaxHealth;
+            AvoidChance = e.AvoidChance;
+            CriticalChance = e.CriticalChance;
+            CriticalDamage = e.CriticalDamage;
         }
 
         public override string ToString()
