@@ -1,7 +1,7 @@
 
 namespace TextRPG
 {
-    public enum UnitType { DEFAULT, WARRIOR, ARCHER, THIEF, MAGICIAN, Enemy }
+    public enum UnitType { DEFAULT, WARRIOR, ARCHER, THIEF, MAGICIAN, ENEMY }
 
     public enum ItemTypes { DEFAULT, WEAPON, ARMOR }
 
