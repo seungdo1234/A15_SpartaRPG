@@ -1,21 +1,21 @@
 ﻿
 namespace TextRPG
 {
-    public class CrisisEvasion : SkillData
+    public class WeaknessSniping : SkillData
     {
-        public CrisisEvasion(int id) : base(id)
+        public WeaknessSniping(int id) : base(id)
         {
         }
 
         public override string CastSkill(Unit caster, Unit target)
         {
             string result;
-            string? critStr = caster.IsCriticalHit();
-            float critRate = critStr != null ? caster.CriticalDamage : 1f;
-            float skillRate = (caster.MaxHealth - caster.Health) > 0 ? (caster.MaxHealth - caster.Health) * 0.01f : 1f;
-            skillRate += 1.5f;
+            string? critStr = "Critical!!";
+            float critRate = caster.CriticalDamage + 0.5f; // 치명타배율 +50%
+            float skillRate = 2;
+            
             int damage = caster.GetDamagePerHit();
-                        
+
             damage = Convert.ToInt32(Math.Round(damage * skillRate * critRate));
             target.OnDamaged(damage);
             result = $"[데미지 {damage}] " + critRate;
