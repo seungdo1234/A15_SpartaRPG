@@ -3,14 +3,15 @@ namespace TextRPG
 {
     public class ItemBuyScreen :Screen
     {
+        private int resetGold = 500;
 
         // 아이템 구매 화면
         public void ItemBuyScreenOn()
         {
-            Console.Clear();
 
             while (true)
             {
+                Console.Clear();
                 ItemBuyScreenText();
                 MyActionText();
 
@@ -22,24 +23,38 @@ namespace TextRPG
                     {
                         return;
                     }
-
-                    EquipItem equipItem = dm.ShopEquipItems[input - 1];
-
-                    // 아이템 구매 및 실패
-                    if (equipItem.IsSell) 
+                    else if (input == 1)
                     {
-                        Console.WriteLine("이미 구매한 아이템입니다. \n");
+                        if(gm.Player.Gold >= resetGold)
+                        {
+                            gm.Player.Gold -= resetGold;
+                            dm.ShopItemReset();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Gold가 부족합니다 !\n");
+                        }
                     }
                     else
                     {
-                        if(gm.Player.Gold >= equipItem.Gold) // 아이템 구매
+                        EquipItem equipItem = dm.ShopEquipItems[input - 2];
+
+                        // 아이템 구매 및 실패
+                        if (equipItem.IsSell)
                         {
-                            Console.WriteLine("구매를 완료했습니다. \n");
-                            dm.BuyShopItem(equipItem);
+                            Console.WriteLine("이미 구매한 아이템입니다. \n");
                         }
-                        else // 실패
+                        else
                         {
-                            Console.WriteLine("Gold가 부족합니다 !\n");
+                            if (gm.Player.Gold >= equipItem.Gold) // 아이템 구매
+                            {
+                                Console.WriteLine("구매를 완료했습니다. \n");
+                                dm.BuyShopItem(equipItem);
+                            }
+                            else // 실패
+                            {
+                                Console.WriteLine("Gold가 부족합니다 !\n");
+                            }
                         }
                     }
 
@@ -69,9 +84,9 @@ namespace TextRPG
 
             Console.WriteLine("[장비 목록]");
 
-            for (int i = 0; i < dm.ShopEquipItems.Count; i++) // 판매 목록 출력
+            for (int i = 1; i < dm.ShopEquipItems.Count; i++) // 판매 목록 출력
             {
-                EquipItem equipItem = dm.ShopEquipItems[i];
+                EquipItem equipItem = dm.ShopEquipItems[i - 1];
 
                 Console.Write($"- {i + 1} {equipItem.ItemName} ({equipItem.GetEquipItemClassName()})\t| ");
 
@@ -94,6 +109,7 @@ namespace TextRPG
 
             Console.WriteLine();
 
+            Console.WriteLine($"1. 상점 아이템 초기화 ({resetGold} G)");
             Console.WriteLine("0. 나가기");
 
             Console.WriteLine();

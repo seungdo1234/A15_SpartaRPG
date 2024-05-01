@@ -37,7 +37,8 @@
         {
             List<EquipItem> equipItems = EquipItemDB.FindAll(obj => obj.ItemRank != EItemRank.EPIC);
 
-            for(int i = 0; i < ShopEquipItemCount; i++)
+            ShopEquipItems.Clear();
+            for (int i = 0; i < ShopEquipItemCount; i++)
             {
                 ShopEquipItems.Add(GetRandomEquipItem(equipItems));
             }
