@@ -41,8 +41,8 @@ namespace TextRPG
                             {
                                 Console.WriteLine("첫번째 페이지입니다!");
                                 page++;
-                                Thread.Sleep(500);
-                                Console.SetCursorPosition(0, 5);
+                                Thread.Sleep(1000);
+                                Console.SetCursorPosition(0, 6);
                                 Console.WriteLine("                     ");
                             }
                             break;
@@ -53,7 +53,7 @@ namespace TextRPG
                                 Console.WriteLine("마지막 페이지입니다!");
                                 page--;
                                 Thread.Sleep(1000);
-                                Console.SetCursorPosition(0, 5);
+                                Console.SetCursorPosition(0, 6);
                                 Console.WriteLine("                     ");
                             }
                             break;
