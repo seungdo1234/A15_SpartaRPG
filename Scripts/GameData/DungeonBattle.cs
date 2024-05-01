@@ -20,7 +20,7 @@ namespace TextRPG
         public DungeonBattle()
         {
             player = new Player("Tester");
-            enemies = new List<Enemy>().ToList(); ;  // 몬스터를 저장할 리스트 초기화
+            enemies = new List<Enemy>(); ;  // 몬스터를 저장할 리스트 초기화
         }
 
         public void CheckforBattle()
@@ -38,7 +38,6 @@ namespace TextRPG
                 switch(choice)
                 {
                     case "1":
-                        enemies.Clear();  // 이전 몬스터 목록을 클리어
                         AppearEnemy();
                         if (enemies.Any())  // 몬스터가 있는지 확인 후 전투 시작
                         {
@@ -59,8 +58,10 @@ namespace TextRPG
 
         public void AppearEnemy()
         {
+            enemies.Clear();
             int currentDungeonLevel = player.Level; // 임시로 집어 넣음, 원래는 던전 난이도를 집어 넣어야함
-            enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel);  // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기
+            List<Enemy> originalEnemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel);  // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기
+            enemies = new List<Enemy>(originalEnemies.Select(e => new Enemy(e))); // 깊은 복사를 통해 리스트 복제
 
             foreach (var enemy in enemies)
             {
@@ -123,42 +124,42 @@ namespace TextRPG
 
             if (player.Health > 0)
             {
-                // 플레이어의 공격이 성공적으로 적을 타격하면 true, 회피되면 false를 반환
-                bool hitSuccess = player.Attack(enemy);
+                string attackResult = player.Attack(enemy); // 공격 결과 메시지 반환
+                Console.WriteLine(attackResult); // 공격 결과를 출력
 
-                if (hitSuccess && enemy.Health <= 0)
+                if (enemy.Health <= 0)
                 {
-                    BettlePlayerWinEnd();
+                    BettlePlayerWinEnd(); // 적 체력이 0 이하면 승리 처리
                 }
             }
             else
             {
-                BettlePlayerLoseEnd();
+                BettlePlayerLoseEnd(); // 플레이어 체력이 0 이하면 패배 처리
             }
 
-            Console.Clear();
+            Console.Clear(); // 콘솔 화면 지우기
         }
 
         public void EnemyTurn(Enemy enemy)
         {
+            Console.WriteLine($"{enemy.Name}의 공격!");
+
             if (enemy.Health > 0)
             {
-                Console.WriteLine($"{enemy.Name}의 공격!");
+                string attackResult = enemy.Attack(player); // 공격 결과 메시지 반환
+                Console.WriteLine(attackResult); // 공격 결과를 출력
 
-                bool hitSuccess = enemy.Attack(player);
-
-                if (!hitSuccess)
+                if (player.Health <= 0)
                 {
-                    Console.WriteLine($"{player.Name}은(는) 공격을 회피했습니다!");
-                }
-
-                // 공격이 성공했을 때만 피해를 출력합니다.
-                if (hitSuccess && player.Health <= 0)
-                {
-                    Console.WriteLine($"{player.Name}은(는) 사망했습니다!");
-                    BettlePlayerLoseEnd();
+                    BettlePlayerLoseEnd(); // 플리에어 체력이 0 이하면 패배
                 }
             }
+            else
+            {
+                BettlePlayerWinEnd(); // 플레이어 체력이 0 이하면 패배 처리
+            }
+
+            Console.Clear(); // 콘솔 화면 지우기
         }
 
         private void BattleText(Enemy enemy)
