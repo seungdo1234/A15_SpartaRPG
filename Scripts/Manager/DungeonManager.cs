@@ -3,7 +3,7 @@ namespace TextRPG
 {
     public struct Reward
     {
-       // public Item dungeonRewardItem; 던전 보상 추가 예정
+        public Item dungeonRewardItem; // 던전 보상 추가 예정
         public int gold;
         public int exp;
 
