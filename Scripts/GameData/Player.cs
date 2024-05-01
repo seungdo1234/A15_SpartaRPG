@@ -42,8 +42,7 @@ namespace TextRPG
             switch (ePlayerClass)
             {
                 case EUnitType.WARRIOR:
-                    Health += 50;
-                    MaxHealth += 50; /// 수정이 필요함
+                    Health += 50; /// 수정이 필요함
                     Def += 5;
                     Skills.Add(new SkillData(0));
                     Skills.Add(new SkillData(1));

@@ -19,10 +19,12 @@ namespace TextRPG
             dungeonScreen = new DungeonResultScreen();
             restScreen = new RestScreen();
 
+            /* 배틀 초기화 주석처리
             // 던전 배틀 초기화 및 이벤트
             dungeonBattle = new DungeonBattle();
             dungeonBattle.PlayerDied += PlayerDiedHandler;
             dungeonBattle.EnemyDied += EnemyDiedHandler;
+            */
         }
 
         // 로비 화면
@@ -58,11 +60,11 @@ namespace TextRPG
                         case 5:
                             restScreen.RestScreenOn();
                             break;
-
+                        /* 던전 위치 이동
                         case 6:
                             dungeonBattle.CheckforBattle();
                             break;
-
+                        */
                     }
                     Console.Clear();
                 }
@@ -96,7 +98,7 @@ namespace TextRPG
         }
 
 
-
+        /* // 주석처리
         // 사망, 적처리 이벤트
         private void PlayerDiedHandler()
         {
@@ -107,6 +109,6 @@ namespace TextRPG
         {
             LobbyScreenOn();
         }
-
+        */
     }
 }
