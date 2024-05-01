@@ -15,7 +15,7 @@ namespace TextRPG
                 MyActionText();
 
                 // 0: 뒤로가기  아이템 번호 : 구매
-                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.ShopItemsCount())
+                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.ShopItems.Count)
                 {
 
                     if (input == 0)
@@ -23,7 +23,7 @@ namespace TextRPG
                         return;
                     }
 
-                    Item item = dm.GetShopItem(input - 1);
+                    Item item = dm.ShopItems[input - 1];
 
                     // 아이템 구매 및 실패
                     if (item.IsSell) 
@@ -69,9 +69,9 @@ namespace TextRPG
 
             Console.WriteLine("[아이템 목록]");
 
-            for (int i = 0; i < dm.ShopItemsCount(); i++) // 판매 목록 출력
+            for (int i = 0; i < dm.ShopItems.Count; i++) // 판매 목록 출력
             {
-                Item item = dm.GetShopItem(i);
+                Item item = dm.ShopItems[i];
                 string itemType = item.Itemtype == ItemTypes.WEAPON ? "공격력" : "방어력";
                 string sell = item.IsSell ? "구매 완료" : $"{item.Gold} G";
                 Console.WriteLine($"- {i + 1} {item.ItemName}\t| {itemType} +{item.Value} |\t{item.Desc} | {sell}");
