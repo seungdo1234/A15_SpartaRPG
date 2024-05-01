@@ -22,9 +22,11 @@ namespace TextRPG
         [JsonProperty] public List<SkillData> Skills { get; protected set; }
 
         protected Random random = new Random();
-        public virtual void OnDamaged(int damage) // 최소 데미지 1
-        {   
-            Health -= (damage - Def) > 0 ? (int)(damage - Def) : 1;           
+        public virtual string OnDamaged(int damage) // 최소 데미지 1
+        {
+            int endDamage = (damage - Def) > 0 ? (int)(damage - Def) : 1;
+            Health -= endDamage;
+            return $"[데미지 {endDamage}] ";
         }
 
         public string? IsCriticalHit()
@@ -32,7 +34,7 @@ namespace TextRPG
             int critRate = random.Next(0, 101); // 치명타 확률
             if (critRate <= CriticalChance)
             {                
-                return "Critical!!";
+                return "Critical!! ";
             }
             return null;
         }
@@ -59,8 +61,8 @@ namespace TextRPG
             }
 
             damage = Convert.ToInt32(Math.Round(damage * critRate));
-            target.OnDamaged(damage);
-            result = $"[데미지 {damage}] " + critRate;
+            result = target.OnDamaged(damage);
+            result += critStr;
 
             return result;
         }
