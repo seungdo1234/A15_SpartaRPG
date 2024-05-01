@@ -48,10 +48,10 @@ namespace TextRPG
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.\n");
 
             Console.WriteLine("[아이템 목록]");
-            for (int i = 0; i < dm.PlayerItemsCount(); i++)
+            for (int i = 0; i < dm.PlayerItems.Count; i++)
             {
                 Console.Write("- ");
-                InventoryItemText(dm.GetPlayerItem(i));
+                InventoryItemText(dm.PlayerItems[i]);
             }
 
             Console.WriteLine();
