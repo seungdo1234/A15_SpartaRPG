@@ -9,5 +9,6 @@ namespace TextRPG.Scripts
     public class Quest
     {
 
+        string QuestType { get; set; } 
     }
 }

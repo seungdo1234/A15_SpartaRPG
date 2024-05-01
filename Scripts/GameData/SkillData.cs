@@ -10,7 +10,7 @@ namespace TextRPG
         public bool IsMultiTarget { get; private set; }
         public int ManaCost { get; private set; } // 마나 소모량
         public string Content { get; private set; } // 스킬 설명
-        public UnitType ClassType { get; private set; }
+        public EUnitType ClassType { get; private set; }
 
         public SkillData(int id)
         {
