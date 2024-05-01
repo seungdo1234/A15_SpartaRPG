@@ -12,12 +12,6 @@ namespace TextRPG
         // 인벤토리 화면
         public void InventoryScreenOn()
         {
-
-            for (int i = 0; i < 30; i++)
-            {
-                dm.DungeonDropItem(dm.EquipItemDB[i]);
-            }
-
             Console.Clear();
 
             while (true)

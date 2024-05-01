@@ -4,14 +4,14 @@ namespace TextRPG
     public class EquipItem : Item
     {
         public EUnitType UnitType { get; private set; }
-        public EEquipmentType EquipmenttType { get; private set; }
+        public EEquipItemType EquipmenttType { get; private set; }
         public float AtkValue { get; private set; }
         public float DefValue { get; private set; }
         public bool IsEquip { get; set; }
         public bool IsSell { get; set; }
 
 
-        public EquipItem(EUnitType unitType,EItemRank itemRank, string itemName, EEquipmentType itemType, float atkValue, float defValue, string desc, int gold)
+        public EquipItem(EUnitType unitType,EItemRank itemRank, string itemName, EEquipItemType itemType, float atkValue, float defValue, string desc, int gold)
         {
             UnitType = unitType;
             ItemRank = itemRank;

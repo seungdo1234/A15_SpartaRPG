@@ -67,15 +67,29 @@ namespace TextRPG
 
             Console.WriteLine();
 
-            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("[장비 목록]");
 
             for (int i = 0; i < dm.ShopEquipItems.Count; i++) // 판매 목록 출력
             {
                 EquipItem equipItem = dm.ShopEquipItems[i];
-                string itemType = equipItem.EquipmenttType == EEquipmentType.WEAPON ? "공격력" : "방어력";
+
+                Console.Write($"- {i + 1} {equipItem.ItemName} ({equipItem.GetEquipItemClassName()})\t| ");
+
+
+                if (equipItem.AtkValue != 0)
+                {
+                    Console.Write($"공격력 {equipItem.AtkValue} ");
+                }
+
+                if (equipItem.DefValue != 0)
+                {
+                    Console.Write($"방어력 {equipItem.DefValue} ");
+                }
+
                 string sell = equipItem.IsSell ? "구매 완료" : $"{equipItem.Gold} G";
-                // 아이템 구매
-      //          Console.WriteLine($"- {i + 1} {item.ItemName}\t| {itemType} +{item.Value} |\t{item.Desc} | {sell}");
+
+                Console.WriteLine($"|\t{equipItem.Desc} | {sell}");
+
             }
 
             Console.WriteLine();

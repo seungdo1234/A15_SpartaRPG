@@ -28,7 +28,7 @@ namespace TextRPG
 
                     if (item.IsEquip) // 장착 중인 아이템을 팔 경우 장착 해제
                     {
-                        if(item.EquipmenttType == EEquipmentType.WEAPON)
+                        if(item.EquipmenttType == EEquipItemType.WEAPON)
                         {
                             gm.Player.EquipAtkItem = null;
                         }
@@ -64,7 +64,7 @@ namespace TextRPG
 
             Console.WriteLine();
 
-            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("[장비 목록]");
 
             for (int i = 0; i < dm.PlayerEquipItems.Count; i++) // 판매 목록 출력
             {
