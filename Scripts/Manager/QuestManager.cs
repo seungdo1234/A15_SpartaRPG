@@ -20,7 +20,7 @@ namespace TextRPG.Scripts
 
             QuestSaver = new int[1, 2];
             QuestSaver[0, 0] = 1;
-            QuestSaver[1, 0] = 0;
+            QuestSaver[0, 1] = 0;
 
             //스토리 퀘스트 리스트
             StoryQuest = new List<Quest>();
