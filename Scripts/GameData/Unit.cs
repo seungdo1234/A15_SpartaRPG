@@ -19,6 +19,7 @@ namespace TextRPG
         [JsonProperty] public float CriticalDamage { get; protected set; }
         [JsonProperty] public int Mana { get; protected set; }
         [JsonProperty] public int MaxMana { get; protected set; }
+        [JsonProperty] public List<SkillData> Skills { get; protected set; }
 
         protected Random random = new Random();
         public virtual void OnDamaged(int damage) // 최소 데미지 1
