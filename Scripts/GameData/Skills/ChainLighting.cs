@@ -1,9 +1,9 @@
 ﻿
 namespace TextRPG
 {
-    public class CrisisEvasion : SkillData
+    internal class ChainLighting : SkillData
     {
-        public CrisisEvasion(int id) : base(id)
+        public ChainLighting(int id) : base(id)
         {
         }
 
@@ -12,10 +12,9 @@ namespace TextRPG
             string result;
             string? critStr = caster.IsCriticalHit();
             float critRate = critStr != null ? caster.CriticalDamage : 1f;
-            float skillRate = (caster.MaxHealth - caster.Health) > 0 ? (caster.MaxHealth - caster.Health) * 0.01f : 1f;
-            skillRate += 1.5f;
+            float skillRate = 3;            
             int damage = caster.GetDamagePerHit();
-                        
+
             damage = Convert.ToInt32(Math.Round(damage * skillRate * critRate));
             target.OnDamaged(damage);
             result = $"[데미지 {damage}] " + critRate;

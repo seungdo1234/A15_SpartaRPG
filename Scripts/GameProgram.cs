@@ -16,7 +16,7 @@ namespace TextRPG
         public void GameStart()
         {
             gm.Init();
-            EnemyDataManager.instance.Init();
+            
             loginScreen.LoginScreenOn();
         }
 

@@ -6,9 +6,9 @@ namespace TextRPG
     public class Item // 아이템 정보가 담긴 클래스
     {
 
-        public EItemRanks ItemRank { get; private set; }
+        public EItemRank ItemRank { get; private set; }
         public string ItemName { get; private set; }
-        public EItemTypes Itemtype { get; private set; }
+        public EItemType Itemtype { get; private set; }
         public float Value { get; private set; }
         public string Desc { get; private set; }
         public int Gold { get; private set; }
@@ -17,7 +17,7 @@ namespace TextRPG
 
 
         // 아이템 초기화
-        public Item(string itemName, EItemTypes itemType, float value ,string desc, int gold)
+        public Item(string itemName, EItemType itemType, float value ,string desc, int gold)
         {
             ItemName = itemName;
             Itemtype = itemType;
