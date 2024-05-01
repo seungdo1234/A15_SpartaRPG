@@ -5,8 +5,12 @@ namespace TextRPG
 { 
     public class Item // 아이템 정보가 담긴 클래스
     {
+<<<<<<< HEAD
         
         public EUnitType UnitType { get; private set; }
+=======
+
+>>>>>>> Dev
         public EItemRank ItemRank { get; private set; }
         public string ItemName { get; private set; }
         public EItemType Itemtype { get; private set; }
@@ -18,7 +22,11 @@ namespace TextRPG
 
 
         // 아이템 초기화
+<<<<<<< HEAD
         public Item(EUnitType unitType,EItemRank itemRank, string itemName, EItemType itemType, float value ,string desc, int gold)
+=======
+        public Item(string itemName, EItemType itemType, float value ,string desc, int gold)
+>>>>>>> Dev
         {
             UnitType = unitType;
             ItemRank = itemRank;
