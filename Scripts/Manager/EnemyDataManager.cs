@@ -35,6 +35,8 @@ namespace TextRPG
             int totalLevelLimit = CurrentDungeonLevel * 2;
             int maxLevel = 10;
             int[] monsterLevels = randomMonsterEncount(totalLevelLimit, maxLevel);
+             
+            SpawnMonsters.Clear();
 
             foreach (int i in monsterLevels)
             {
