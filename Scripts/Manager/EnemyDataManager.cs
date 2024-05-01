@@ -40,7 +40,7 @@ namespace TextRPG
             {
                 if (i == 0) continue;
 
-                SpawnMonsters.Add(MonsterDB[i - 1]);
+                SpawnMonsters.Add(new Enemy(MonsterDB[i - 1]));
             }
 
             return SpawnMonsters;
