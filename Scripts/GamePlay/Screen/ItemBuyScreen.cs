@@ -84,9 +84,9 @@ namespace TextRPG
 
             Console.WriteLine("[장비 목록]");
 
-            for (int i = 1; i < dm.ShopEquipItems.Count; i++) // 판매 목록 출력
+            for (int i = 0; i < dm.ShopEquipItems.Count; i++) // 판매 목록 출력
             {
-                EquipItem equipItem = dm.ShopEquipItems[i - 1];
+                EquipItem equipItem = dm.ShopEquipItems[i];
 
                 Console.Write($"- {i + 1} {equipItem.ItemName} ({equipItem.GetEquipItemClassName()})\t| ");
 
