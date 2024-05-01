@@ -1,0 +1,82 @@
+[
+  {
+    "Name": "사나운 토끼",
+    "Level": 1,
+    "Atk": 5,
+    "Def": 0,
+    "Health": 20,
+    "MaxHealth": 20
+  },
+  {
+    "Name": "노을의 늑대개",
+    "Level": 2,
+    "Atk": 10,
+    "Def": 3,
+    "Health": 30,
+    "MaxHealth": 30
+  },
+  {
+    "Name": "강을 건넌 사람",
+    "Level": 3,
+    "Atk": 15,
+    "Def": 6,
+    "Health": 40,
+    "MaxHealth": 40
+  },
+  {
+    "Name": "흐느끼는 유령",
+    "Level": 4,
+    "Atk": 20,
+    "Def": 9,
+    "Health": 50,
+    "MaxHealth": 50
+  },
+  {
+    "Name": "늘어나는 그림자",
+    "Level": 5,
+    "Atk": 25,
+    "Def": 12,
+    "Health": 60,
+    "MaxHealth": 60
+  },
+  {
+    "Name": "노래하는 물고기",
+    "Level": 6,
+    "Atk": 30,
+    "Def": 15,
+    "Health": 70,
+    "MaxHealth": 70
+  },
+  {
+    "Name": "흰머리 호랑이",
+    "Level": 7,
+    "Atk": 35,
+    "Def": 18,
+    "Health": 80,
+    "MaxHealth": 80
+  },
+  {
+    "Name": "외로운 불귀신",
+    "Level": 8,
+    "Atk": 40,
+    "Def": 21,
+    "Health": 90,
+    "MaxHealth": 90
+  },
+  {
+    "Name": "독수리 사자",
+    "Level": 9,
+    "Atk": 45,
+    "Def": 24,
+    "Health": 100,
+    "MaxHealth": 100
+  },
+  {
+    "Name": "녹안의 악마",
+    "Level": 10,
+    "Atk": 50,
+    "Def": 27,
+    "Health": 120,
+    "MaxHealth": 120
+  }
+]

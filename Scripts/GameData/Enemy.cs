@@ -7,19 +7,13 @@ namespace TextRPG
 
         public Enemy()
         {
-            Name = "더미";
-            Level = 1;
-            Atk = 10;
-            Def = 5;
-            MaxHealth = 100;
             Health = MaxHealth;
             AvoidChance = 10;
             CriticalChance = 16;
             CriticalDamage = 1.6f;
         }
 
-        public Enemy(string Name, int Level, float Atk, float Def,
-            int MaxHealth, int AvoidChance = 10, int CriticalChance = 10, float CriticalDamage = 1.6f)
+        public Enemy(string Name, int Level, float Atk, float Def, int MaxHealth)
         {
             this.Name = Name;
             this.Level = Level;
@@ -27,6 +21,9 @@ namespace TextRPG
             this.Def = Def;
             this.MaxHealth = MaxHealth; 
             Health = MaxHealth;
+            AvoidChance = 10;
+            CriticalChance = 16;
+            CriticalDamage = 1.6f;
         }
 
         public override string ToString()
