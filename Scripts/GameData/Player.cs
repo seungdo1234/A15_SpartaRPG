@@ -14,8 +14,9 @@ namespace TextRPG
         public EUnitType ePlayerClass { get;  set; }
         public int Gold { get; set; }
         [JsonProperty] public int Exp { get; private set; }
-        public Item EquipAtkItem { get; set; }
-        public Item EquipDefItem { get; set; }        
+        public EquipItem EquipAtkItem { get; set; }
+        public EquipItem EquipDefItem { get; set; }      
+        
         
         public Player(string name)
         {
@@ -33,6 +34,8 @@ namespace TextRPG
             Mana = MaxMana;
             base.Skills = new List<SkillData>();
         }
+
+
 
         public void ChangePlayerClass(EUnitType ePlayerClass)
         {
@@ -92,7 +95,7 @@ namespace TextRPG
             }
             else
             {
-                return Atk + EquipAtkItem.Value;
+                return Atk + EquipAtkItem.AtkValue;
             }
         }
         public float GetDefValue() // 전체 방어력 반환
@@ -103,7 +106,7 @@ namespace TextRPG
             }
             else
             {
-                return Def + EquipDefItem.Value;
+                return Def + EquipDefItem.DefValue;
             }
         }
 

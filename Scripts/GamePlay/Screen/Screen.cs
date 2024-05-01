@@ -13,12 +13,26 @@ namespace TextRPG
             gm = GameManager.instance;
         }
 
+        // 5.1 J => 장비 추가로 인한 리팩토링
         // 인벤토리 아이템 텍스트 출력
-        protected void InventoryItemText(Item item)
+        protected void InventoryItemText(EquipItem equipItem)
         {
-            string equip = item.IsEquip ? "[E]" : "";
-            string itemType = item.Itemtype == EItemType.WEAPON ? "공격력" : "방어력";
-            Console.WriteLine($"{equip}{item.ItemName}\t| {itemType} {item.Value} |\t{item.Desc}");
+            string equip = equipItem.IsEquip ? "[E]" : "";
+
+            Console.Write($"{equip}{equipItem.ItemName} ({equipItem.GetEquipItemClassName()})\t| ");
+
+
+            if(equipItem.AtkValue != 0)
+            {
+                Console.Write($"공격력 {equipItem.AtkValue} ");
+            }
+
+            if(equipItem.DefValue != 0)
+            {
+                Console.Write($"방어력 {equipItem.DefValue} ");
+            }
+
+            Console.WriteLine($"|\t{equipItem.Desc}");
         }
 
 

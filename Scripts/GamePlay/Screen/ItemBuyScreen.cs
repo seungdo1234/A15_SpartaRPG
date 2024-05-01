@@ -15,7 +15,7 @@ namespace TextRPG
                 MyActionText();
 
                 // 0: 뒤로가기  아이템 번호 : 구매
-                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.ShopItems.Count)
+                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.ShopEquipItems.Count)
                 {
 
                     if (input == 0)
@@ -23,19 +23,19 @@ namespace TextRPG
                         return;
                     }
 
-                    Item item = dm.ShopItems[input - 1];
+                    EquipItem equipItem = dm.ShopEquipItems[input - 1];
 
                     // 아이템 구매 및 실패
-                    if (item.IsSell) 
+                    if (equipItem.IsSell) 
                     {
                         Console.WriteLine("이미 구매한 아이템입니다. \n");
                     }
                     else
                     {
-                        if(gm.Player.Gold >= item.Gold) // 아이템 구매
+                        if(gm.Player.Gold >= equipItem.Gold) // 아이템 구매
                         {
                             Console.WriteLine("구매를 완료했습니다. \n");
-                            dm.BuyShopItem(item);
+                            dm.BuyShopItem(equipItem);
                         }
                         else // 실패
                         {
@@ -69,12 +69,13 @@ namespace TextRPG
 
             Console.WriteLine("[아이템 목록]");
 
-            for (int i = 0; i < dm.ShopItems.Count; i++) // 판매 목록 출력
+            for (int i = 0; i < dm.ShopEquipItems.Count; i++) // 판매 목록 출력
             {
-                Item item = dm.ShopItems[i];
-                string itemType = item.Itemtype == EItemType.WEAPON ? "공격력" : "방어력";
-                string sell = item.IsSell ? "구매 완료" : $"{item.Gold} G";
-                Console.WriteLine($"- {i + 1} {item.ItemName}\t| {itemType} +{item.Value} |\t{item.Desc} | {sell}");
+                EquipItem equipItem = dm.ShopEquipItems[i];
+                string itemType = equipItem.EquipmenttType == EEquipmentType.WEAPON ? "공격력" : "방어력";
+                string sell = equipItem.IsSell ? "구매 완료" : $"{equipItem.Gold} G";
+                // 아이템 구매
+      //          Console.WriteLine($"- {i + 1} {item.ItemName}\t| {itemType} +{item.Value} |\t{item.Desc} | {sell}");
             }
 
             Console.WriteLine();

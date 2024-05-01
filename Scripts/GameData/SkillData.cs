@@ -12,9 +12,6 @@ namespace TextRPG
         public bool IsMultiTarget { get; private set; }
         public int ManaCost { get; private set; } // 마나 소모량
         public string Content { get; private set; } // 스킬 설명
-<<<<<<< HEAD
-        public EUnitType ClassType { get; private set; }
-=======
         public EUnitType UnitType { get; private set; }
 
         [JsonConstructor]
@@ -27,7 +24,6 @@ namespace TextRPG
             Content = content;
             UnitType = unitType;
         }
->>>>>>> Dev
 
         public SkillData(int id)
         {
