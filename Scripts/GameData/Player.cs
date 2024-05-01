@@ -8,7 +8,6 @@ namespace TextRPG
 {
     public class Player:Unit
     {
-    
         // 플레이어 경험치
         private int[] levelExp = new int[10] { 5, 7, 10, 12, 15, 20, 25, 30, 40, 50 }; // 레벨 별 경험치 통
 
@@ -44,6 +43,7 @@ namespace TextRPG
             {
                 case EUnitType.WARRIOR:
                     Health += 50;
+                    MaxHealth += 50; /// 수정이 필요함
                     Def += 5;
                     Skills.Add(new SkillData(0));
                     Skills.Add(new SkillData(1));

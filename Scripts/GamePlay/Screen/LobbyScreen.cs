@@ -21,7 +21,6 @@ namespace TextRPG
 
             // 던전 배틀 초기화 및 이벤트
             dungeonBattle = new DungeonBattle();
-            
             dungeonBattle.PlayerDied += PlayerDiedHandler;
             dungeonBattle.EnemyDied += EnemyDiedHandler;
         }
@@ -99,7 +98,6 @@ namespace TextRPG
 
 
         // 사망, 적처리 이벤트
-
         private void PlayerDiedHandler()
         {
             LobbyScreenOn();
