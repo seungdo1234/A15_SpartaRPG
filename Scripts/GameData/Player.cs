@@ -11,7 +11,7 @@ namespace TextRPG
         // 플레이어 경험치
         private int[] levelExp = new int[10] { 5, 7, 10, 12, 15, 20, 25, 30, 40, 50 }; // 레벨 별 경험치 통
 
-        public PlayerClass ePlayerClass { get;  set; }
+        public UnitType ePlayerClass { get;  set; }
         public int Gold { get; set; }
         [JsonProperty] public int Exp { get; private set; }
         public Item EquipAtkItem { get; set; }
@@ -33,40 +33,40 @@ namespace TextRPG
             Mana = MaxMana;
         }
 
-        public void ChangePlayerClass(PlayerClass ePlayerClass)
+        public void ChangePlayerClass(UnitType ePlayerClass)
         {
             // 플레이어의 직업에 따라 추가스탯 배정
             this.ePlayerClass = ePlayerClass;
 
             switch (ePlayerClass)
             {
-                case PlayerClass.WARRIOR:
+                case UnitType.WARRIOR:
                     Health += 50;
                     Def += 5;
                     //PlayerSkills = new WarriorSkills();
                     break;
-                case PlayerClass.ARCHER:
+                case UnitType.ARCHER:
                     CriticalChance += 9;
                     CriticalDamage += 0.9f;
                     break;
-                case PlayerClass.THIEF:
+                case UnitType.THIEF:
                     AvoidChance += 10;
                     break;
-                case PlayerClass.MAGICIAN:
+                case UnitType.MAGICIAN:
                     MaxMana += 50;
                     Mana += 50;
                     break;
             }
         }
 
-        public string GetPlayerClass(PlayerClass ePlayerClass) // 플레이어의 직업 별 이름 반환 
+        public string GetPlayerClass(UnitType ePlayerClass) // 플레이어의 직업 별 이름 반환 
         {
             string playerClass = ePlayerClass switch
             {
-                PlayerClass.WARRIOR => "전사",
-                PlayerClass.ARCHER => "궁수",
-                PlayerClass.THIEF => "도적",
-                PlayerClass.MAGICIAN => "마법사",
+                UnitType.WARRIOR => "전사",
+                UnitType.ARCHER => "궁수",
+                UnitType.THIEF => "도적",
+                UnitType.MAGICIAN => "마법사",
                 _ => "직업이 존재하지 않습니다." // default
             };
 
@@ -130,25 +130,32 @@ namespace TextRPG
             Health -= (damage - GetDefValue()) > 0 ? (int)(damage - GetDefValue()) : 1;            
         }
 
-        public override bool Attack(Unit unit)
-        {   
+        public override int GetDamagePerHit() // bool 반환형 = 치명타 여부
+        {
             int atkRange = random.Next(0, 21); // 공격력 오차범위
-            float damage = GetAtkValue() * (100 + (atkRange - 10)) * 0.01f; // 오차범위 적용한 데미지
+            float damage = GetAtkValue() * (100 + (atkRange - 10)) * 0.01f; // 오차범위 적용한 데미지 
+
+            return Convert.ToInt32(Math.Round(damage));
+        }
+
+        public override string Attack(Unit target)
+        {
             int avoidRange = random.Next(0, 101); // 회피 범위
+            string result;
+            string? critStr = IsCriticalHit();
+            float critRate = critStr != null ? CriticalDamage : 1f;
+            int damage = GetDamagePerHit();
 
             if (avoidRange <= AvoidChance) // 회피 시 리턴
             {
-                return false;
+                return "Miss!!";
             }
 
-            if (IsCriticalHit())
-            {
-                unit.OnDamaged(Convert.ToInt32(Math.Round(damage * CriticalDamage)));
-                return true;
-            }
+            damage = Convert.ToInt32(Math.Round(damage * critRate));
+            target.OnDamaged(damage);
+            result = $"[데미지 {damage}] " + critRate;
 
-            unit.OnDamaged(Convert.ToInt32(Math.Round(damage)));
-            return false;
+            return result;
         }
     }
 }
