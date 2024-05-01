@@ -3,10 +3,17 @@ namespace TextRPG
 {
     public class Enemy : Unit
     {
-        public List<EnemySkill> SkillList = new List<EnemySkill>(); // 지움 필요
+        private List<EnemySkill> SkillList {  get; set; } = new List<EnemySkill>();
 
-        public Enemy(string Name, int Level, float Atk, float Def,
-            int MaxHealth, int AvoidChance = 10, int CriticalChance = 10, float CriticalDamage = 1.6f)
+        public Enemy()
+        {
+            Health = MaxHealth;
+            AvoidChance = 10;
+            CriticalChance = 16;
+            CriticalDamage = 1.6f;
+        }
+
+        public Enemy(string Name, int Level, float Atk, float Def, int MaxHealth)
         {
             this.Name = Name;
             this.Level = Level;
@@ -14,6 +21,9 @@ namespace TextRPG
             this.Def = Def;
             this.MaxHealth = MaxHealth; 
             Health = MaxHealth;
+            AvoidChance = 10;
+            CriticalChance = 16;
+            CriticalDamage = 1.6f;
         }
 
         public override string ToString()

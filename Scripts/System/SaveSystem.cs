@@ -13,8 +13,8 @@ namespace TextRPG
         public PlayerDatas()
         {
             player = GameManager.instance.Player;
-            playerItems = ItemDataManager.instance.GetAllPlayerItems();
-            shopItems = ItemDataManager.instance.GetAllShopItems();
+            playerItems = ItemDataManager.instance.PlayerItems;
+            shopItems = ItemDataManager.instance.ShopItems;
         }
     }
 

@@ -14,7 +14,7 @@ namespace TextRPG
                 MyActionText();
 
                 // 0: 뒤로가기  아이템 번호 : 구매
-                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.PlayerItemsCount())
+                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.PlayerItems.Count)
                 {
 
                     if (input == 0)
@@ -22,7 +22,7 @@ namespace TextRPG
                         return;
                     }
 
-                    Item item = dm.GetPlayerItem(input - 1);
+                    Item item = dm.PlayerItems[input - 1];
 
                     item.IsSell = false; // 판매
 
@@ -66,9 +66,9 @@ namespace TextRPG
 
             Console.WriteLine("[아이템 목록]");
 
-            for (int i = 0; i < dm.PlayerItemsCount(); i++) // 판매 목록 출력
+            for (int i = 0; i < dm.PlayerItems.Count; i++) // 판매 목록 출력
             {
-                Item item = dm.GetPlayerItem(i);
+                Item item = dm.PlayerItems[i];
                 string itemType = item.Itemtype == ItemTypes.WEAPON ? "공격력" : "방어력";
                 Console.WriteLine($"- {i + 1} {item.ItemName}\t| {itemType} +{item.Value} |\t{item.Desc} | {(int)((float)item.Gold * 0.8f)} G");
             }

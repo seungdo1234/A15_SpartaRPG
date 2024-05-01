@@ -21,8 +21,6 @@ namespace TextRPG
 
         public MonsterEncount(int CurrentDungeonLevel)
         {
-            EnemyDataManager.instance.Init();
-
             spawnMonsters = EnemyDataManager.instance.GetSpawnMonsters(CurrentDungeonLevel);
         }
     }
@@ -31,6 +29,11 @@ namespace TextRPG
     {
         protected Random random = new Random();
         
+        public DungeonManager()
+        {
+            EnemyDataManager.instance.Init();
+        }
+
         //랜덤 몬스터리스트 가져오는 함수
         public List<Enemy> GetMonsterEncount(int CurrentDungeonLevel)
         {

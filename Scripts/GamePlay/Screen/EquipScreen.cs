@@ -16,7 +16,7 @@ namespace TextRPG
                 MyActionText();
 
                 // 0. 뒤로 가기  장비 번호 : 장착/ 장착 해제
-                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.PlayerItemsCount())
+                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.PlayerItems.Count)
                 {
 
                     if (input == 0) 
@@ -24,7 +24,7 @@ namespace TextRPG
                         return;
                     }
 
-                    Item item = dm.GetPlayerItem(input - 1);
+                    Item item = dm.PlayerItems[input - 1];
                     Equip(item);
 
                     Console.Clear();
@@ -81,10 +81,10 @@ namespace TextRPG
             Console.WriteLine("보유 중인 아이템을 장착할 수 있습니다.\n");
 
             Console.WriteLine("[아이템 목록]");
-            for (int i = 0; i < dm.PlayerItemsCount(); i++)
+            for (int i = 0; i < dm.PlayerItems.Count; i++)
             {
                 Console.Write($"- {i + 1} ");
-                InventoryItemText(dm.GetPlayerItem(i));
+                InventoryItemText(dm.PlayerItems[i]);
             }
 
             Console.WriteLine();

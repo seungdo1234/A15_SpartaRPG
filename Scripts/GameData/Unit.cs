@@ -26,35 +26,42 @@ namespace TextRPG
             Health -= (damage - Def) > 0 ? (int)(damage - Def) : 1;           
         }
 
-        public bool IsCriticalHit()
+        public string? IsCriticalHit()
         {
             int critRate = random.Next(0, 101); // 치명타 확률
             if (critRate <= CriticalChance)
             {                
-                return true;
+                return "Critical!!";
             }
-            return false;
+            return null;
         }
 
-        public virtual bool Attack(Unit unit) // bool 반환형 = 치명타 여부
+        public virtual int GetDamagePerHit() // bool 반환형 = 치명타 여부
         {
             int atkRange = random.Next(0, 21); // 공격력 오차범위
-            float damage = Atk * (100 + (atkRange - 10)) * 0.01f; // 오차범위 적용한 데미지
+            float damage = Atk * (100 + (atkRange - 10)) * 0.01f; // 오차범위 적용한 데미지 
+            
+            return Convert.ToInt32(Math.Round(damage));
+        }
+
+        public virtual string Attack(Unit target) // bool 반환형 = 치명타 여부
+        {   
             int avoidRange = random.Next(0, 101); // 회피 범위
+            string result;
+            string? critStr = IsCriticalHit();
+            float critRate = critStr != null ? CriticalDamage : 1f;                        
+            int damage = GetDamagePerHit();
 
             if (avoidRange <= AvoidChance) // 회피 시 리턴
             {
-                return false;
+                return "Miss!!";
             }
 
-            if (IsCriticalHit())
-            {
-                unit.OnDamaged(Convert.ToInt32(Math.Round(damage * CriticalDamage)));
-                return true;
-            }
+            damage = Convert.ToInt32(Math.Round(damage * critRate));
+            target.OnDamaged(damage);
+            result = $"[데미지 {damage}] " + critRate;
 
-            unit.OnDamaged(Convert.ToInt32(Math.Round(damage)));
-            return false;
+            return result;
         }
 
         public virtual void CostMana(int cost)
