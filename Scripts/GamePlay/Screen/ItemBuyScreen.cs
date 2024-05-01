@@ -72,7 +72,7 @@ namespace TextRPG
             for (int i = 0; i < dm.ShopItems.Count; i++) // 판매 목록 출력
             {
                 Item item = dm.ShopItems[i];
-                string itemType = item.Itemtype == ItemTypes.WEAPON ? "공격력" : "방어력";
+                string itemType = item.Itemtype == EItemTypes.WEAPON ? "공격력" : "방어력";
                 string sell = item.IsSell ? "구매 완료" : $"{item.Gold} G";
                 Console.WriteLine($"- {i + 1} {item.ItemName}\t| {itemType} +{item.Value} |\t{item.Desc} | {sell}");
             }

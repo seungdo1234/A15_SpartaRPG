@@ -21,7 +21,7 @@ namespace TextRPG
             gm.Player = gm.SaveSystem.Load(playerName);
 
 
-            if(gm.Player.ePlayerClass == UnitType.DEFAULT) // 새로 생성한 플레이어 데이터라면
+            if(gm.Player.ePlayerClass == EUnitType.DEFAULT) // 새로 생성한 플레이어 데이터라면
             {
                 classSelectionScreen.ClassSelectionScreenOn(); // 직업 선택
             }
