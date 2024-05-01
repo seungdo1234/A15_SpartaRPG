@@ -3,13 +3,13 @@ namespace TextRPG
 {
     public struct Reward
     {
-        public Item dungeonRewardItem;
+        public Item dungeonRewardItem; // 던전 보상 추가 예정
         public int gold;
         public int exp;
 
         public Reward()
         {
-            dungeonRewardItem = new Item("낡은 검", EEquipItemType.WEAPON, 2, "쉽게 볼 수 있는 낡은 검 입니다.", 600);
+
             gold = 500;
             exp = 5;
         }

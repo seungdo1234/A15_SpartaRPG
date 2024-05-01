@@ -16,7 +16,7 @@ namespace TextRPG
                 MyActionText();
 
                 // 0. 뒤로 가기  장비 번호 : 장착/ 장착 해제
-                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.PlayerItems.Count)
+                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.PlayerEquipItems.Count)
                 {
 
                     if (input == 0) 
@@ -24,8 +24,8 @@ namespace TextRPG
                         return;
                     }
 
-                    Item item = dm.PlayerItems[input - 1];
-                    Equip(item);
+                    EquipItem equipItem = dm.PlayerEquipItems[input - 1];
+                    Equip(equipItem);
 
                     Console.Clear();
                 }
@@ -36,19 +36,19 @@ namespace TextRPG
             }
         }
 
-        private void Equip(Item item) // 장비 장착 함수
+        private void Equip(EquipItem equipItem) // 장비 장착 함수
         {
-            item.IsEquip = !item.IsEquip; // 선택한 장비 장착
+            equipItem.IsEquip = !equipItem.IsEquip; // 선택한 장비 장착
 
-            if (item.IsEquip) // 장비를 장착한 거라면
+            if (equipItem.IsEquip) // 장비를 장착한 거라면
             {
-                if (item.Itemtype == EEquipItemType.WEAPON) // 무기일 때
+                if (equipItem.EquipmenttType == EEquipItemType.WEAPON) // 무기일 때
                 {
                     if(gm.Player.EquipAtkItem != null)
                     {
                         gm.Player.EquipAtkItem.IsEquip = false;
                     }
-                    gm.Player.EquipAtkItem = item;
+                    gm.Player.EquipAtkItem = equipItem;
                 }
                 else // 방어구도 똑같이 동작
                 {
@@ -56,12 +56,12 @@ namespace TextRPG
                     {
                         gm.Player.EquipDefItem.IsEquip = false;
                     }
-                    gm.Player.EquipDefItem = item;
+                    gm.Player.EquipDefItem = equipItem;
                 }
             }
             else // 장착 해제
             {
-                if (item.Itemtype == EEquipItemType.WEAPON) // 장착 아이템, 장착 하고 있던 아이템 정보 초기화
+                if (equipItem.EquipmenttType == EEquipItemType.WEAPON) // 장착 아이템, 장착 하고 있던 아이템 정보 초기화
                 {
                     gm.Player.EquipAtkItem = null;
                 }
@@ -81,10 +81,10 @@ namespace TextRPG
             Console.WriteLine("보유 중인 아이템을 장착할 수 있습니다.\n");
 
             Console.WriteLine("[아이템 목록]");
-            for (int i = 0; i < dm.PlayerItems.Count; i++)
+            for (int i = 0; i < dm.PlayerEquipItems.Count; i++)
             {
                 Console.Write($"- {i + 1} ");
-                InventoryItemText(dm.PlayerItems[i]);
+                InventoryItemText(dm.PlayerEquipItems[i]);
             }
 
             Console.WriteLine();

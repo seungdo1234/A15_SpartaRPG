@@ -7,14 +7,14 @@ namespace TextRPG
     struct PlayerDatas // Json에 저장할 플레이어 데이터 구조체
     { 
         public Player player;
-        public List<Item> playerItems;
-        public List<Item> shopItems;
+        public List<EquipItem> playerItems;
+        public List<EquipItem> shopItems;
 
         public PlayerDatas()
         {
             player = GameManager.instance.Player;
-            playerItems = ItemDataManager.instance.PlayerItems;
-            shopItems = ItemDataManager.instance.ShopItems;
+            playerItems = ItemDataManager.instance.PlayerEquipItems;
+            shopItems = ItemDataManager.instance.ShopEquipItems;
         }
     }
 
@@ -44,18 +44,23 @@ namespace TextRPG
         public Player Load(string name)
         {
             string filePath = $"{path}\\{name}.json";
+            string itemJsonFilePath = Path.Combine(path, @"..\..\..\SaveData\ItemData.json");
+
+            // 전체 아이템 데이터 불러오기
+            string itemJsonData = File.ReadAllText(itemJsonFilePath); 
+            ItemDataManager.instance.SetItemDB(JsonConvert.DeserializeObject<List<EquipItem>>(itemJsonData));
 
             if (File.Exists(filePath)) // 파일이 존재하는지 -> 이미 데이터가 존재하는 지
             {
                 // 데이터가 존재한다면 해당 데이터를 읽어옴
-                string jsonData = File.ReadAllText(filePath);
+                string playerJsonData = File.ReadAllText(filePath);
 
                 // PlayerDatas 구조체로 역직렬화해서 텍스트를 데이터로 변환
-                PlayerDatas data = JsonConvert.DeserializeObject<PlayerDatas>(jsonData);
+                PlayerDatas playerData = JsonConvert.DeserializeObject<PlayerDatas>(playerJsonData);
 
                 // 불러온 플레이어 정보 저장
-                ItemDataManager.instance.SetAlItems(data.shopItems, data.playerItems);
-                return data.player;
+                ItemDataManager.instance.SetItems(playerData.shopItems, playerData.playerItems);
+                return playerData.player;
 
             }
             else // 데이터가 없다면
