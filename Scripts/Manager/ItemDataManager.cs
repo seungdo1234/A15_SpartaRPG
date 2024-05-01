@@ -4,6 +4,7 @@
     {
         public static ItemDataManager instance = new ItemDataManager();
 
+        // 장비 아이템 DB
         public List<EquipItem> EquipItemDB { get; private set; }
         // 플레이어, 상점 아이템 리스트
         public List<EquipItem> PlayerEquipItems {  get; private set; }
@@ -26,7 +27,7 @@
             ShopEquipItems= shopItems;
         }
 
-        public void SetItemDB(List<EquipItem> itemDB)
+        public void SetItemDB(List<EquipItem> itemDB) 
         {
             EquipItemDB = itemDB;
         }
