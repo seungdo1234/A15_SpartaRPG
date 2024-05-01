@@ -25,8 +25,8 @@ namespace TextRPG
             }
 
             damage = Convert.ToInt32(Math.Round(damage * skillRate * critRate));
-            target.OnDamaged(damage);
-            result = $"[데미지 {damage}] " + critRate;
+            result = target.OnDamaged(damage);
+            result += critStr;
 
             return result;
         }

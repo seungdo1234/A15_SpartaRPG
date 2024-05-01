@@ -42,7 +42,8 @@ namespace TextRPG
             switch (ePlayerClass)
             {
                 case EUnitType.WARRIOR:
-                    Health += 50; /// 수정이 필요함
+                    MaxHealth += 50; /// 수정이 필요함
+                    Health += 50;
                     Def += 5;
                     Skills.Add(new SkillData(0));
                     Skills.Add(new SkillData(1));
@@ -137,9 +138,11 @@ namespace TextRPG
             Def += 1;
         }
 
-        public override void OnDamaged(int damage) // 회피시 0
+        public override string OnDamaged(int damage) // 회피시 0
         {
-            Health -= (damage - GetDefValue()) > 0 ? (int)(damage - GetDefValue()) : 1;            
+            int endDamage = (damage - GetDefValue()) > 0 ? (int)(damage - GetDefValue()) : 1;
+            Health -= endDamage;
+            return $"[데미지 {endDamage}] ";
         }
 
         public override int GetDamagePerHit() // bool 반환형 = 치명타 여부
@@ -160,12 +163,12 @@ namespace TextRPG
 
             if (avoidRange <= AvoidChance) // 회피 시 리턴
             {
-                return "Miss!!";
+                return "Miss!! ";
             }
 
             damage = Convert.ToInt32(Math.Round(damage * critRate));
-            target.OnDamaged(damage);
-            result = $"[데미지 {damage}] " + critRate;
+            result = target.OnDamaged(damage);
+            result += critStr;
 
             return result;
         }
