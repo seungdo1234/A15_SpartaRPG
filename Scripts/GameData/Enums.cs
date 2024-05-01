@@ -1,13 +1,13 @@
 
 namespace TextRPG
 {
-    public enum UnitType { DEFAULT, WARRIOR, ARCHER, THIEF, MAGICIAN, ENEMY }
+    public enum EUnitType { DEFAULT, WARRIOR, ARCHER, THIEF, MAGICIAN, ENEMY }
 
-    public enum ItemTypes { DEFAULT, WEAPON, ARMOR }
+    public enum EItemType { DEFAULT, WEAPON, ARMOR }
 
-    public enum DungeonDifficulty { DEFAULT, EASY, NORMAL, HARD }
+    public enum EDungeonDifficulty { DEFAULT, EASY, NORMAL, HARD }
 
-    public enum DungeonResultType { DEFAULT, VICTORY, RETIRE }
+    public enum EDungeonResultType { DEFAULT, VICTORY, RETIRE }
 
-    public enum ItemRanks { DEFAULT, COMMON, RARE, EPIC }
+    public enum EItemRank { DEFAULT, COMMON, RARE, EPIC }
 }

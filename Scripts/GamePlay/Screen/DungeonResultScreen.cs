@@ -4,7 +4,7 @@ namespace TextRPG
     public class DungeonResultScreen : Screen
     {
 
-        private DungeonDifficulty dif; // 던전의 난이도
+        private EDungeonDifficulty dif; // 던전의 난이도
         private int prevHealth; // 던전 진행 전 체력
         private int prevExp; // 던전 진행 전 체력
         // private int prevLevel; // 던전 진행 전 Level
@@ -12,9 +12,9 @@ namespace TextRPG
         private Reward reward;
 
 
-        public void DungeonResultScreenOn(DungeonResultType resultType , DungeonDifficulty dif)
+        public void DungeonResultScreenOn(EDungeonResultType resultType , EDungeonDifficulty dif)
         {
-            if (resultType != DungeonResultType.RETIRE)
+            if (resultType != EDungeonResultType.RETIRE)
             {
                 this.dif = dif;
                 DungeonReward();
@@ -27,17 +27,17 @@ namespace TextRPG
 
                 switch (resultType)
                 {
-                    case DungeonResultType.VICTORY:
+                    case EDungeonResultType.VICTORY:
                         VictoryText();
                         break;
-                    case DungeonResultType.RETIRE:
+                    case EDungeonResultType.RETIRE:
                         RetireText();
                         break;
                 }
                 MyActionText();
 
                 // 1, 2, 3만 입력 받을 수 있게 함 
-                if (int.TryParse(Console.ReadLine(), out int input) && (input == 0 || (input == 1 && resultType == DungeonResultType.VICTORY)))
+                if (int.TryParse(Console.ReadLine(), out int input) && (input == 0 || (input == 1 && resultType == EDungeonResultType.VICTORY)))
                 {
                     if (input == 0) // 되돌아 가기
                     {

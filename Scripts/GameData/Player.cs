@@ -11,7 +11,7 @@ namespace TextRPG
         // 플레이어 경험치
         private int[] levelExp = new int[10] { 5, 7, 10, 12, 15, 20, 25, 30, 40, 50 }; // 레벨 별 경험치 통
 
-        public UnitType ePlayerClass { get;  set; }
+        public EUnitType ePlayerClass { get;  set; }
         public int Gold { get; set; }
         [JsonProperty] public int Exp { get; private set; }
         public Item EquipAtkItem { get; set; }
@@ -31,42 +31,54 @@ namespace TextRPG
             CriticalDamage = 1.6f;
             MaxMana = 100;
             Mana = MaxMana;
+            base.Skills = new List<SkillData>();
         }
 
-        public void ChangePlayerClass(UnitType ePlayerClass)
+        public void ChangePlayerClass(EUnitType ePlayerClass)
         {
             // 플레이어의 직업에 따라 추가스탯 배정
             this.ePlayerClass = ePlayerClass;
 
             switch (ePlayerClass)
             {
-                case UnitType.WARRIOR:
+                case EUnitType.WARRIOR:
                     Health += 50;
                     Def += 5;
-                    //PlayerSkills = new WarriorSkills();
+                    Skills.Add(new SkillData(0));
+                    Skills.Add(new SkillData(1));
+                    Skills.Add(new CrisisEvasion(2));                    
                     break;
-                case UnitType.ARCHER:
+                case EUnitType.ARCHER:
                     CriticalChance += 9;
                     CriticalDamage += 0.9f;
+                    Skills.Add(new SkillData(3));
+                    Skills.Add(new SkillData(4));
+                    Skills.Add(new WeaknessSniping(5));
                     break;
-                case UnitType.THIEF:
+                case EUnitType.THIEF:
                     AvoidChance += 10;
+                    Skills.Add(new SkillData(6));
+                    Skills.Add(new SkillData(7));
+                    Skills.Add(new Assassination(8));
                     break;
-                case UnitType.MAGICIAN:
+                case EUnitType.MAGICIAN:
                     MaxMana += 50;
                     Mana += 50;
+                    Skills.Add(new SkillData(9));
+                    Skills.Add(new SkillData(10));
+                    Skills.Add(new ChainLighting(11));
                     break;
             }
         }
 
-        public string GetPlayerClass(UnitType ePlayerClass) // 플레이어의 직업 별 이름 반환 
+        public string GetPlayerClass(EUnitType ePlayerClass) // 플레이어의 직업 별 이름 반환 
         {
             string playerClass = ePlayerClass switch
             {
-                UnitType.WARRIOR => "전사",
-                UnitType.ARCHER => "궁수",
-                UnitType.THIEF => "도적",
-                UnitType.MAGICIAN => "마법사",
+                EUnitType.WARRIOR => "전사",
+                EUnitType.ARCHER => "궁수",
+                EUnitType.THIEF => "도적",
+                EUnitType.MAGICIAN => "마법사",
                 _ => "직업이 존재하지 않습니다." // default
             };
 

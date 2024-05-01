@@ -1,0 +1,178 @@
+{
+  "0": {
+    "Name": "강베기",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "적 하나에게 무기로 강력한 일격을 날립니다.",
+    "UnitType": 1
+  },
+  "1": {
+    "Name": "가로베기",
+    "MaxTargetCount": 3,
+    "IsMultiTarget": true,
+    "ManaCost": 20,
+    "Content": "무기를 크게 휘둘러 최대 3명의 적을 공격합니다.",
+    "UnitType": 1
+  },
+  "2": {
+    "Name": "위기모면",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 30,
+    "Content": "적 하나에게 잃은 체력 비례 피해를 가격합니다.",
+    "UnitType": 1
+  },
+  "3": {
+    "Name": "일발필중",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "적 하나에게 강력한 한 발을 저격합니다.",
+    "UnitType": 2
+  },
+  "4": {
+    "Name": "일제사격",
+    "MaxTargetCount": 3,
+    "IsMultiTarget": true,
+    "ManaCost": 20,
+    "Content": "다수의 화살을 날려 적들을 공격합니다",
+    "UnitType": 2
+  },
+  "5": {
+    "Name": "급소저격",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 30,
+    "Content": "적의 약점을 노려 반드시 치명타를 적중시킵니다",
+    "UnitType": 2
+  },
+  "6": {
+    "Name": "약점베기",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "적의 약점을 간파해 공격합니다",
+    "UnitType": 3
+  },
+  "7": {
+    "Name": "그림자베기",
+    "MaxTargetCount": 3,
+    "IsMultiTarget": true,
+    "ManaCost": 20,
+    "Content": "그림자로 된 분신들을 소환해 다수의 적을 공격합니다",
+    "UnitType": 3
+  },
+  "8": {
+    "Name": "암살",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 30,
+    "Content": "체력 20% 이하의 적을 암살합니다",
+    "UnitType": 3
+  },
+  "9": {
+    "Name": "파이어볼",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "적에게 화염구를 날립니다",
+    "UnitType": 4
+  },
+  "10": {
+    "Name": "블리자드",
+    "MaxTargetCount": 3,
+    "IsMultiTarget": true,
+    "ManaCost": 20,
+    "Content": "전장에 눈보라를 생성해 적들을 공격합니다",
+    "UnitType": 4
+  },
+  "11": {
+    "Name": "체인라이트닝",
+    "MaxTargetCount": 2,
+    "IsMultiTarget": true,
+    "ManaCost": 30,
+    "Content": "전이되는 강력한 전격을 생성에 최대 2명의 적에게 타격합니다",
+    "UnitType": 4
+  },
+  "12": {
+    "Name": "앞니물기",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "목을 노려 평소보다 강하다.",
+    "UnitType": 5
+  },
+  "13": {
+    "Name": "달그림자",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "늑대의 암습은 도망칠 수 없다.",
+    "UnitType": 5
+  },
+  "14": {
+    "Name": "생자탐닉",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "산자의 정기를 갈취한다.",
+    "UnitType": 5
+  },
+  "15": {
+    "Name": "사망예고",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "당신이 죽길 기다리는 흐느낌이다.",
+    "UnitType": 5
+  },
+  "16": {
+    "Name": "시선고정",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "바라볼수록 그는 강해진다.",
+    "UnitType": 5
+  },
+  "17": {
+    "Name": "바다유혹",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "당신의 마음을 녹여 생존을 꾀한다.",
+    "UnitType": 5
+  },
+  "18": {
+    "Name": "흉내내기",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "당신은 혹시 하는 생각을 멈출수 없었다.",
+    "UnitType": 5
+  },
+  "19": {
+    "Name": "불태워라",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "당신께 꺼지지 않는 불을 선사한다.",
+    "UnitType": 5
+  },
+  "20": {
+    "Name": "짐승의왕",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "날짐승과 들짐승의 왕의 패기가 당신을 짓누른다.",
+    "UnitType": 5
+  },
+  "21": {
+    "Name": "시각갈취",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "질투는 당신의 눈을 멀게 한다.",
+    "UnitType": 5
+  }
+}
