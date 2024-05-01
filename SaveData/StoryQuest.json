@@ -1,0 +1,82 @@
+[
+  {
+    "QuestName": "걸음마를 떼다",
+    "CurrentProgress": 0,
+    "TotalProgress": 1,
+    "RewardGold": 100,
+    "RewardItem": "",
+    "QuestContent": "던전에 첫 발을 들인 것을 환영하오 낯선 이여."
+  },
+  {
+    "QuestName": "조금 성장했나?",
+    "CurrentProgress": 1,
+    "TotalProgress": 2,
+    "RewardGold": 200,
+    "RewardItem": "",
+    "QuestContent": "아직은 쉬운 난이도의 도전이 기다린다. \n하지만 방심은 죽음으로의 지름길."
+  },
+  {
+    "QuestName": "날개를 피다",
+    "CurrentProgress": 2,
+    "TotalProgress": 3,
+    "RewardGold": 300,
+    "RewardItem": "",
+    "QuestContent": "점점 강해지는 몬스터. \n지금까지의 경험을 살려 더욱 치열한 전투에 임하라."
+  },
+  {
+    "QuestName": "프로모션?",
+    "CurrentProgress": 3,
+    "TotalProgress": 4,
+    "RewardGold": 500,
+    "RewardItem": "",
+    "QuestContent": "아직도 장비가 없다고요? \n지금 바로 상점에 들르세요! \n*절찬리에 세일중!*"
+  },
+  {
+    "QuestName": "벌써 반이나!",
+    "CurrentProgress": 4,
+    "TotalProgress": 5,
+    "RewardGold": 700,
+    "RewardItem": "",
+    "QuestContent": "더 이상 초보 모험가라고 할 수 없는 중견 모험가가 된 당신. \n그대가 끝에 닿으려는 이유는 무엇인가?"
+  },
+  {
+    "QuestName": "불길한 예감",
+    "CurrentProgress": 5,
+    "TotalProgress": 6,
+    "RewardGold": 1000,
+    "RewardItem": "",
+    "QuestContent": "깊은 곳으로 나아갈수록, \n심연 아래 심연이 보일지니."
+  },
+  {
+    "QuestName": "높아지는 명성",
+    "CurrentProgress": 6,
+    "TotalProgress": 7,
+    "RewardGold": 1200,
+    "RewardItem": "",
+    "QuestContent": "모든 능력을 극대화하라. \n전투는 더욱 치열해지며, \n한 번의 실수가 승패를 좌우한다."
+  },
+  {
+    "QuestName": "이래도 버텨?",
+    "CurrentProgress": 7,
+    "TotalProgress": 8,
+    "RewardGold": 1500,
+    "RewardItem": "",
+    "QuestContent": "의지의 시험을 받으며, \n흔들리지 않는 마음을 갖춘 자만이 승리할 수 있다. \n이겨내라, 어떠한 상황에서도."
+  },
+  {
+    "QuestName": "다가오는 위험",
+    "CurrentProgress": 8,
+    "TotalProgress": 9,
+    "RewardGold": 2000,
+    "RewardItem": "",
+    "QuestContent": "최고점에 도달하기 직전, 모든 것이 시험되는 단계다. \n가장 강한 적들이 기다린다.\n부디, 이번에도 살아남아 앞으로 나아가길."
+  },
+  {
+    "QuestName": "위대한 모험가",
+    "CurrentProgress": 9,
+    "TotalProgress": 10,
+    "RewardGold": 4000,
+    "RewardItem": "",
+    "QuestContent": "마지막 보스가 당신을 기다리고 있다. \n나아갈 것인가 포기할 것인가? \n전설이 되겠나, 포기할텐가?"
+  }
+]

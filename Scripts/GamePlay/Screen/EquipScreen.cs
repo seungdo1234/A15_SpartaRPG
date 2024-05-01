@@ -42,7 +42,7 @@ namespace TextRPG
 
             if (item.IsEquip) // 장비를 장착한 거라면
             {
-                if (item.Itemtype == EItemType.WEAPON) // 무기일 때
+                if (item.Itemtype == EEquipItemType.WEAPON) // 무기일 때
                 {
                     if(gm.Player.EquipAtkItem != null)
                     {
@@ -61,7 +61,7 @@ namespace TextRPG
             }
             else // 장착 해제
             {
-                if (item.Itemtype == EItemType.WEAPON) // 장착 아이템, 장착 하고 있던 아이템 정보 초기화
+                if (item.Itemtype == EEquipItemType.WEAPON) // 장착 아이템, 장착 하고 있던 아이템 정보 초기화
                 {
                     gm.Player.EquipAtkItem = null;
                 }
