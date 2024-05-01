@@ -76,7 +76,6 @@ namespace TextRPG
         public void dungeonBattle()
         {
             Console.Clear();
-            currentEnemyIndex = 0;
 
             while (enemies.Any(e => e.Health > 0) && player.Health > 0)
             {
@@ -84,24 +83,11 @@ namespace TextRPG
                 int targetIndex = ChooseEnemy();
                 if (targetIndex == -1) continue;
 
-                enemy = enemies[targetIndex];
+                PlayerTurn(enemies[targetIndex]);
 
-                while (enemy.Health > 0 && player.Health > 0)
+                foreach (var enemy in enemies.Where(e => e.Health > 0))
                 {
-                    string choice;
-                    do
-                    {
-                        Console.WriteLine("1. 공격");
-                        Console.WriteLine(">> 원하시는 행동을 입력해 주세요");
-                        choice = Console.ReadLine();
-                    } while (choice != "1");
-
-                    PlayerTurn(enemy);
-                    if (enemy.Health > 0)
-                    {
-                        EnemyTurn(enemy);
-                    }
-
+                    EnemyTurn(enemy);
                     if (player.Health <= 0)
                     {
                         BettlePlayerLoseEnd();
@@ -142,9 +128,9 @@ namespace TextRPG
 
         private void PlayerTurn(Enemy enemy)
         {
-            Console.WriteLine();
-            Console.WriteLine($"{player.Name}의 공격!");
-
+            // 선택한 몬스터의 이름을 포함하여 공격 메시지 출력
+            Console.WriteLine($"{player.Name}의 {enemy.Name}를 향한 공격!");
+            
             if (player.Health <= 0)
             {
                 BettlePlayerLoseEnd();
@@ -153,6 +139,7 @@ namespace TextRPG
 
             string attackResult = player.Attack(enemy);
             Console.WriteLine(attackResult);
+            Thread.Sleep(2000);
 
             if (enemy.Health <= 0)
             {
@@ -183,7 +170,7 @@ namespace TextRPG
             }
             else
             {
-                Console.Clear();
+                Thread.Sleep(2000);
             }
         }
 
@@ -213,7 +200,12 @@ namespace TextRPG
         private void BettlePlayerLoseEnd()
         {
             Console.WriteLine($"{player.Name}이(가) 패배 하였습니다. 마을로 돌아갑니다.");
-            Thread.Sleep(500);
+            int RestoreHP = player.MaxHealth;
+
+            // 임시 회복
+            player.RecoveryHealth(RestoreHP);
+            Thread.Sleep(2000);
+
             PlayerDied?.Invoke();
         }
     }

@@ -60,6 +60,10 @@ namespace TextRPG
                             restScreen.RestScreenOn();
                             break;
 
+                        case 6:
+                            dungeonBattle.CheckforBattle();
+                            break;
+
                     }
                     Console.Clear();
                 }

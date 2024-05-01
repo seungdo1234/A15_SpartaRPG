@@ -21,7 +21,7 @@ namespace TextRPG
         public Player(string name)
         {
             Name = name;
-            Level = 10;
+            Level = 1;
             Atk = 10;
             Def = 5;
             MaxHealth = 100;
