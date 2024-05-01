@@ -1,4 +1,5 @@
 ﻿using System.Reflection.Emit;
+using System.Linq;
 
 namespace TextRPG
 {
@@ -7,12 +8,9 @@ namespace TextRPG
         public Player player;
         private Enemy enemy;
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
-
-
+        
         // 던전 몬스터 랜덤 추출
-        private DungeonResultScreen dungeonResultScreen;
         private int currentEnemyIndex;
-        private DungeonManager dungeonManager; // 던전 관리자 추가
         private Random random = new Random();
 
         // 이벤트로 사망 처리
@@ -22,12 +20,12 @@ namespace TextRPG
         public DungeonBattle()
         {
             player = new Player("Tester");
-            dungeonManager = new DungeonManager(); // 인스턴스 생성
-            enemies = new List<Enemy>();  // 몬스터를 저장할 리스트 초기화
+            enemies = new List<Enemy>().ToList(); ;  // 몬스터를 저장할 리스트 초기화
         }
 
         public void CheckforBattle()
         {
+
             while (true)
             {
                 Console.WriteLine("정말 던전에 진입하시겠습니까? 끝을 보시거나, 죽기 전까지 탈출하실 수 없습니다.");
@@ -40,6 +38,7 @@ namespace TextRPG
                 switch(choice)
                 {
                     case "1":
+                        enemies.Clear();  // 이전 몬스터 목록을 클리어
                         AppearEnemy();
                         if (enemies.Any())  // 몬스터가 있는지 확인 후 전투 시작
                         {
@@ -60,8 +59,7 @@ namespace TextRPG
 
         public void AppearEnemy()
         {
-            enemies.Clear();  // 이전 몬스터 목록을 클리어
-            int currentDungeonLevel = player.Level;  // 플레이어 레벨을 기준으로 던전 레벨 결정
+            int currentDungeonLevel = player.Level; // 임시로 집어 넣음, 원래는 던전 난이도를 집어 넣어야함
             enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel);  // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기
 
             foreach (var enemy in enemies)
@@ -108,7 +106,6 @@ namespace TextRPG
                     if (player.Health <= 0)
                     {
                         BettlePlayerLoseEnd();
-                        return;  // 전투 종료
                     }
                 }
 
@@ -116,7 +113,6 @@ namespace TextRPG
                 if (currentEnemyIndex >= enemies.Count)
                 {
                     Console.WriteLine("모든 적이 패배했습니다. 마을로 돌아갑니다.");
-                    return; // 모든 적이 사망했으므로 메소드 종료
                 }
             }
         }
@@ -161,7 +157,6 @@ namespace TextRPG
                 {
                     Console.WriteLine($"{player.Name}은(는) 사망했습니다!");
                     BettlePlayerLoseEnd();
-                    return; // 플레이어가 사망한 경우 전투 종료
                 }
             }
         }

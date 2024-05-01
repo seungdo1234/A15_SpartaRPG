@@ -3,7 +3,7 @@ namespace TextRPG
 {
     public class Enemy : Unit
     {
-        public List<EnemySkill> SkillList = new List<EnemySkill>();
+        public List<EnemySkill> SkillList = new List<EnemySkill>(); // 지움 필요
 
         public Enemy(string Name, int Level, float Atk, float Def,
             int MaxHealth, int AvoidChance = 10, int CriticalChance = 10, float CriticalDamage = 1.6f)
