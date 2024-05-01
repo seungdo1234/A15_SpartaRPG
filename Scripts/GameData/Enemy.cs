@@ -3,7 +3,7 @@ namespace TextRPG
 {
     public class Enemy : Unit
     {
-        private List<EnemySkill> SkillList {  get; set; }
+        private List<EnemySkill> SkillList {  get; set; } = new List<EnemySkill>();
 
         public Enemy()
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,10 +23,13 @@ namespace TextRPG
             MonsterDB = new List<Enemy>();
             SpawnMonsters = new List<Enemy>();
 
-            
+            string jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\SaveData\Enemy.json");
+            string jsonText = File.ReadAllText(jsonFilePath);
+
+            MonsterDB = JsonConvert.DeserializeObject<List<Enemy>>(jsonText);
         }
 
-        
+
         public List<Enemy> GetSpawnMonsters(int CurrentDungeonLevel)
         {
             int totalLevelLimit = CurrentDungeonLevel * 2;
