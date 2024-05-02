@@ -32,7 +32,7 @@ namespace TextRPG
                             Console.WriteLine("< 사냥 퀘스트 >       ");
                             break;
                         case 3:
-                            Console.WriteLine("< 몬스터 도감 >       ");
+                            Console.WriteLine("< 퀘스트 아카이브       ");
                             break;
                         //case 4:
                         //    Console.WriteLine("< 수집한 장비 업적     ");
@@ -73,7 +73,12 @@ namespace TextRPG
                                 Console.WriteLine("                     ");
                             }
                             break;
-                        case ConsoleKey.D0:
+                        case ConsoleKey.D0: //알파벳 위의 0
+                            isExit = true;
+                            IsEnterKey = true;
+                            page = 0;
+                            break;
+                        case ConsoleKey.NumPad0:
                             isExit = true;
                             IsEnterKey = true;
                             page = 0;
@@ -97,8 +102,8 @@ namespace TextRPG
                         break;
                     case 3:
                         break;
-                    case 4:
-                        break;
+                    //case 4:
+                    //    break;
                     default:
                         break;
                 }
@@ -168,7 +173,6 @@ namespace TextRPG
                     Thread.Sleep(1000);
                 }
             }
-            
         }
 
         private void MonsterQuestText()
@@ -264,7 +268,7 @@ namespace TextRPG
                             gm.Player.Gold += q.RewardGold;
                             Console.WriteLine($"보상을 수령했습니다. +{q.RewardGold} G");
                             gm.QuestManager.QuestSaver[1, 0]++;
-                            gm.QuestManager.QuestSaver[1, 1] = -1; 
+                            gm.QuestManager.QuestSaver[1, 1] = -1;
                         }
                         else if (q.CurrentProgress < 0)
                         {
