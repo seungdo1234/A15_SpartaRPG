@@ -43,7 +43,7 @@ namespace TextRPG
             string result;
             string? critStr = caster.IsCriticalHit();
             float critRate = critStr != null ? caster.CriticalDamage : 1f;             
-            float skillRate = IsMultiTarget ? 2 : 1.5f;            
+            float skillRate = IsMultiTarget ? 1.5f : 2f;            
             int damage = caster.GetDamagePerHit();
                                     
             damage = Convert.ToInt32(Math.Round(damage * skillRate * critRate));
