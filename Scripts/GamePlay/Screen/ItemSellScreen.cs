@@ -28,14 +28,9 @@ namespace TextRPG
 
                     if (item.IsEquip) // 장착 중인 아이템을 팔 경우 장착 해제
                     {
-                        if(item.EquipmenttType == EEquipItemType.WEAPON)
-                        {
-                            gm.Player.EquipAtkItem = null;
-                        }
-                        else
-                        {
-                            gm.Player.EquipDefItem = null;
-                        }
+                        gm.Player.EquipItemFlag &= ~item.EquipmenttType;
+                        item.IsEquip = !item.IsEquip;
+                        gm.Player.SwitchingEquipItem(item);
                     }
 
                     gm.Player.Gold += (int)((float)item.Gold * 0.8f); // 골드 ++

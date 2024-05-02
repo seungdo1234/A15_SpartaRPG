@@ -38,38 +38,33 @@ namespace TextRPG
 
         private void Equip(EquipItem equipItem) // 장비 장착 함수
         {
-            equipItem.IsEquip = !equipItem.IsEquip; // 선택한 장비 장착
+            //equipItem.IsEquip = !equipItem.IsEquip; // 선택한 장비 장착
 
-            if (equipItem.IsEquip) // 장비를 장착한 거라면
+            List<EquipItem> list = dm.PlayerEquipItems.FindAll(x => x.IsEquip); // 장착중인 아이템 찾기
+
+            // 장비를 장착 중 일때           
+            if (equipItem.IsEquip)
             {
-                if (equipItem.EquipmenttType == EEquipItemType.WEAPON) // 무기일 때
-                {
-                    if(gm.Player.EquipAtkItem != null)
-                    {
-                        gm.Player.EquipAtkItem.IsEquip = false;
-                    }
-                    gm.Player.EquipAtkItem = equipItem;
-                }
-                else // 방어구도 똑같이 동작
-                {
-                    if (gm.Player.EquipDefItem != null)
-                    {
-                        gm.Player.EquipDefItem.IsEquip = false;
-                    }
-                    gm.Player.EquipDefItem = equipItem;
-                }
+                equipItem.IsEquip = !equipItem.IsEquip;
+                gm.Player.EquipItemFlag &= ~equipItem.EquipmenttType;
+                gm.Player.SwitchingEquipItem(equipItem);
+                
             }
-            else // 장착 해제
+            // 장비를 장착 중이지 않을 때
+            else
             {
-                if (equipItem.EquipmenttType == EEquipItemType.WEAPON) // 장착 아이템, 장착 하고 있던 아이템 정보 초기화
+                equipItem.IsEquip = !equipItem.IsEquip;
+                gm.Player.EquipItemFlag |= equipItem.EquipmenttType;
+                gm.Player.SwitchingEquipItem(equipItem);
+                foreach (EquipItem g in list)
                 {
-                    gm.Player.EquipAtkItem = null;
+                    if (equipItem.EquipmenttType == g.EquipmenttType)
+                    {
+                        g.IsEquip = false;
+                        gm.Player.SwitchingEquipItem(g);
+                    }
                 }
-                else
-                {
-                    gm.Player.EquipDefItem = null;
-                }
-            }   
+            } 
         }
 
         // 장비 장착 텍스트 출력

@@ -2,8 +2,17 @@
 namespace TextRPG
 {
     public enum EUnitType { DEFAULT, WARRIOR, ARCHER, THIEF, MAGICIAN, ENEMY }
-    
-    public enum EEquipItemType { DEFAULT, WEAPON, OFFHAND , BODYARMOR , HELMET, BOOTS }
+
+    [Flags]
+    public enum EEquipItemType
+    {
+        DEFAULT = 0, 
+        WEAPON = 1 << 1,
+        OFFHAND = 1 << 2, 
+        BODYARMOR = 1 << 3, 
+        HELMET = 1 << 4, 
+        BOOTS = 1 << 5
+    }
 
     public enum EDungeonDifficulty { DEFAULT, EASY, NORMAL, HARD }
 
