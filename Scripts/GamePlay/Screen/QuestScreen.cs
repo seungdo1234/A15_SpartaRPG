@@ -86,6 +86,7 @@ namespace TextRPG
                 switch (page)
                 {
                     case 1:
+                        StoryQuestText();
                         break;
                     case 2:
                         break;
@@ -101,27 +102,40 @@ namespace TextRPG
 
         private void StoryQuestText()
         {
-            Console.Clear();
-            Console.WriteLine("Story Quest!!\n");
-
-            Quest q = gm.QuestManager.GetCurrentStoryQuest();
-
-            Console.WriteLine(q.QuestName + "\n");
-            Console.WriteLine();
-            Console.WriteLine(q.QuestContent + "\n");
-            Console.WriteLine($"-스테이지 {q.TotalProgress} 깨기 ({q.CurrentProgress}/{q.TotalProgress})\n");
-            Console.WriteLine("-보상-");
-
-            if (q.RewardItem != null)
+            while (true)
             {
-                Console.WriteLine(q.RewardItem.ItemName);
-            }
-            if (q.RewardGold != null)
-            {
-                Console.WriteLine($"{q.RewardGold} G");
-            }
+                Console.Clear();
+                Console.WriteLine("Story Quest!!\n");
 
-            Console.WriteLine("\n\n");
+                Quest q = gm.QuestManager.GetCurrentStoryQuest();
+
+                Console.WriteLine(q.QuestName + "\n");
+                Console.WriteLine();
+                Console.WriteLine(q.QuestContent + "\n");
+                Console.WriteLine($"-스테이지 {q.TotalProgress} 깨기");
+                Console.WriteLine("-보상-");
+
+                if (q.RewardItem != null)
+                {
+                    Console.WriteLine(q.RewardItem.ItemName);
+                }
+                if (q.RewardGold != null)
+                {
+                    Console.WriteLine($"{q.RewardGold} G");
+                }
+
+                Console.WriteLine("\n");
+
+                if (q.CurrentProgress == q.TotalProgress)
+                {
+                    Console.WriteLine("1. 보상 받기");
+                }
+
+                Console.WriteLine("0. 돌아가기");
+
+                Console.ReadKey();
+            }
+            
         }
     }
 }

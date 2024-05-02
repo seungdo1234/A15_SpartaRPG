@@ -18,9 +18,9 @@ namespace TextRPG.Scripts
             string jsonFilePath;
             string jsonText;
 
-            QuestSaver = new int[1, 2];
-            QuestSaver[0, 0] = 1;
-            QuestSaver[0, 1] = 0;
+            QuestSaver = new int[4, 2]; //왼쪽: 퀘스트 타입. 오른쪽: 퀘스트번호, currentProgress
+            QuestSaver[0, 0] = 0;   //임시: 이번 퀘스트 넘버.
+            QuestSaver[0, 1] = 0;   //임시: 클리어한 최대 스테이지 번호.
 
             //스토리 퀘스트 리스트
             StoryQuest = new List<Quest>();
@@ -32,7 +32,7 @@ namespace TextRPG.Scripts
 
         public Quest GetCurrentStoryQuest()
         {
-            StoryQuest[0].CurrentProgress = QuestSaver[0, 1];
+            StoryQuest[QuestSaver[0,0]].CurrentProgress = QuestSaver[0, 1];
 
             return StoryQuest[QuestSaver[0,0]];
         }
