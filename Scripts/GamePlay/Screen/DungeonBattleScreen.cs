@@ -72,7 +72,8 @@ namespace TextRPG
                 int targetIndex = ChooseEnemy();
                 if (targetIndex == -1) continue;
 
-                PlayerAction(enemies[targetIndex]);
+                int actionResult = PlayerAction(enemies[targetIndex]);
+                if (actionResult == -1) continue;
 
                 if (isEnd)
                 {
@@ -97,49 +98,74 @@ namespace TextRPG
 
         private int ChooseEnemy()
         {
-            Console.WriteLine("공격할 몬스터를 선택하세요:");
-            for (int i = 0; i < enemies.Count; i++)
+            while (true)
             {
-                if (enemies[i].Health > 0)
+                Console.WriteLine("공격할 몬스터를 선택하세요:");
+                for (int i = 0; i < enemies.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. {enemies[i].Name} (HP: {enemies[i].Health}/{enemies[i].MaxHealth})");
+                    if (enemies[i].Health > 0)
+                    {
+                        Console.WriteLine($"{i + 1}. {enemies[i].Name} (HP: {enemies[i].Health}/{enemies[i].MaxHealth})");
+                    }
                 }
-            }
 
-            Console.Write("\n>>  ");
-            
-            string input = Console.ReadLine();
-            int selected = int.Parse(input) - 1;
-            if (selected < 0 || selected >= enemies.Count || enemies[selected].Health <= 0)
-            {
-                Console.WriteLine("잘못된 선택입니다.");
-                return -1;
+                Console.Write("\n>>  ");
+
+                string input = Console.ReadLine();
+
+                // 입력이 공백이거나 null인 경우
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
+                    continue;
+                }
+
+                // 숫자로 변환할 수 없는 경우
+                if (!int.TryParse(input, out int selected))
+                {
+                    Console.WriteLine("숫자를 입력하세요.");
+                    continue;
+                }
+
+                selected -= 1; // 선택한 몬스터의 인덱스를 계산
+
+                // 유효한 선택이 아닌 경우
+                if (selected < 0 || selected >= enemies.Count || enemies[selected].Health <= 0)
+                {
+                    Console.WriteLine("잘못된 선택입니다.");
+                    continue;
+                }
+
+                return selected; // 유효한 선택일 경우 선택한 몬스터의 인덱스를 반환
             }
-            return selected;
         }
 
-        private void PlayerAction(Enemy enemy)
+        private int PlayerAction(Enemy enemy)
         {
-            Console.WriteLine();
-            Console.WriteLine("\n행동을 선택하세요:");
-            Console.WriteLine("1. 기본 공격");
-            Console.WriteLine("2. 스킬 사용\n");
-            MyActionText();
-
-
-            string choice = Console.ReadLine();
-
-            switch (choice)
+            while (true)
             {
-                case "1":
-                    PlayerTurn(enemy);
-                    break;
-                case "2":
-                    UseSkill(enemy);
-                    break;
-                default:
-                    Console.WriteLine("잘못된 선택입니다.");
-                    break;
+                Console.WriteLine("\n행동을 선택하세요:");
+                Console.WriteLine("0. 다른 적 선택");
+                Console.WriteLine("1. 기본 공격");
+                Console.WriteLine("2. 스킬 사용\n");
+                MyActionText();
+
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "0":
+                        return -1;  // 다른 적을 선택하게 하기 위해 특별한 값을 반환
+                    case "1":
+                        PlayerTurn(enemy);
+                        return 0;
+                    case "2":
+                        UseSkill(enemy);
+                        return 0;
+                    default:
+                        Console.WriteLine("잘못된 선택입니다.");
+                        continue;
+                }
             }
         }
 
@@ -150,7 +176,7 @@ namespace TextRPG
 
             if (gm.Player.Health <= 0)
             {
-                BettleEnd(false);
+                BattleEnd(false);
                 return;
             } 
 
@@ -160,7 +186,7 @@ namespace TextRPG
 
             if (enemy.Health <= 0)
             {
-                BettleEnd( true);
+                BattleEnd( true);
                 Console.WriteLine($"[{enemy.Name}이(가) 쓰러졌습니다.]");
             }
             else
@@ -171,62 +197,69 @@ namespace TextRPG
 
         private void UseSkill(Enemy enemy)
         {
-            // 플레이어가 보유한 스킬 목록 출력
-            Console.WriteLine("사용할 스킬을 선택하세요:");
-            for (int i = 0; i < gm.Player.Skills.Count; i++)
+            while (true)
             {
-                var skill = gm.Player.Skills[i];
-                Console.WriteLine($"{i + 1}. {skill.Name} (MP: {skill.ManaCost}) - {skill.Content}");
+                // 플레이어가 보유한 스킬 목록 출력
+                Console.WriteLine("사용할 스킬을 선택하세요:");
+                for (int i = 0; i < gm.Player.Skills.Count; i++)
+                {
+                    var skill = gm.Player.Skills[i];
+                    Console.WriteLine($"{i + 1}. {skill.Name} (MP: {skill.ManaCost}) - {skill.Content}");
+                }
+
+                // 사용자 입력을 받아 선택된 스킬을 확인
+                string input = Console.ReadLine();
+                if (!int.TryParse(input, out int selectedSkillIndex))
+                {
+                    Console.WriteLine("숫자로만 입력해주세요.");
+                    continue;
+                }
+
+                selectedSkillIndex -= 1;
+                if (selectedSkillIndex < 0 || selectedSkillIndex >= gm.Player.Skills.Count)
+                {
+                    Console.WriteLine("잘못된 선택입니다.");
+                    continue;
+                }
+
+                SkillData selectedSkill = gm.Player.Skills[selectedSkillIndex];
+
+                // 마나가 부족하면 스킬 사용 불가
+                if (gm.Player.Mana < selectedSkill.ManaCost)
+                {
+                    Console.WriteLine("마나가 부족합니다.");
+                    continue;
+                }
+
+                // 마나 소모하고 스킬 사용
+                gm.Player.CostMana(selectedSkill.ManaCost);
+                // 스킬 사용 로직
+                UseSelectedSkill(selectedSkill, enemy);
+
+                break; // 스킬을 성공적으로 사용했으면 반복문을 종료
             }
+        }
 
-            // 사용자 입력을 받아 선택된 스킬을 확인
-            string input = Console.ReadLine();
-            int selectedSkillIndex = int.Parse(input) - 1;
-            if (selectedSkillIndex < 0 || selectedSkillIndex >= gm.Player.Skills.Count)
-            {
-                Console.WriteLine("잘못된 선택입니다.");
-                return;
-            }
-
-            SkillData selectedSkill = gm.Player.Skills[selectedSkillIndex];
-
-            // 마나가 부족하면 스킬 사용 불가
-            if (gm.Player.Mana < selectedSkill.ManaCost)
-            {
-                Console.WriteLine("마나가 부족합니다.");
-                return;
-            }
-
-            // 마나 소모하고 스킬 사용
-            gm.Player.CostMana(selectedSkill.ManaCost);
-
-            // 다중 대상 스킬인지 확인
-            if (selectedSkill.IsMultiTarget)
+        private void UseSelectedSkill(SkillData skill, Enemy target)
+        {
+            if (skill.IsMultiTarget)
             {
                 Console.WriteLine("다중 대상 스킬 사용 중...");
-                // 다중 공격 대상에 대한 로직 작성 (예시: MaxTargetCount까지)
                 int targetsHit = 0;
-                foreach (var target in enemies)
+                foreach (var enemy in enemies.Where(e => e.Health > 0))
                 {
-                    if (target.Health > 0)
-                    {
-                        // 공격받은 대상의 이름을 함께 출력
-                        Console.WriteLine($"{target.Name}을(를) 공격합니다...");
-                        string skillResult = selectedSkill.CastSkill(gm.Player, target);
-                        Console.WriteLine(skillResult);
-                        Thread.Sleep(2000);
+                    Console.WriteLine($"{enemy.Name}을(를) 공격합니다...");
+                    string skillResult = skill.CastSkill(gm.Player, enemy);
+                    Console.WriteLine(skillResult);
+                    Thread.Sleep(2000);
 
-                        if (++targetsHit >= selectedSkill.MaxTargetCount)
-                        {
-                            break;
-                        }
-                    }
+                    if (++targetsHit >= skill.MaxTargetCount)
+                        break;
                 }
             }
             else
             {
-                // 단일 대상 스킬 사용
-                string skillResult = selectedSkill.CastSkill(gm.Player, enemy);
+                string skillResult = skill.CastSkill(gm.Player, target);
                 Console.WriteLine(skillResult);
                 Thread.Sleep(2000);
             }
@@ -234,7 +267,7 @@ namespace TextRPG
             // 남은 적이 없으면 전투 승리 처리
             if (enemies.All(e => e.Health <= 0))
             {
-                BettleEnd(true);
+                BattleEnd(true);
             }
             else
             {
@@ -247,7 +280,7 @@ namespace TextRPG
         {
             if (enemy.Health <= 0)
             {
-                BettleEnd(true);
+                BattleEnd(true);
                 return;
             }
 
@@ -260,7 +293,7 @@ namespace TextRPG
 
             if (gm.Player.Health <= 0)
             {
-                BettleEnd(false);
+                BattleEnd(false);
             }
             else
             {
@@ -283,7 +316,7 @@ namespace TextRPG
             Console.WriteLine($"MP {gm.Player.Mana}/{gm.Player.MaxMana}");
         }
 
-        private void BettleEnd(bool isWin)
+        private void BattleEnd(bool isWin)
         {
             isEnd = true;
             this.isWin = isWin;
