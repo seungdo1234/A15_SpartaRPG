@@ -88,7 +88,7 @@ namespace TextRPG
             {
                 EquipItem equipItem = dm.ShopEquipItems[i];
 
-                Console.Write($"- {i + 1} {equipItem.ItemName} ({equipItem.GetEquipItemClassName()})\t| ");
+                Console.Write($"- {i + 2} {equipItem.ItemName} ({equipItem.GetEquipItemClassName()})\t| ");
 
 
                 if (equipItem.AtkValue != 0)
