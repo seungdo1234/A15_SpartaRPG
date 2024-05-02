@@ -14,7 +14,7 @@ namespace TextRPG
                 MyActionText();
 
                 // 0: 뒤로가기  아이템 번호 : 구매
-                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.PlayerItems.Count)
+                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.PlayerEquipItems.Count)
                 {
 
                     if (input == 0)
@@ -22,13 +22,13 @@ namespace TextRPG
                         return;
                     }
 
-                    Item item = dm.PlayerItems[input - 1];
+                    EquipItem item = dm.PlayerEquipItems[input - 1];
 
                     item.IsSell = false; // 판매
 
                     if (item.IsEquip) // 장착 중인 아이템을 팔 경우 장착 해제
                     {
-                        if(item.Itemtype == EEquipItemType.WEAPON)
+                        if(item.EquipmenttType == EEquipItemType.WEAPON)
                         {
                             gm.Player.EquipAtkItem = null;
                         }
@@ -64,13 +64,29 @@ namespace TextRPG
 
             Console.WriteLine();
 
-            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("[장비 목록]");
 
-            for (int i = 0; i < dm.PlayerItems.Count; i++) // 판매 목록 출력
+            for (int i = 0; i < dm.PlayerEquipItems.Count; i++) // 판매 목록 출력
             {
-                Item item = dm.PlayerItems[i];
-                string itemType = item.Itemtype == EEquipItemType.WEAPON ? "공격력" : "방어력";
-                Console.WriteLine($"- {i + 1} {item.ItemName}\t| {itemType} +{item.Value} |\t{item.Desc} | {(int)((float)item.Gold * 0.8f)} G");
+                EquipItem equipItem = dm.PlayerEquipItems[i];
+
+                string equip = equipItem.IsEquip ? "[E]" : "";
+
+                Console.Write($"- {i + 1} {equip}{equipItem.ItemName} ({equipItem.GetEquipItemClassName()})\t| ");
+
+
+                if (equipItem.AtkValue != 0)
+                {
+                    Console.Write($"공격력 {equipItem.AtkValue} ");
+                }
+
+                if (equipItem.DefValue != 0)
+                {
+                    Console.Write($"방어력 {equipItem.DefValue} ");
+                }
+
+                Console.WriteLine($"|\t{equipItem.Desc} | {MathF.Floor((float)equipItem.Gold * 0.8f)} G ");
+
             }
 
             Console.WriteLine();

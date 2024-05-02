@@ -7,6 +7,7 @@ namespace TextRPG
         // 상태 보기 
         public void StatusScreenOn()
         {
+
             Console.Clear();
 
             while (true)
@@ -50,14 +51,14 @@ namespace TextRPG
             Console.Write($"공격력 : {gm.Player.GetAtkValue():F1}");
             if (gm.Player.EquipAtkItem != null )
             {
-                Console.Write($" (+{gm.Player.EquipAtkItem.Value:F1})");
+        //        Console.Write($" (+{gm.Player.EquipAtkItem.Value:F1})");
             }
             Console.WriteLine();
 
             Console.Write($"방어력 : {gm.Player.GetDefValue():F1}");
             if (gm.Player.EquipDefItem != null)
             {
-                Console.Write($" (+{gm.Player.EquipDefItem.Value:F1})");
+       //        Console.Write($" (+{gm.Player.EquipDefItem.Value:F1})");
             }
             Console.WriteLine("\n");
 

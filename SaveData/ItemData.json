@@ -1,0 +1,582 @@
+[
+  {
+    "UnitType": 0,
+    "ItemRank": 1,
+    "ItemName": "조잡한 갑옷",
+    "Itemtype": 3,
+    "AtkValue": 0,
+    "DefValue": 1,
+    "Desc": "낮은 품질의 재료로 만들어진 조잡한 갑옷입니다.",
+    "Gold": 300
+  },
+  {
+    "UnitType": 0,
+    "ItemRank": 1,
+    "ItemName": "낡은 갑옷",
+    "Itemtype": 3,
+    "AtkValue": 0,
+    "DefValue": 3,
+    "Desc": "오랜 사용으로 인해 마모되고 손상된 갑옷입니다.",
+    "Gold": 600
+  },
+  {
+    "UnitType": 0,
+    "ItemRank": 1,
+    "ItemName": "낡은 헬멧",
+    "Itemtype": 4,
+    "AtkValue": 0,
+    "DefValue": 1.5,
+    "Desc": "오랜 사용으로 인해 마모되고 손상된 헬멧입니다.",
+    "Gold": 300
+  },
+  {
+    "UnitType": 0,
+    "ItemRank": 1,
+    "ItemName": "조잡한 헬멧",
+    "Itemtype": 4,
+    "AtkValue": 0,
+    "DefValue": 2,
+    "Desc": "낮은 품질의 재료로 만들어진 조잡한 헬멧입니다.",
+    "Gold": 500
+  },
+  {
+    "UnitType": 0,
+    "ItemRank": 1,
+    "ItemName": "낡은 부츠",
+    "Itemtype": 5,
+    "AtkValue": 0,
+    "DefValue": 1,
+    "Desc": "오랜 사용으로 인해 마모되고 닳은 부츠입니다.",
+    "Gold": 300
+  },
+  {
+    "UnitType": 0,
+    "ItemRank": 1,
+    "ItemName": "조잡한 부츠",
+    "Itemtype": 5,
+    "AtkValue": 0,
+    "DefValue": 1.5,
+    "Desc": "낮은 품질의 재료로 만들어진 조잡한 부츠입니다.",
+    "Gold": 500
+  },
+  {
+    "UnitType": 0,
+    "ItemRank": 2,
+    "ItemName": "견습용 부츠",
+    "Itemtype": 5,
+    "AtkValue": 0,
+    "DefValue": 2.5,
+    "Desc": "초보 모험가들이 훈련 및 연습을 위해 사용하는 꽤 쓸만한 부츠입니다.",
+    "Gold": 1000
+  },
+  {
+    "UnitType": 0,
+    "ItemRank": 2,
+    "ItemName": "수련자 갑옷",
+    "Itemtype": 3,
+    "AtkValue": 0,
+    "DefValue": 5,
+    "Desc": "수련에 도움을 주는 갑옷입니다",
+    "Gold": 1000
+  },
+  {
+    "UnitType": 0,
+    "ItemRank": 2,
+    "ItemName": "견습용 헬멧",
+    "Itemtype": 4,
+    "AtkValue": 0,
+    "DefValue": 3.5,
+    "Desc": "초보 모험가들이 훈련 및 연습을 위해 사용하는 꽤 쓸만한 헬멧입니다.",
+    "Gold": 1000
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 2,
+    "ItemName": "무쇠 갑옷",
+    "Itemtype": 3,
+    "AtkValue": 0,
+    "DefValue": 9,
+    "Desc": "무쇠로 만들어져 튼튼한 갑옷입니다.",
+    "Gold": 1500
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 3,
+    "ItemName": "스파르타의 갑옷",
+    "Itemtype": 3,
+    "AtkValue": 0,
+    "DefValue": 15,
+    "Desc": "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.",
+    "Gold": 4000
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 1,
+    "ItemName": "낡은 방패",
+    "Itemtype": 2,
+    "AtkValue": 0,
+    "DefValue": 1,
+    "Desc": "오랜 사용으로 인해 닳고 손상된 방패입니다.",
+    "Gold": 300
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 1,
+    "ItemName": "조잡한 방패",
+    "Itemtype": 2,
+    "AtkValue": 1,
+    "DefValue": 2,
+    "Desc": "싸구려 재료로 만들어진 방패입니다.",
+    "Gold": 1000
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 2,
+    "ItemName": "쓸만한 방패",
+    "Itemtype": 2,
+    "AtkValue": 2,
+    "DefValue": 3,
+    "Desc": "평균적인 방어력을 제공하는 방패입니다.",
+    "Gold": 1500
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 2,
+    "ItemName": "강철 방패",
+    "Itemtype": 2,
+    "AtkValue": 3,
+    "DefValue": 5,
+    "Desc": "강철로 만들어져 견고하며, 적의 공격을 효과적으로 막아주는 방패입니다.",
+    "Gold": 2000
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 3,
+    "ItemName": "스파르타 방패",
+    "Itemtype": 2,
+    "AtkValue": 4,
+    "DefValue": 7,
+    "Desc": "스파르타 전사들이 사용했다는 전설의 방패입니다.",
+    "Gold": 4000
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 2,
+    "ItemName": "강철 헬멧",
+    "Itemtype": 4,
+    "AtkValue": 0,
+    "DefValue": 5,
+    "Desc": "강철로 만들어져 견고하며, 적의 공격을 효과적으로 막아주는 헬멧입니다.",
+    "Gold": 1500
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 3,
+    "ItemName": "스파르타의 헬멧",
+    "Itemtype": 4,
+    "AtkValue": 0,
+    "DefValue": 8,
+    "Desc": "스파르타 전사들이 사용했다는 전설의 헬멧입니다.",
+    "Gold": 3000
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 1,
+    "ItemName": "낡은 창",
+    "Itemtype": 1,
+    "AtkValue": 4,
+    "DefValue": 0,
+    "Desc": "날카롭지 않은 낡은 창 입니다.",
+    "Gold": 700
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 1,
+    "ItemName": "낡은 검",
+    "Itemtype": 1,
+    "AtkValue": 2,
+    "DefValue": 0,
+    "Desc": "쉽게 볼 수 있는 낡은 검 입니다.",
+    "Gold": 300
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 2,
+    "ItemName": "청동 도끼",
+    "Itemtype": 1,
+    "AtkValue": 7,
+    "DefValue": 0,
+    "Desc": "어디선가 사용됐던거 같은 도끼입니다.",
+    "Gold": 1500
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 2,
+    "ItemName": "황금 검",
+    "Itemtype": 1,
+    "AtkValue": 5,
+    "DefValue": 0,
+    "Desc": "황금으로 만들어진 아름다운 검입니다. 매우 값지고 귀중합니다.",
+    "Gold": 5000
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 3,
+    "ItemName": "스파르타 창",
+    "Itemtype": 1,
+    "AtkValue": 12,
+    "DefValue": 0,
+    "Desc": "스파르타의 전사들이 사용했다는 전설의 창입니다.",
+    "Gold": 3500
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 2,
+    "ItemName": "강철 부츠",
+    "Itemtype": 5,
+    "AtkValue": 0,
+    "DefValue": 3.5,
+    "Desc": "강철로 만들어져 견고하며, 적의 공격을 효과적으로 막아주는 부츠입니다.",
+    "Gold": 1500
+  },
+  {
+    "UnitType": 1,
+    "ItemRank": 3,
+    "ItemName": "스파르타의 부츠",
+    "Itemtype": 5,
+    "AtkValue": 2,
+    "DefValue": 5,
+    "Desc": "스파르타 전사들이 사용했다는 전설의 부츠입니다.",
+    "Gold": 3000
+  },
+  {
+    "UnitType": 2,
+    "ItemRank": 2,
+    "ItemName": "경량 갑옷",
+    "Itemtype": 3,
+    "AtkValue": 0,
+    "DefValue": 6.5,
+    "Desc": "가벼운 재료로 만들어진 갑옷입니다.",
+    "Gold": 1500
+  },
+  {
+    "UnitType": 2,
+    "ItemRank": 3,
+    "ItemName": "레인저의 갑옷",
+    "Itemtype": 3,
+    "AtkValue": 0,
+    "DefValue": 10,
+    "Desc": "전설의 레인저가 사용했다는 갑옷입니다.",
+    "Gold": 4000
+  },
+  {
+    "UnitType": 2,
+    "ItemRank": 2,
+    "ItemName": "경량 헬멧",
+    "Itemtype": 4,
+    "AtkValue": 0,
+    "DefValue": 4.5,
+    "Desc": "가벼운 재료로 만들어진 헬멧입니다.",
+    "Gold": 1500
+  },
+  {
+    "UnitType": 2,
+    "ItemRank": 3,
+    "ItemName": "레인저의 헬멧",
+    "Itemtype": 4,
+    "AtkValue": 0,
+    "DefValue": 7,
+    "Desc": "전설의 레인저가 사용했다는 헬멧입니다.",
+    "Gold": 3000
+  },
+  {
+    "UnitType": 2,
+    "ItemRank": 1,
+    "ItemName": "낡은 활",
+    "Itemtype": 1,
+    "AtkValue": 4.5,
+    "DefValue": 0,
+    "Desc": "오랜 사용으로 인해 마모되고 손상된 활입니다.",
+    "Gold": 300
+  },
+  {
+    "UnitType": 2,
+    "ItemRank": 1,
+    "ItemName": "조잡한 활",
+    "Itemtype": 1,
+    "AtkValue": 6.5,
+    "DefValue": 0,
+    "Desc": "낮은 품질의 재료로 만들어진 조잡한 활입니다.",
+    "Gold": 500
+  },
+  {
+    "UnitType": 2,
+    "ItemRank": 2,
+    "ItemName": "견습용 활",
+    "Itemtype": 1,
+    "AtkValue": 9,
+    "DefValue": 0,
+    "Desc": "초보 모험가들이 훈련 및 연습을 위해 사용하는 꽤 쓸만한 활입니다.",
+    "Gold": 1200
+  },
+  {
+    "UnitType": 2,
+    "ItemRank": 2,
+    "ItemName": "강철 활",
+    "Itemtype": 1,
+    "AtkValue": 12,
+    "DefValue": 0,
+    "Desc": "강철 재료로 만들어져 견고하며 내구성이 뛰어난 활입니다.",
+    "Gold": 1800
+  },
+  {
+    "UnitType": 2,
+    "ItemRank": 3,
+    "ItemName": "레인저의 활",
+    "Itemtype": 1,
+    "AtkValue": 20,
+    "DefValue": 0,
+    "Desc": "전설의 레인저가 사용했다는 활입니다.",
+    "Gold": 4000
+  },
+  {
+    "UnitType": 2,
+    "ItemRank": 2,
+    "ItemName": "경량 부츠",
+    "Itemtype": 5,
+    "AtkValue": 3,
+    "DefValue": 1,
+    "Desc": "가벼운 재료로 만들어진 부츠입니다.",
+    "Gold": 1500
+  },
+  {
+    "UnitType": 2,
+    "ItemRank": 3,
+    "ItemName": "레인저의 부츠",
+    "Itemtype": 5,
+    "AtkValue": 6,
+    "DefValue": 3,
+    "Desc": "전설의 레인저가 사용했다는 부츠입니다.",
+    "Gold": 3000
+  },
+  {
+    "UnitType": 3,
+    "ItemRank": 2,
+    "ItemName": "가죽 갑옷",
+    "Itemtype": 3,
+    "AtkValue": 0,
+    "DefValue": 6,
+    "Desc": "쓸만한 가죽으로 만들어진 갑옷입니다.",
+    "Gold": 1500
+  },
+  {
+    "UnitType": 3,
+    "ItemRank": 3,
+    "ItemName": "그림자 갑옷",
+    "Itemtype": 3,
+    "AtkValue": 3,
+    "DefValue": 8,
+    "Desc": "전설의 도적이 사용했다는 갑옷입니다.",
+    "Gold": 4000
+  },
+  {
+    "UnitType": 3,
+    "ItemRank": 2,
+    "ItemName": "가죽 헬멧",
+    "Itemtype": 4,
+    "AtkValue": 0,
+    "DefValue": 4.5,
+    "Desc": "쓸만한 가죽으로 만들어진 헬멧입니다.",
+    "Gold": 1500
+  },
+  {
+    "UnitType": 3,
+    "ItemRank": 3,
+    "ItemName": "그림자 헬멧",
+    "Itemtype": 4,
+    "AtkValue": 2,
+    "DefValue": 6,
+    "Desc": "전설의 도적이 사용했다는 헬멧입니다.",
+    "Gold": 3000
+  },
+  {
+    "UnitType": 3,
+    "ItemRank": 1,
+    "ItemName": "낡은 단검",
+    "Itemtype": 1,
+    "AtkValue": 4.5,
+    "DefValue": 0,
+    "Desc": "오랜 사용으로 인해 마모되고 손상된 활입니다.",
+    "Gold": 300
+  },
+  {
+    "UnitType": 3,
+    "ItemRank": 1,
+    "ItemName": "조잡한 단검",
+    "Itemtype": 1,
+    "AtkValue": 6.5,
+    "DefValue": 0,
+    "Desc": "낮은 품질의 재료로 만들어진 조잡한 활입니다.",
+    "Gold": 500
+  },
+  {
+    "UnitType": 3,
+    "ItemRank": 2,
+    "ItemName": "닌자도",
+    "Itemtype": 1,
+    "AtkValue": 7,
+    "DefValue": 0,
+    "Desc": "닌자들이 사용하는 쓸만한 단검입니다.",
+    "Gold": 1200
+  },
+  {
+    "UnitType": 3,
+    "ItemRank": 2,
+    "ItemName": "강철 단검",
+    "Itemtype": 1,
+    "AtkValue": 10,
+    "DefValue": 0,
+    "Desc": "강철 재료로 만들어져 견고하며 내구성이 뛰어난 단검입니다.",
+    "Gold": 1800
+  },
+  {
+    "UnitType": 3,
+    "ItemRank": 3,
+    "ItemName": "차크랑",
+    "Itemtype": 1,
+    "AtkValue": 17,
+    "DefValue": 0,
+    "Desc": "전설의 도적이 사용했다는 무기입니다.",
+    "Gold": 4000
+  },
+  {
+    "UnitType": 3,
+    "ItemRank": 2,
+    "ItemName": "가죽 부츠",
+    "Itemtype": 5,
+    "AtkValue": 2,
+    "DefValue": 2,
+    "Desc": "쓸만한 가죽으로 만들어진 부츠입니다.",
+    "Gold": 1500
+  },
+  {
+    "UnitType": 3,
+    "ItemRank": 3,
+    "ItemName": "그림자 부츠",
+    "Itemtype": 5,
+    "AtkValue": 5,
+    "DefValue": 4,
+    "Desc": "전설의 도적이 사용했다는 부츠입니다.",
+    "Gold": 3000
+  },
+  {
+    "UnitType": 4,
+    "ItemRank": 2,
+    "ItemName": "천 로브",
+    "Itemtype": 3,
+    "AtkValue": 3,
+    "DefValue": 2,
+    "Desc": "고운 천으로 만든 쓸만한 로브입니다.",
+    "Gold": 1500
+  },
+  {
+    "UnitType": 4,
+    "ItemRank": 3,
+    "ItemName": "아케인 로브",
+    "Itemtype": 3,
+    "AtkValue": 8,
+    "DefValue": 5,
+    "Desc": "전설의 마법사가 사용했다는 로브입니다.",
+    "Gold": 4000
+  },
+  {
+    "UnitType": 4,
+    "ItemRank": 2,
+    "ItemName": "천 모자",
+    "Itemtype": 4,
+    "AtkValue": 2.5,
+    "DefValue": 2,
+    "Desc": "고운 천으로 만든 쓸만한 모자입니다.",
+    "Gold": 1500
+  },
+  {
+    "UnitType": 4,
+    "ItemRank": 3,
+    "ItemName": "아케인 모자",
+    "Itemtype": 4,
+    "AtkValue": 4,
+    "DefValue": 4,
+    "Desc": "전설의 마법사가 사용했다는 모자입니다.",
+    "Gold": 3000
+  },
+  {
+    "UnitType": 4,
+    "ItemRank": 1,
+    "ItemName": "낡은 지팡이",
+    "Itemtype": 1,
+    "AtkValue": 3,
+    "DefValue": 0,
+    "Desc": "오랜 사용으로 인해 마모되고 손상된 지팡이입니다.",
+    "Gold": 300
+  },
+  {
+    "UnitType": 4,
+    "ItemRank": 1,
+    "ItemName": "조잡한 완드",
+    "Itemtype": 1,
+    "AtkValue": 4,
+    "DefValue": 0,
+    "Desc": "낮은 품질의 재료로 만들어진 조잡한 완드입니다.",
+    "Gold": 500
+  },
+  {
+    "UnitType": 4,
+    "ItemRank": 2,
+    "ItemName": "하트 완드",
+    "Itemtype": 1,
+    "AtkValue": 6.5,
+    "DefValue": 0,
+    "Desc": "하트 모양의 장식이 달린 완드입니다.",
+    "Gold": 1200
+  },
+  {
+    "UnitType": 4,
+    "ItemRank": 2,
+    "ItemName": "고목나무 스태프",
+    "Itemtype": 1,
+    "AtkValue": 10,
+    "DefValue": 0,
+    "Desc": "고목나무로 만들어진 스태프입니다.",
+    "Gold": 1800
+  },
+  {
+    "UnitType": 4,
+    "ItemRank": 3,
+    "ItemName": "딱총나무 완드",
+    "Itemtype": 1,
+    "AtkValue": 13,
+    "DefValue": 0,
+    "Desc": "전설의 마법사가 사용했다는 완드입니다.",
+    "Gold": 4000
+  },
+  {
+    "UnitType": 4,
+    "ItemRank": 2,
+    "ItemName": "천 신발",
+    "Itemtype": 5,
+    "AtkValue": 2.5,
+    "DefValue": 1,
+    "Desc": "고운 천으로 만든 쓸만한 신입니다.",
+    "Gold": 1500
+  },
+  {
+    "UnitType": 4,
+    "ItemRank": 3,
+    "ItemName": "아케인 신발",
+    "Itemtype": 5,
+    "AtkValue": 6,
+    "DefValue": 3,
+    "Desc": "전설의 마법사가 사용했다는 신발입니다.",
+    "Gold": 3000
+  }
+]
