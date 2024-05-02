@@ -10,6 +10,5 @@ namespace TextRPG
         public string Desc { get; protected set; }
         public int Gold { get; protected set; }
 
-
     }
 }

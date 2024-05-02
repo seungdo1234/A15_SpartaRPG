@@ -24,7 +24,9 @@ namespace TextRPG
         protected Random random = new Random();
         public virtual string OnDamaged(int damage) // 최소 데미지 1
         {
-            int endDamage = (damage - Def) > 0 ? (int)(damage - Def) : 1;
+            int endDamage = Convert.ToInt32(Math.Round(damage - Def));
+            endDamage = endDamage > 0 ? endDamage : 1;
+                
             Health -= endDamage;
             return $"[데미지 {endDamage}] ";
         }

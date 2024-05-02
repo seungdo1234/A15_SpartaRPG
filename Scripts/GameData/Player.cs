@@ -160,7 +160,9 @@ namespace TextRPG
 
         public override string OnDamaged(int damage) // 회피시 0
         {
-            int endDamage = (damage - GetDefValue()) > 0 ? (int)(damage - GetDefValue()) : 1;
+            int endDamage = Convert.ToInt32(Math.Round(damage - GetDefValue()));
+            endDamage = endDamage > 0 ? endDamage : 1;
+
             Health -= endDamage;
             return $"[데미지 {endDamage}] ";
         }
