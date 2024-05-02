@@ -91,9 +91,7 @@ namespace TextRPG
             }
 
             // 5.2 j => 배틀 재시작, 로비로 가기 수정
-            EDungeonResultType dungeonResultType = isWin ? EDungeonResultType.VICTORY : EDungeonResultType.RETIRE;
-
-            if(dungeonResultScreen.DungeonResultScreenOn(dungeonResultType, EDungeonDifficulty.NORMAL))
+            if(playerInput == 1)
             {
                 BattleStart();
             }
@@ -338,7 +336,10 @@ namespace TextRPG
         private void BattleEnd(bool isWin)
         {
             isEnd = true;
-            this.isWin = isWin;
+            gm.Dungeon.resultType = isWin ? EDungeonResultType.VICTORY : EDungeonResultType.RETIRE;
+            gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
+
+            dungeonResultScreen.ScreenOn();
         }
     }
 }

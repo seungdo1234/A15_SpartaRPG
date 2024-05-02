@@ -25,7 +25,7 @@ namespace TextRPG
                     switch (input)
                     {
                         case 1:
-                            equipScreen.EquipScreenOn();
+                            equipScreen.ScreenOn();
                             break;
                         case 0:
                             return;

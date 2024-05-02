@@ -7,6 +7,8 @@ namespace TextRPG
     {
         protected ItemDataManager dm;
         protected GameManager gm;
+
+        protected static int playerInput;
         public Screen()
         {
             dm = ItemDataManager.instance;

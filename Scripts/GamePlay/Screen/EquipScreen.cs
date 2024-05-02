@@ -6,7 +6,7 @@ namespace TextRPG
     {
 
         // 장비 장착
-        public void EquipScreenOn()
+        public override void ScreenOn()
         {
             Console.Clear();
 
