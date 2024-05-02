@@ -28,6 +28,11 @@ namespace TextRPG
             Health -= endDamage;
             return $"[데미지 {endDamage}] ";
         }
+        public virtual string OnDamagedDenyDef(int damage) // 최소 데미지 1
+        {   
+            Health -= damage;
+            return $"[데미지 {damage}] ";
+        }
 
         public string? IsCriticalHit()
         {
