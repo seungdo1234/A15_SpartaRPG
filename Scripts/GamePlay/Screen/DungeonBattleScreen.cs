@@ -245,20 +245,32 @@ namespace TextRPG
             if (skill.IsMultiTarget)
             {
                 Console.WriteLine("다중 대상 스킬 사용 중...");
-                int targetsHit = 0;
-                foreach (var enemy in enemies.Where(e => e.Health > 0))
+
+                // 첫 번째로 지정된 타겟에 스킬 적용
+                Console.WriteLine($"{gm.Player.Name}의 {target.Name}을(를) 향한 공격!");
+                string initialSkillResult = skill.CastSkill(gm.Player, target);
+                Console.WriteLine(initialSkillResult);
+                Thread.Sleep(2000);
+
+                // 나머지 타겟들에게 스킬 적용
+                int targetsHit = 1; // 첫 번째 타겟이 이미 공격받았으므로 1로 시작
+                foreach (var enemy in enemies.Where(e => e.Health > 0 && e != target))
                 {
-                    Console.WriteLine($"{enemy.Name}을(를) 공격합니다...");
+                    if (targetsHit >= skill.MaxTargetCount)
+                        break;
+
+                    Console.WriteLine($"이어지는 {enemy.Name}을(를) 향한 공격!");
                     string skillResult = skill.CastSkill(gm.Player, enemy);
                     Console.WriteLine(skillResult);
                     Thread.Sleep(2000);
 
-                    if (++targetsHit >= skill.MaxTargetCount)
-                        break;
+                    targetsHit++;
                 }
             }
             else
             {
+                // 단일 대상 스킬 사용
+                Console.WriteLine($"{gm.Player.Name} {target.Name}을 향한 공격!");
                 string skillResult = skill.CastSkill(gm.Player, target);
                 Console.WriteLine(skillResult);
                 Thread.Sleep(2000);
