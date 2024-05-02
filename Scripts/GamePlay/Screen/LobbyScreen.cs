@@ -8,8 +8,6 @@ namespace TextRPG
         private ShopScreen shopScreen;
         private DungeonResultScreen dungeonScreen;
         private QuestScreen questScreen;
-
-        // 던전 전투 초기화
         private DungeonBattleScreen dungeonBattle;
         public LobbyScreen()
         {
@@ -18,8 +16,6 @@ namespace TextRPG
             shopScreen = new ShopScreen();
             dungeonScreen = new DungeonResultScreen();
             questScreen = new QuestScreen();
-
-            // 던전 배틀 초기화 및 이벤트
             dungeonBattle = new DungeonBattleScreen();
         }
 
