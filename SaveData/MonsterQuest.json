@@ -1,0 +1,98 @@
+[
+  {
+    "QuestName": "사냥 연습",
+    "CurrentProgress": 0,
+    "TotalProgress": 5,
+    "RewardGold": 200,
+    "RewardItem": "",
+    "QuestContent": "숙련된 사냥꾼:\n그래, 자네가 이번에 새로 온 신입인가?\n던전 안에는 정말 무서운 몬스터들이 많지. \n하지만 정작 어떤 몬스터를 잡고 싶을 땐 또 안나온단 말이야...\n그러니 일단 던전에 들어가 아무 몬스터나 5마리 잡아오게. \n그럼 자네를 견습 사냥꾼으로 인정해주지."
+  },
+  {
+    "QuestName": "토끼 사냥꾼",
+    "CurrentProgress": 0,
+    "TotalProgress": 3,
+    "RewardGold": 300,
+    "RewardItem": "",
+    "QuestContent": "숙련된 사냥꾼:\n좋아, 이제 자네도 훌륭한 견습 사냥꾼이 되었네.\n하지만 견습이라고 뭐가 된 것 같지? \n어서 가서 [사나운 토끼]나 좀 잡아오게나. \n요즘 번식기인지 기승이거든.\n자네가 미리 개체 수를 줄여놓으면 다른 숙련된 모험가들도 \n편하게 깊은 곳으로 탐험을 하겠지."
+  },
+  {
+    "QuestName": "늑대 사냥꾼",
+    "CurrentProgress": 0,
+    "TotalProgress": 3,
+    "RewardGold": 500,
+    "RewardItem": "",
+    "QuestContent": "숙련된 사냥꾼:\n그래, 토끼정도는 역시 쉽다 이거지. \n다음은 [노을의 늑대개]일세. \n멀리서 바라볼 때는 저게 몬스터인지 아닌지 \n헷갈린다는 특징이 있으니 주의하게. \n다 잡으면 던전을 나와서 보상을 챙겨가는 것 잊지 말고!"
+  },
+  {
+    "QuestName": "좀비 사냥꾼",
+    "CurrentProgress": 0,
+    "TotalProgress": 3,
+    "RewardGold": 700,
+    "RewardItem": "",
+    "QuestContent": "숙련된 사냥꾼:\n좋아좋아, 훌륭하군.\n(이번 신입은 좀 오래가는군...) 크흠흠! \n그래, 지금쯤이면 이미 [강을 건넌 사람]도 본 적이 있겠지?\n이들의 영혼은 이미 저승의 강을 건너갔으나,\n그 몸이 영혼을 찾아 헤매는 존재일세. \n가서 그 몸뚱이 역시 안식을 찾을 수 있게 도와주게나."
+  },
+  {
+    "QuestName": "벤시 사냥꾼",
+    "CurrentProgress": 0,
+    "TotalProgress": 3,
+    "RewardGold": 900,
+    "RewardItem": "",
+    "QuestContent": "숙련된 사냥꾼:\n아, 이제 자네도 진정한 사냥꾼의 길을 걷고 있네. \n그런데 자네, 벤시를 아는가? \n저 먼 북쪽 숲에서 살다 던전에 숨어든 유령 말일세. \n가서 [흐느끼는 유령]을 쫓아버리게.\n이번 퀘스트는 쉽지 않겠지만... 부디 살아남게."
+  },
+  {
+    "QuestName": "어둑시니 사냥꾼",
+    "CurrentProgress": 0,
+    "TotalProgress": 3,
+    "RewardGold": 1100,
+    "RewardItem": "",
+    "QuestContent": "숙련된 사냥꾼:\n이제 어둠 속에서 꿈틀대는 존재, 어둑시니를 처단해야 하네. \n그림자보다 어두운 곳에서 나타나는 이 생물을 조심하게. \n그림자 속에서 빛나는 두 눈을 마주해선 안돼.\n[늘어나는 그림자] 라고 불리는건 다 이유가 있는 것이야."
+  },
+  {
+    "QuestName": "세이렌 사냥꾼",
+    "CurrentProgress": 0,
+    "TotalProgress": 3,
+    "RewardGold": 1300,
+    "RewardItem": "",
+    "QuestContent": "숙련된 사냥꾼:\n바다의 미녀, 세이렌의 아름다운 노래가 자네를 유혹할 걸세. \n하지만 조심하게, 그녀의 노래는 자네를 영원한 잠에 빠뜨릴 수 있어. \n응? 왜 바다의 마녀가 던전 안에나 있냐고?\n...늙어서 세이렌 무리에서 쫓겨난 개체들일걸세. \n그 얼굴은 추악해졌으나 여전히 노래는 위험하니\n가서 [노래하는 물고기]를 죽여주게."
+  },
+  {
+    "QuestName": "장산범 사냥꾼",
+    "CurrentProgress": 0,
+    "TotalProgress": 3,
+    "RewardGold": 1500,
+    "RewardItem": "",
+    "QuestContent": "숙련된 사냥꾼:\n다음 몬스터 역시 목소리로 사람을 유혹하는 생물일세.\n장산범, 또는... [흰머리 호랑이] 라고 하지.\n자네가 가장 사랑하는 사람의 목소리를 들려주며, \n마음속에 의심을 심을테지만 잘 기억하게.\n죽은 이는 절.대. 살아돌아올 수 없다는 사실을."
+  },
+  {
+    "QuestName": "지귀 사냥꾼",
+    "CurrentProgress": 0,
+    "TotalProgress": 3,
+    "RewardGold": 1700,
+    "RewardItem": "",
+    "QuestContent": "숙련된 사냥꾼:\n깊은 사랑에 빠졌으나 사랑을 이루지 못한 이들은 무엇이 되는지 아는가?\n그 답이 바로 여기있네.\n[외로운 불귀신]은 이룰 수 없는 사랑을 포기하지 못하고\n결국 그 마음에 불이 붙어 다른 이들에게까지 그 불을 옮기고 다니네.\n화상을 입지 않게 주의하며 잡게나."
+  },
+  {
+    "QuestName": "그리핀 사냥꾼",
+    "CurrentProgress": 0,
+    "TotalProgress": 3,
+    "RewardGold": 1900,
+    "RewardItem": "",
+    "QuestContent": "숙련된 사냥꾼:\n하늘을 지배하는 그리핀을 마주할 준비가 되었나? \n강력한 발톱과 날카로운 부리를 조심하고,\n그 위압감에 주눅들지 말고 당당하게 맞서게.\n던전에 있는 개체는 주로 암컷이니 그나마 싸울만 할걸세."
+  },
+  {
+    "QuestName": "악마 사냥꾼",
+    "CurrentProgress": 0,
+    "TotalProgress": 3,
+    "RewardGold": 2100,
+    "RewardItem": "",
+    "QuestContent": "숙련된 사냥꾼:\n자네처럼 오래 버티는 모험가는 정말이지... 처음이야.\n어쩌면 진짜 끝에 다다를지도 모르겠군.\n우선 [녹안의 악마] 5마리만 잡아오게.\n다음에 의뢰할건 던전 가장 깊숙한 곳에 도사리는 용에 대한 것이니 \n꼭! 마지막에 도달하기 전에 이 보상을 받아 적절한 장비를 맞추게."
+  },
+  {
+    "QuestName": "드레곤 슬레이어",
+    "CurrentProgress": 0,
+    "TotalProgress": 1,
+    "RewardGold": 5000,
+    "RewardItem": "",
+    "QuestContent": "숙련된 사냥꾼:\n그래, 결국 끝을 보고야 말겠다는 것이군.\n마지막에 있는 그것... [휘몰아치는 강철이]는 일단은 용일세.\n중요한건 그거야. 드래곤이 아닌 용이라는 것.\n원래 용이라는 것들은 신성한 존재이지만, \n저것은 타락하여 신선님들에 의해 이곳 깊숙한 곳에 봉인되었지.\n하지만 요즘 기세가 심상치 않아...\n자네가 저것을 물리친다면 꼭 마을의 이름으로 사례하겠네...!"
+  }
+]
