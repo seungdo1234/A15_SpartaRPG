@@ -19,7 +19,10 @@ namespace TextRPG
     public class DungeonManager : DungeonData
     {
         protected Random random = new Random();
-        
+
+        public EDungeonResultType resultType { get; set; }
+        public EDungeonDifficulty dif {  get; set; }
+
         public DungeonManager()
         {
             EnemyDataManager.instance.Init();

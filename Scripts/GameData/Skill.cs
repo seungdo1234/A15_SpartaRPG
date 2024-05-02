@@ -4,7 +4,7 @@ using TextRPG.Scripts.Manager;
 
 namespace TextRPG
 {
-    public class SkillData
+    public class Skill
     {  
         //public int ID { get; private set; }
         public string Name { get; private set; }
@@ -15,7 +15,7 @@ namespace TextRPG
         public EUnitType UnitType { get; private set; }
 
         [JsonConstructor]
-        public SkillData(string name, int maxTargetCount, bool isMultiTarget, int manaCost, string content, EUnitType unitType)
+        public Skill(string name, int maxTargetCount, bool isMultiTarget, int manaCost, string content, EUnitType unitType)
         {
             Name = name;
             MaxTargetCount = maxTargetCount;
@@ -25,9 +25,9 @@ namespace TextRPG
             UnitType = unitType;
         }
 
-        public SkillData(int id)
+        public Skill(int id)
         {
-            SkillData skill;
+            Skill skill;
             SkillDataManager.GetInstance().SkillDictionary.TryGetValue(id, out skill);
 
             Name = skill.Name;

@@ -11,18 +11,18 @@ namespace TextRPG.Scripts.Manager
     {
         private static SkillDataManager instance;
         [JsonProperty]
-        public Dictionary<int, SkillData> SkillDictionary { get; private set; }
+        public Dictionary<int, Skill> SkillDictionary { get; private set; }
 
         private SkillDataManager()
         {
-            SkillDictionary = new Dictionary<int, SkillData>();
+            SkillDictionary = new Dictionary<int, Skill>();
             // Json 파일 받아오기
             string jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\SaveData\Skills.json");
             string jsonText = File.ReadAllText(jsonFilePath);
 
             Console.WriteLine();
 
-            SkillDictionary = JsonConvert.DeserializeObject<Dictionary<int, SkillData>>(jsonText);
+            SkillDictionary = JsonConvert.DeserializeObject<Dictionary<int, Skill>>(jsonText);
         }
 
         public static SkillDataManager GetInstance()
