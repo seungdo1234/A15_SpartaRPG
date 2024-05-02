@@ -4,7 +4,7 @@ namespace TextRPG
     public class ItemSellScreen :Screen
     {
 
-        public void ItemSellScreenOn()
+        public override void ScreenOn()
         {
             Console.Clear();
 

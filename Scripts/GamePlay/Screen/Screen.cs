@@ -3,10 +3,12 @@ namespace TextRPG
 {
 
     // 각종 스크린 클래스의 부모클래스
-    public class Screen
+    public  abstract class Screen
     {
         protected ItemDataManager dm;
         protected GameManager gm;
+
+        protected static int playerInput;
         public Screen()
         {
             dm = ItemDataManager.instance;
@@ -43,5 +45,7 @@ namespace TextRPG
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">> ");
         }
+
+        public abstract void ScreenOn();
     }
 }

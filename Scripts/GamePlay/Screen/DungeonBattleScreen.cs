@@ -20,7 +20,7 @@ namespace TextRPG
             enemies = new List<Enemy>(); ;  // 몬스터를 저장할 리스트 초기화
         }
 
-        public void CheckforBattle()
+        public override void ScreenOn()
         {
 
             while (true)
@@ -91,9 +91,7 @@ namespace TextRPG
             }
 
             // 5.2 j => 배틀 재시작, 로비로 가기 수정
-            EDungeonResultType dungeonResultType = isWin ? EDungeonResultType.VICTORY : EDungeonResultType.RETIRE;
-
-            if(dungeonResultScreen.DungeonResultScreenOn(dungeonResultType, EDungeonDifficulty.NORMAL))
+            if(playerInput == 1)
             {
                 BattleStart();
             }
@@ -215,7 +213,7 @@ namespace TextRPG
                     continue;
                 }
 
-                SkillData selectedSkill = gm.Player.Skills[selectedSkillIndex];
+                Skill selectedSkill = gm.Player.Skills[selectedSkillIndex];
                 if (gm.Player.Mana < selectedSkill.ManaCost)
                 {
                     BattleLogText();
@@ -234,7 +232,7 @@ namespace TextRPG
             }
         }
 
-        private void UseSelectedSkill(SkillData skill, Enemy target)
+        private void UseSelectedSkill(Skill skill, Enemy target)
         {
             if (skill.IsMultiTarget)
             {
@@ -295,7 +293,10 @@ namespace TextRPG
         private void BattleEnd(bool isWin)
         {
             isEnd = true;
-            this.isWin = isWin;
+            gm.Dungeon.resultType = isWin ? EDungeonResultType.VICTORY : EDungeonResultType.RETIRE;
+            gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
+
+            dungeonResultScreen.ScreenOn();
         }
 
         private void BattleLogText()

@@ -6,7 +6,7 @@ namespace TextRPG
         private int resetGold = 500;
 
         // 아이템 구매 화면
-        public void ItemBuyScreenOn()
+        public override void ScreenOn()
         {
 
             while (true)

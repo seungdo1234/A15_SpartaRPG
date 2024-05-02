@@ -10,7 +10,7 @@ namespace TextRPG
         }
 
         // 인벤토리 화면
-        public void InventoryScreenOn()
+        public override void ScreenOn()
         {
             Console.Clear();
 
@@ -25,7 +25,7 @@ namespace TextRPG
                     switch (input)
                     {
                         case 1:
-                            equipScreen.EquipScreenOn();
+                            equipScreen.ScreenOn();
                             break;
                         case 0:
                             return;

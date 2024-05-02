@@ -20,7 +20,7 @@ namespace TextRPG
         }
 
         // 로비 화면
-        public void LobbyScreenOn()
+        public override void ScreenOn()
         {
             Console.Clear();
 
@@ -38,19 +38,19 @@ namespace TextRPG
                             gm.SaveSystem.Save();
                             return;
                         case 1:
-                            statusScreen.StatusScreenOn();
+                            statusScreen.ScreenOn();
                             break;
                         case 2:
-                            inventoryScreen.InventoryScreenOn();
+                            inventoryScreen.ScreenOn();
                             break;
                         case 3:
-                            shopScreen.ShopScreenOn();
+                            shopScreen.ScreenOn();
                             break;
                         case 4:
-                            dungeonBattle.CheckforBattle();
+                            dungeonBattle.ScreenOn();
                             break;
                         case 5:
-                            questScreen.QuestScreenOn();
+                            questScreen.ScreenOn();
                             break;
                     }
                     Console.Clear();

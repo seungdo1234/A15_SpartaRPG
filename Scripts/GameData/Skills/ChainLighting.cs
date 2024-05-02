@@ -1,7 +1,7 @@
 ﻿
 namespace TextRPG
 {
-    internal class ChainLighting : SkillData
+    internal class ChainLighting : Skill
     {
         public ChainLighting(int id) : base(id)
         {

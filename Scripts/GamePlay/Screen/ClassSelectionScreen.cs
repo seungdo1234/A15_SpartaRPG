@@ -5,7 +5,7 @@ namespace TextRPG
     {
 
         //  Enum.GetNames(typeof(PlayerClass)).Length => PlayerClass 열거형의 길이를 반환
-        public void ClassSelectionScreenOn()
+        public override void ScreenOn()
         {
             Console.Clear();
 
