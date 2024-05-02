@@ -9,6 +9,9 @@ namespace TextRPG
 
         private bool isEnd;
         private bool isWin;
+        private bool returnToChooseEnemy = false; // 스킬 예외처리
+
+
         private DungeonResultScreen dungeonResultScreen;
         public DungeonBattleScreen()
         {
@@ -161,6 +164,11 @@ namespace TextRPG
                         return 0;
                     case "2":
                         UseSkill(enemy);
+                        if (returnToChooseEnemy)
+                        {
+                            returnToChooseEnemy = false; // 상태 초기화
+                            return -1; // 다른 적을 선택하도록 플로우 변경
+                        }
                         return 0;
                     default:
                         Console.WriteLine("잘못된 선택입니다.");
@@ -199,16 +207,20 @@ namespace TextRPG
         {
             while (true)
             {
-                // 플레이어가 보유한 스킬 목록 출력
-                Console.WriteLine("사용할 스킬을 선택하세요:");
+                Console.WriteLine("사용할 스킬을 선택하세요 (0을 누르면 다른 적 선택):");
                 for (int i = 0; i < gm.Player.Skills.Count; i++)
                 {
                     var skill = gm.Player.Skills[i];
                     Console.WriteLine($"{i + 1}. {skill.Name} (MP: {skill.ManaCost}) - {skill.Content}");
                 }
 
-                // 사용자 입력을 받아 선택된 스킬을 확인
                 string input = Console.ReadLine();
+                if (input == "0")
+                {
+                    returnToChooseEnemy = true;
+                    return; // 다른 적을 선택하도록 하기 위해 메서드 종료
+                }
+
                 if (!int.TryParse(input, out int selectedSkillIndex))
                 {
                     Console.WriteLine("숫자로만 입력해주세요.");
@@ -223,20 +235,15 @@ namespace TextRPG
                 }
 
                 SkillData selectedSkill = gm.Player.Skills[selectedSkillIndex];
-
-                // 마나가 부족하면 스킬 사용 불가
                 if (gm.Player.Mana < selectedSkill.ManaCost)
                 {
                     Console.WriteLine("마나가 부족합니다.");
                     continue;
                 }
 
-                // 마나 소모하고 스킬 사용
                 gm.Player.CostMana(selectedSkill.ManaCost);
-                // 스킬 사용 로직
                 UseSelectedSkill(selectedSkill, enemy);
-
-                break; // 스킬을 성공적으로 사용했으면 반복문을 종료
+                break; // 스킬 사용 후 정상 종료
             }
         }
 
