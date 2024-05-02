@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TextRPG
 {
@@ -166,23 +167,17 @@ namespace TextRPG
             // 선택한 몬스터의 이름을 포함하여 공격 메시지 출력
             Console.WriteLine($"{gm.Player.Name}의 {enemy.Name}를 향한 공격!");
 
-            if (gm.Player.Health <= 0)
-            {
-                BattleEnd(false);
-                return;
-            } 
-
             string attackResult = gm.Player.Attack(enemy);
             Console.WriteLine(attackResult);
             Thread.Sleep(2000);
 
             if (enemy.Health <= 0)
             {
-                BattleEnd( true);
                 Console.WriteLine($"[{enemy.Name}이(가) 쓰러졌습니다.]");
             }
             else
             {
+                BattleEnd(true);
                 Console.Clear();
             }
         }
@@ -232,6 +227,11 @@ namespace TextRPG
                 UseSelectedSkill(selectedSkill, enemy);
                 break; // 스킬 사용 후 정상 종료
             }
+            if (enemy.Health <= 0)
+            {
+                BattleEnd(true);
+                return;
+            }
         }
 
         private void UseSelectedSkill(SkillData skill, Enemy target)
@@ -269,27 +269,12 @@ namespace TextRPG
                 Console.WriteLine(skillResult);
                 Thread.Sleep(2000);
             }
-
-            // 남은 적이 없으면 전투 승리 처리
-            if (enemies.All(e => e.Health <= 0))
-            {
-                BattleEnd(true);
-            }
-            else
-            {
-                Console.Clear();
-            }
+            Console.Clear();
         }
 
 
         private void EnemyTurn(Enemy enemy)
         {
-            if (enemy.Health <= 0)
-            {
-                BattleEnd(true);
-                return;
-            }
-
             Console.WriteLine($"{enemy.Name}의 공격!");
 
 
