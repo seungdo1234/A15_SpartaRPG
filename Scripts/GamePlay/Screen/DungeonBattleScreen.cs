@@ -19,7 +19,7 @@ namespace TextRPG
             enemies = new List<Enemy>(); ;  // 몬스터를 저장할 리스트 초기화
         }
 
-        public void CheckforBattle()
+        public override void ScreenOn()
         {
 
             while (true)
@@ -234,7 +234,7 @@ namespace TextRPG
                     continue;
                 }
 
-                SkillData selectedSkill = gm.Player.Skills[selectedSkillIndex];
+                Skill selectedSkill = gm.Player.Skills[selectedSkillIndex];
                 if (gm.Player.Mana < selectedSkill.ManaCost)
                 {
                     Console.WriteLine("마나가 부족합니다.");
@@ -247,7 +247,7 @@ namespace TextRPG
             }
         }
 
-        private void UseSelectedSkill(SkillData skill, Enemy target)
+        private void UseSelectedSkill(Skill skill, Enemy target)
         {
             if (skill.IsMultiTarget)
             {

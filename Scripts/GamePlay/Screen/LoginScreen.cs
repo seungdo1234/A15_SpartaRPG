@@ -12,7 +12,7 @@ namespace TextRPG
             lobbyScreen = new LobbyScreen();
         }
         // 로그인
-        public void LoginScreenOn()
+        public override void ScreenOn()
         {
             string playerName = NameCheck();
 
@@ -53,7 +53,7 @@ namespace TextRPG
                 }
             }
 
-            lobbyScreen.LobbyScreenOn();
+            lobbyScreen.ScreenOn();
         }
 
         private void LoginText()

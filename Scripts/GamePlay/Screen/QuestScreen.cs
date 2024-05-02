@@ -9,7 +9,7 @@ namespace TextRPG
 {
     public class QuestScreen : Screen
     {
-        public void QuestScreenOn()
+        public override void ScreenOn()
         {
             int page = 1; //퀘스트 창 페이지.
             bool isExit = false;

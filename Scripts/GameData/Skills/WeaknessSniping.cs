@@ -1,7 +1,7 @@
 ﻿
 namespace TextRPG
 {
-    public class WeaknessSniping : SkillData
+    public class WeaknessSniping : Skill
     {
         public WeaknessSniping(int id) : base(id)
         {

@@ -1,7 +1,7 @@
 ﻿
 namespace TextRPG
 {
-    public class Assassination : SkillData
+    public class Assassination : Skill
     {
         public Assassination(int id) : base(id)
         {

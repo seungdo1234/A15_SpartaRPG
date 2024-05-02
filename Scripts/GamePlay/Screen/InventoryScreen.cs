@@ -10,7 +10,7 @@ namespace TextRPG
         }
 
         // 인벤토리 화면
-        public void InventoryScreenOn()
+        public override void ScreenOn()
         {
             Console.Clear();
 

@@ -33,7 +33,7 @@ namespace TextRPG
             CriticalDamage = 1.6f;
             MaxMana = 100;
             Mana = MaxMana;
-            base.Skills = new List<SkillData>();
+            base.Skills = new List<Skill>();
         }
 
 
@@ -49,28 +49,28 @@ namespace TextRPG
                     MaxHealth += 50; /// 수정이 필요함
                     Health += 50;
                     Def += 5;
-                    Skills.Add(new SkillData(0));
-                    Skills.Add(new SkillData(1));
+                    Skills.Add(new Skill(0));
+                    Skills.Add(new Skill(1));
                     Skills.Add(new CrisisEvasion(2));                    
                     break;
                 case EUnitType.ARCHER:
                     CriticalChance += 9;
                     CriticalDamage += 0.9f;
-                    Skills.Add(new SkillData(3));
-                    Skills.Add(new SkillData(4));
+                    Skills.Add(new Skill(3));
+                    Skills.Add(new Skill(4));
                     Skills.Add(new WeaknessSniping(5));
                     break;
                 case EUnitType.THIEF:
                     AvoidChance += 10;
-                    Skills.Add(new SkillData(6));
-                    Skills.Add(new SkillData(7));
+                    Skills.Add(new Skill(6));
+                    Skills.Add(new Skill(7));
                     Skills.Add(new Assassination(8));
                     break;
                 case EUnitType.MAGICIAN:
                     MaxMana += 50;
                     Mana += 50;
-                    Skills.Add(new SkillData(9));
-                    Skills.Add(new SkillData(10));
+                    Skills.Add(new Skill(9));
+                    Skills.Add(new Skill(10));
                     Skills.Add(new ChainLighting(11));
                     break;
             }
