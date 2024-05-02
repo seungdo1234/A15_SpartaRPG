@@ -64,7 +64,7 @@ namespace TextRPG
                             break;
                         case ConsoleKey.RightArrow:
                             page++;
-                            if (page == 5)
+                            if (page == 4) //페이지 증가시 바꾸기
                             {
                                 Console.WriteLine("마지막 페이지입니다!");
                                 page--;
