@@ -14,10 +14,11 @@ namespace TextRPG
         public EUnitType ePlayerClass { get;  set; }
         public int Gold { get; set; }
         [JsonProperty] public int Exp { get; private set; }
-        public EquipItem EquipAtkItem { get; set; }
-        public EquipItem EquipDefItem { get; set; }      
-        
-        
+        public float EquipAtkItem { get; set; }
+        public float EquipDefItem { get; set; }    
+        public EEquipItemType EquipItemFlag { get; set; }
+
+
         public Player(string name)
         {
             Name = name;
@@ -88,6 +89,22 @@ namespace TextRPG
 
             return playerClass;
         }
+
+        public void SwitchingEquipItem(EquipItem equipItem)
+        {
+            if (equipItem.IsEquip)
+            {
+                EquipAtkItem += equipItem.AtkValue;
+                EquipDefItem += equipItem.DefValue;
+            }
+            else
+            {
+                EquipAtkItem -= equipItem.AtkValue;
+                EquipDefItem -= equipItem.DefValue;
+            }
+            
+        }
+
         public float GetAtkValue() // 전체 공격력 반환
         {
             if (EquipAtkItem == null)
@@ -96,7 +113,7 @@ namespace TextRPG
             }
             else
             {
-                return Atk + EquipAtkItem.AtkValue;
+                return Atk + EquipAtkItem;
             }
         }
         public float GetDefValue() // 전체 방어력 반환
@@ -107,7 +124,7 @@ namespace TextRPG
             }
             else
             {
-                return Def + EquipDefItem.DefValue;
+                return Def + EquipDefItem;
             }
         }
 
