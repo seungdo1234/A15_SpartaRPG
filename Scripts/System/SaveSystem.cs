@@ -44,11 +44,13 @@ namespace TextRPG
         public Player Load(string name)
         {
             string filePath = $"{path}\\{name}.json";
-            string equipitemJsonFilePath = Path.Combine(path, @"..\..\..\SaveData\EquipItemData.json");
+            string equipItemJsonFilePath = Path.Combine(path, @"..\..\..\SaveData\EquipItemData.json");
+            string consumableJsonFilePath = Path.Combine(path, @"..\..\..\SaveData\ConsumableItemData.json");
 
             // 전체 아이템 데이터 불러오기
-            string equipItemJsonData = File.ReadAllText(equipitemJsonFilePath); 
-            ItemDataManager.instance.SetItemDB(JsonConvert.DeserializeObject<List<EquipItem>>(equipItemJsonData));
+            string equipItemJsonData = File.ReadAllText(equipItemJsonFilePath); 
+            string consumableItemJsonData = File.ReadAllText(consumableJsonFilePath); 
+            ItemDataManager.instance.SetItemDB(JsonConvert.DeserializeObject<List<EquipItem>>(equipItemJsonData) , JsonConvert.DeserializeObject<List<ConsumableItem>>(consumableItemJsonData));
 
             if (File.Exists(filePath)) // 파일이 존재하는지 -> 이미 데이터가 존재하는 지
             {

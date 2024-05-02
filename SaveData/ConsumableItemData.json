@@ -1,0 +1,50 @@
+[
+  {
+    "ItemName": "하급 체력 물약",
+    "ItemRank": 1,
+    "ConsumableType": 1,
+    "Value": 30,
+    "Desc": "체력을 30만큼 회복 시켜주는 물약이다.",
+    "Gold": 300
+  },
+  {
+    "ItemName": "중급 체력 물약",
+    "ItemRank": 2,
+    "ConsumableType": 1,
+    "Value": 50,
+    "Desc": "체력을 50만큼 회복 시켜주는 물약이다.",
+    "Gold": 600
+  },
+  {
+    "ItemName": "상급 체력 물약",
+    "ItemRank": 3,
+    "ConsumableType": 1,
+    "Value": 70,
+    "Desc": "체력을 50만큼 회복 시켜주는 물약이다.",
+    "Gold": 1000
+  },
+  {
+    "ItemName": "하급 마나 물약",
+    "ItemRank": 1,
+    "ConsumableType": 2,
+    "Value": 30,
+    "Desc": "마나를 30만큼 회복 시켜주는 물약이다.",
+    "Gold": 300
+  },
+  {
+    "ItemName": "중급 마나 물약",
+    "ItemRank": 2,
+    "ConsumableType": 2,
+    "Value": 50,
+    "Desc": "마나를 50만큼 회복 시켜주는 물약이다.",
+    "Gold": 600
+  },
+  {
+    "ItemName": "상급 마나 물약",
+    "ItemRank": 3,
+    "ConsumableType": 2,
+    "Value": 70,
+    "Desc": "마나를 50만큼 회복 시켜주는 물약이다.",
+    "Gold": 1000
+  }
+]
