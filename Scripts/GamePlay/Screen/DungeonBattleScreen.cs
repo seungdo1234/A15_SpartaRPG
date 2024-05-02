@@ -220,9 +220,8 @@ namespace TextRPG
                     return; // 다른 적을 선택하도록 하기 위해 메서드 종료
                 }
 
-                if (!int.TryParse(input, out int selectedSkillIndex) && USerrorOccurred == false)
+                if (!int.TryParse(input, out int selectedSkillIndex) && USerrorOccurred)
                 {
-                    USerrorOccurred = true;
                     BattleLogText();
                     Console.WriteLine("잘못된 입력입니다.");
                     USerrorOccurred = false;
@@ -230,9 +229,8 @@ namespace TextRPG
                 }
 
                 selectedSkillIndex -= 1;
-                if (selectedSkillIndex < 0 || selectedSkillIndex >= gm.Player.Skills.Count && USerrorOccurred == false)
+                if (selectedSkillIndex < 0 || selectedSkillIndex >= gm.Player.Skills.Count && USerrorOccurred)
                 {
-                    USerrorOccurred = true;
                     BattleLogText();
                     Console.WriteLine("잘못된 선택입니다.");
                     USerrorOccurred = false; 
@@ -240,9 +238,8 @@ namespace TextRPG
                 }
 
                 SkillData selectedSkill = gm.Player.Skills[selectedSkillIndex];
-                if (gm.Player.Mana < selectedSkill.ManaCost && USerrorOccurred == false)
+                if (gm.Player.Mana < selectedSkill.ManaCost && USerrorOccurred)
                 {
-                    USerrorOccurred = true;
                     BattleLogText();
                     Console.WriteLine("마나가 부족합니다.");
                     USerrorOccurred = false;
