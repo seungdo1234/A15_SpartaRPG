@@ -113,7 +113,6 @@ namespace TextRPG
                 Console.WriteLine("Story Quest!!\n");
 
                 Quest q = gm.QuestManager.GetCurrentStoryQuest();
-                q.isAccepted = true;
 
                 Console.WriteLine(q.QuestName + "\n");
                 Console.WriteLine();
@@ -185,49 +184,52 @@ namespace TextRPG
                 Console.WriteLine();
                 Console.WriteLine(q.QuestContent + "\n");
 
-                switch(gm.QuestManager.QuestSaver[1,0])
+                if (q.CurrentProgress >= 0)
                 {
-                    case 0:
-                        Console.WriteLine($"-몬스터 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                        break;
-                    case 1:
-                        Console.WriteLine($"-사나운 토끼 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                        break;
-                    case 2:
-                        Console.WriteLine($"-노을의 늑대개 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                        break;
-                    case 3:
-                        Console.WriteLine($"-강을 건넌 사람 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                        break;
-                    case 4:
-                        Console.WriteLine($"-흐느끼는 유령 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                        break;
-                    case 5:
-                        Console.WriteLine($"-늘어나는 그림자 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                        break;
-                    case 6:
-                        Console.WriteLine($"-노래하는 물고기 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                        break;
-                    case 7:
-                        Console.WriteLine($"-흰머리 호랑이 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                        break;
-                    case 8:
-                        Console.WriteLine($"-외로운 불귀신 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                        break; 
-                    case 9:
-                        Console.WriteLine($"-독수리 사자 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                        break;
-                    case 10:
-                        Console.WriteLine($"-녹안의 악마 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                        break;
-                    case 11:
-                        Console.WriteLine($"-BOSS 휘몰아치는 강철이 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                        break;
-                    default:
-                        break;
+                    switch (gm.QuestManager.QuestSaver[1, 0])
+                    {
+                        case 0:
+                            Console.WriteLine($"-몬스터 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                            break;
+                        case 1:
+                            Console.WriteLine($"-사나운 토끼 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                            break;
+                        case 2:
+                            Console.WriteLine($"-노을의 늑대개 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                            break;
+                        case 3:
+                            Console.WriteLine($"-강을 건넌 사람 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                            break;
+                        case 4:
+                            Console.WriteLine($"-흐느끼는 유령 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                            break;
+                        case 5:
+                            Console.WriteLine($"-늘어나는 그림자 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                            break;
+                        case 6:
+                            Console.WriteLine($"-노래하는 물고기 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                            break;
+                        case 7:
+                            Console.WriteLine($"-흰머리 호랑이 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                            break;
+                        case 8:
+                            Console.WriteLine($"-외로운 불귀신 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                            break;
+                        case 9:
+                            Console.WriteLine($"-독수리 사자 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                            break;
+                        case 10:
+                            Console.WriteLine($"-녹안의 악마 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                            break;
+                        case 11:
+                            Console.WriteLine($"-BOSS 휘몰아치는 강철이 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                            break;
+                        default:
+                            break;
+                    }
                 }
-                
-                Console.WriteLine("-보상-");
+
+                Console.WriteLine("\n-보상-");
 
                 if (q.RewardItem != null)
                 {
@@ -262,12 +264,13 @@ namespace TextRPG
                             gm.Player.Gold += q.RewardGold;
                             Console.WriteLine($"보상을 수령했습니다. +{q.RewardGold} G");
                             gm.QuestManager.QuestSaver[1, 0]++;
-                            gm.QuestManager.QuestSaver[1, 0] = -1; 
+                            gm.QuestManager.QuestSaver[1, 1] = -1; 
                         }
                         else if (q.CurrentProgress < 0)
                         {
-
-                        }else
+                            gm.QuestManager.QuestSaver[1, 1] = 0;
+                        }
+                        else
                         {
                             Console.WriteLine("...뭘 바라시는 거죠?");
                             Thread.Sleep(1000);
