@@ -10,7 +10,7 @@ namespace TextRPG
         private QuestScreen questScreen;
 
         // 던전 전투 초기화
-        private DungeonBattle dungeonBattle;
+        private DungeonBattleScreen dungeonBattle;
         public LobbyScreen()
         {
             statusScreen = new StatusScreen();
@@ -19,12 +19,8 @@ namespace TextRPG
             dungeonScreen = new DungeonResultScreen();
             questScreen = new QuestScreen();
 
-            /* 배틀 초기화 주석처리
             // 던전 배틀 초기화 및 이벤트
-            dungeonBattle = new DungeonBattle();
-            dungeonBattle.PlayerDied += PlayerDiedHandler;
-            dungeonBattle.EnemyDied += EnemyDiedHandler;
-            */
+            dungeonBattle = new DungeonBattleScreen();
         }
 
         // 로비 화면
@@ -55,16 +51,11 @@ namespace TextRPG
                             shopScreen.ShopScreenOn();
                             break;
                         case 4:
-                            dungeonScreen.DungeonResultScreenOn(EDungeonResultType.VICTORY , EDungeonDifficulty.HARD);
+                            dungeonBattle.CheckforBattle();
                             break;
                         case 5:
                             questScreen.QuestScreenOn();
                             break;
-                        /* 던전 위치 이동
-                        case 6:
-                            dungeonBattle.CheckforBattle();
-                            break;
-                        */
                     }
                     Console.Clear();
                 }
@@ -96,19 +87,5 @@ namespace TextRPG
 
             Console.WriteLine();
         }
-
-
-        /* // 주석처리
-        // 사망, 적처리 이벤트
-        private void PlayerDiedHandler()
-        {
-            LobbyScreenOn();
-        }
-
-        private void EnemyDiedHandler()
-        {
-            LobbyScreenOn();
-        }
-        */
     }
 }

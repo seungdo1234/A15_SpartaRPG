@@ -3,13 +3,14 @@ namespace TextRPG
 {
     public struct Reward
     {
-        public Item dungeonRewardItem; // 던전 보상 추가 예정
+        public EquipItem dungeonRewardItem; // 던전 보상 추가 예정
         public int gold;
         public int exp;
 
         public Reward()
         {
-
+            // 추후 난이도 별로 장비아이템이 바뀌도록 변경 해야함
+            dungeonRewardItem = ItemDataManager.instance.GetRandomEquipItem(ItemDataManager.instance.EquipItemDB);
             gold = 500;
             exp = 5;
         }
