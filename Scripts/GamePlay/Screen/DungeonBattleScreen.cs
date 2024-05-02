@@ -47,13 +47,13 @@ namespace TextRPG
         private void AppearEnemy()
         {
             int currentDungeonLevel = gm.Player.Level; // 임시로 집어 넣음, 원래는 던전 난이도를 집어 넣어야함
-            List<Enemy> originalEnemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel);  // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기
-            enemies = new List<Enemy>(originalEnemies.Select(e => new Enemy(e))); // 깊은 복사를 통해 리스트 복제
+            enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel);  // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기
 
             foreach (var enemy in enemies)
             {
                 Console.WriteLine($"{enemy.Name}가 나타났습니다!");
             }
+
         }
 
         public void BattleStart() // 전투 시작
@@ -71,7 +71,6 @@ namespace TextRPG
 
             while ((enemies.Any(e => e.Health > 0) && gm.Player.Health > 0))
             {
-                BattleText();
                 int targetIndex = ChooseEnemy();
                 if (targetIndex == -1) continue;
 
@@ -101,41 +100,31 @@ namespace TextRPG
 
         private int ChooseEnemy()
         {
+            bool CEerrorOccurred = false; // 오류 발생 여부를 추적하는 플래그
+
             while (true)
             {
-                Console.WriteLine("공격할 몬스터를 선택하세요:");
-                for (int i = 0; i < enemies.Count; i++)
-                {
-                    if (enemies[i].Health > 0)
-                    {
-                        Console.WriteLine($"{i + 1}. {enemies[i].Name} (HP: {enemies[i].Health}/{enemies[i].MaxHealth})");
-                    }
-                }
-
-                Console.Write("\n>>  ");
-
-                string input = Console.ReadLine();
-
-                // 입력이 공백이거나 null인 경우
-                if (string.IsNullOrWhiteSpace(input))
+                BattleLogText();
+                if (CEerrorOccurred)
                 {
                     Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
-                    continue;
+                    CEerrorOccurred = false; // 오류 메시지를 출력한 후 플래그를 초기화
                 }
 
-                // 숫자로 변환할 수 없는 경우
-                if (!int.TryParse(input, out int selected))
+                Console.Write("\n>> ");
+                string input = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input, out int selected))
                 {
-                    Console.WriteLine("숫자를 입력하세요.");
+                    CEerrorOccurred = true;
                     continue;
                 }
 
-                selected -= 1; // 선택한 몬스터의 인덱스를 계산
+                selected -= 1;
 
-                // 유효한 선택이 아닌 경우
                 if (selected < 0 || selected >= enemies.Count || enemies[selected].Health <= 0)
                 {
-                    Console.WriteLine("잘못된 선택입니다.");
+                    CEerrorOccurred = true;
                     continue;
                 }
 
@@ -145,6 +134,8 @@ namespace TextRPG
 
         private int PlayerAction(Enemy enemy)
         {
+            bool PAerrorOccurred = false; // 오류 발생 여부를 추적하는 플래그
+
             while (true)
             {
                 Console.WriteLine("\n행동을 선택하세요:");
@@ -171,7 +162,13 @@ namespace TextRPG
                         }
                         return 0;
                     default:
-                        Console.WriteLine("잘못된 선택입니다.");
+                        Console.Clear();
+                        BattleLogText();
+                        if (PAerrorOccurred)
+                        {
+                            Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
+                            PAerrorOccurred = false; // 오류 메시지를 출력한 후 플래그를 초기화
+                        }
                         continue;
                 }
             }
@@ -205,6 +202,8 @@ namespace TextRPG
 
         private void UseSkill(Enemy enemy)
         {
+            bool USerrorOccurred = false; // 오류 발생 여부를 추적하는 플래그
+
             while (true)
             {
                 Console.WriteLine("사용할 스킬을 선택하세요 (0을 누르면 다른 적 선택):");
@@ -320,25 +319,31 @@ namespace TextRPG
             }
         }
 
-
-        private void BattleText()
-        {
-            Console.Clear();
-            Console.WriteLine("=== 전투 중인 몬스터 목록 ===");
-            foreach (var en in enemies.Where(e => e.Health > 0))
-            {
-                Console.WriteLine($"몬스터: {en.Name}, HP: {en.Health}/{en.MaxHealth}, 공격력: {en.Atk}");
-            }
-            Console.WriteLine("=== 내 정보 ===");
-            Console.WriteLine($"Lv.{gm.Player.Level} {gm.Player.Name} ({gm.Player.GetPlayerClass(gm.Player.ePlayerClass)})");
-            Console.WriteLine($"HP {gm.Player.Health}/{gm.Player.MaxHealth}\n");
-            Console.WriteLine($"MP {gm.Player.Mana}/{gm.Player.MaxMana}");
-        }
-
         private void BattleEnd(bool isWin)
         {
             isEnd = true;
             this.isWin = isWin;
+        }
+
+        private void BattleLogText()
+        {
+            Console.Clear();
+            Console.WriteLine("=== 전투 중인 몬스터 목록 ===");
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                if (enemies[i].Health > 0)
+                {
+                    Console.WriteLine($"{i + 1}. {enemies[i].Name} (HP: {enemies[i].Health}/{enemies[i].MaxHealth}) ATK: {enemies[i].Atk}");
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("=== 내 정보 ===");
+            Console.WriteLine($"Lv.{gm.Player.Level} {gm.Player.Name} ({gm.Player.GetPlayerClass(gm.Player.ePlayerClass)})");
+            Console.WriteLine($"HP {gm.Player.Health}/{gm.Player.MaxHealth}");
+            Console.WriteLine($"MP {gm.Player.Mana}/{gm.Player.MaxMana}");
+
+            Console.WriteLine("\n공격할 몬스터를 선택하세요:");
         }
     }
 }
