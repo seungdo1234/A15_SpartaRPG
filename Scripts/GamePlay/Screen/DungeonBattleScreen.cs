@@ -105,18 +105,12 @@ namespace TextRPG
             while (true)
             {
                 BattleLogText();
-                if (CEerrorOccurred)
-                {
-                    Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
-                    CEerrorOccurred = false; // 오류 메시지를 출력한 후 플래그를 초기화
-                }
-
                 Console.Write("\n>> ");
                 string input = Console.ReadLine();
 
                 if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input, out int selected))
                 {
-                    CEerrorOccurred = true;
+                    Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
                     continue;
                 }
 
@@ -124,7 +118,7 @@ namespace TextRPG
 
                 if (selected < 0 || selected >= enemies.Count || enemies[selected].Health <= 0)
                 {
-                    CEerrorOccurred = true;
+                    Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
                     continue;
                 }
 
@@ -134,8 +128,6 @@ namespace TextRPG
 
         private int PlayerAction(Enemy enemy)
         {
-            bool PAerrorOccurred = false; // 오류 발생 여부를 추적하는 플래그
-
             while (true)
             {
                 Console.WriteLine("\n행동을 선택하세요:");
@@ -164,11 +156,6 @@ namespace TextRPG
                     default:
                         Console.Clear();
                         BattleLogText();
-                        if (PAerrorOccurred)
-                        {
-                            Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
-                            PAerrorOccurred = false; // 오류 메시지를 출력한 후 플래그를 초기화
-                        }
                         continue;
                 }
             }
@@ -202,8 +189,6 @@ namespace TextRPG
 
         private void UseSkill(Enemy enemy)
         {
-            bool USerrorOccurred = false; // 오류 발생 여부를 추적하는 플래그
-
             while (true)
             {
                 Console.WriteLine("사용할 스킬을 선택하세요 (0을 누르면 다른 적 선택):");
@@ -220,29 +205,26 @@ namespace TextRPG
                     return; // 다른 적을 선택하도록 하기 위해 메서드 종료
                 }
 
-                if (!int.TryParse(input, out int selectedSkillIndex) && USerrorOccurred)
+                if (!int.TryParse(input, out int selectedSkillIndex))
                 {
                     BattleLogText();
                     Console.WriteLine("잘못된 입력입니다.");
-                    USerrorOccurred = false;
                     continue;
                 }
 
                 selectedSkillIndex -= 1;
-                if (selectedSkillIndex < 0 || selectedSkillIndex >= gm.Player.Skills.Count && USerrorOccurred)
+                if (selectedSkillIndex < 0 || selectedSkillIndex >= gm.Player.Skills.Count)
                 {
                     BattleLogText();
                     Console.WriteLine("잘못된 선택입니다.");
-                    USerrorOccurred = false; 
                     continue;
                 }
 
                 SkillData selectedSkill = gm.Player.Skills[selectedSkillIndex];
-                if (gm.Player.Mana < selectedSkill.ManaCost && USerrorOccurred)
+                if (gm.Player.Mana < selectedSkill.ManaCost)
                 {
                     BattleLogText();
                     Console.WriteLine("마나가 부족합니다.");
-                    USerrorOccurred = false;
                     continue;
                 }
 
