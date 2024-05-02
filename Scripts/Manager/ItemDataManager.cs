@@ -4,11 +4,14 @@
     {
         public static ItemDataManager instance = new ItemDataManager();
 
-        // 장비 아이템 DB
+        // 장비,소비 아이템 DB
         public List<EquipItem> EquipItemDB { get; private set; }
-        // 플레이어, 상점 아이템 리스트
+        public List<ConsumableItem> ConsumableItemDB {  get; private set; }
+
+        // 플레이어, 상점 장비 아이템 리스트
         public List<EquipItem> PlayerEquipItems {  get; private set; }
         public List<EquipItem> ShopEquipItems { get; private set; }
+        public ConsumableItem[] ShopConsumableItems { get; private set; }
 
         private Random rand = new Random();
         private int ShopEquipItemCount = 6; // 상점 장비 아이템 갯수
@@ -27,9 +30,11 @@
             ShopEquipItems= shopItems;
         }
 
-        public void SetItemDB(List<EquipItem> itemDB) 
+        public void SetItemDB(List<EquipItem> equipItemDB , List<ConsumableItem> consumableItemDB) 
         {
-            EquipItemDB = itemDB;
+            EquipItemDB = equipItemDB;
+            ConsumableItemDB = consumableItemDB;
+            ShopConsumableItems = new ConsumableItem[4];
         }
 
         // 5.1 J => 상점 아이템 초기화 로직 구현
