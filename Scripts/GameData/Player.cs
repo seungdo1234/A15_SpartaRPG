@@ -24,7 +24,7 @@ namespace TextRPG
             Level = 1;
             Atk = 10;
             Def = 5;
-            MaxHealth = 100;
+            MaxHealth = 1;
             Health = MaxHealth;
             Gold = 10000;
             AvoidChance = 10;

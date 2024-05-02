@@ -12,7 +12,7 @@ namespace TextRPG
         private Reward reward;
 
 
-        public void DungeonResultScreenOn(EDungeonResultType resultType , EDungeonDifficulty dif)
+        public bool DungeonResultScreenOn(EDungeonResultType resultType , EDungeonDifficulty dif)
         {
             if (resultType != EDungeonResultType.RETIRE)
             {
@@ -39,15 +39,15 @@ namespace TextRPG
                 // 1, 2, 3만 입력 받을 수 있게 함 
                 if (int.TryParse(Console.ReadLine(), out int input) && (input == 0 || (input == 1 && resultType == EDungeonResultType.VICTORY)))
                 {
+                    Console.Clear();
                     if (input == 0) // 되돌아 가기
                     {
-                        return;
+                        return false;
                     }
                     else // 계속
                     {
-                        // 코드 작성해야함
+                        return true;
                     }
-                    Console.Clear();
                 }
                 else
                 {
@@ -60,7 +60,7 @@ namespace TextRPG
         {
             reward = gm.Dungeon.GetDungeonReward(dif);
 
-         //   dm.DungeonDropItem(reward.dungeonRewardItem);
+            dm.DungeonDropItem(reward.dungeonRewardItem);
             gm.Player.Gold += reward.gold;
             gm.Player.ExpUp(reward.exp); 
 

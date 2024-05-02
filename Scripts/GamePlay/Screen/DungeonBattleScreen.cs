@@ -1,20 +1,21 @@
-﻿using System.Reflection.Emit;
-using System.Linq;
-using System.Threading.Channels;
+﻿using System.Collections.Generic;
 
 namespace TextRPG
 {
-    public class DungeonBattle:Screen
+    public class DungeonBattleScreen : Screen
     {
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
 
         // 이벤트로 사망 처리, LobbyScreen에서 구독 했음 확인 필요
-        public event Action PlayerDied;
-        public event Action EnemyDied;
+        //public event Action PlayerDied;  전투 결과 창에 넣을 예정
+        //public event Action EnemyDied;
 
-
-        public DungeonBattle()
+        private bool isEnd;
+        private bool isWin;
+        private DungeonResultScreen dungeonResultScreen;
+        public DungeonBattleScreen()
         {
+            dungeonResultScreen = new DungeonResultScreen();
             enemies = new List<Enemy>(); ;  // 몬스터를 저장할 리스트 초기화
         }
 
@@ -23,28 +24,27 @@ namespace TextRPG
 
             while (true)
             {
-                Console.WriteLine("정말 던전에 진입하시겠습니까? 끝을 보시거나, 죽기 전까지 탈출하실 수 없습니다.");
+                Console.Clear();
+                Console.WriteLine("\n정말 던전에 진입하시겠습니까? 끝을 보시거나, 죽기 전까지 탈출하실 수 없습니다.");
                 Console.WriteLine();
                 Console.WriteLine("1. 들어간다");
-                Console.WriteLine("0. 나간다");
-                
+                Console.WriteLine("0. 나간다\n");
+
+                MyActionText();
                 string choice = Console.ReadLine();
 
-                switch(choice)
+                switch (choice)
                 {
                     case "1":
-                        AppearEnemy();
                         BattleStart();
-                        break;
-
+                        return;
                     default:
                         return;
                 }
-            } 
+            }
 
         }
-
-        public void AppearEnemy()
+        private void AppearEnemy()
         {
             int currentDungeonLevel = gm.Player.Level; // 임시로 집어 넣음, 원래는 던전 난이도를 집어 넣어야함
             List<Enemy> originalEnemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel);  // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기
@@ -56,16 +56,20 @@ namespace TextRPG
             }
         }
 
-        public void BattleStart()
+        public void BattleStart() // 전투 시작
         {
+            isWin = false;
+            isEnd = false;
+            // 5.2 J => 전투 결과 창에서 불러올 수 있도록 함
+            AppearEnemy();
             dungeonBattle(); // 전투 시작
         }
 
-        public void dungeonBattle()
+        private void dungeonBattle()
         {
             Console.Clear();
 
-            while (enemies.Any(e => e.Health > 0) && gm.Player.Health > 0)
+            while ((enemies.Any(e => e.Health > 0) && gm.Player.Health > 0))
             {
                 BattleText();
                 int targetIndex = ChooseEnemy();
@@ -73,24 +77,25 @@ namespace TextRPG
 
                 PlayerAction(enemies[targetIndex]);
 
+                if (isEnd)
+                {
+                    break;
+                }
+
+
                 foreach (var enemy in enemies.Where(e => e.Health > 0))
                 {
                     EnemyTurn(enemy);
-                    if (gm.Player.Health <= 0)
-                    {
-                        BettlePlayerLoseEnd();
-                        return;
-                    }
-                }
-
-                if (!enemies.Any(e => e.Health > 0))
-                {
-                    Console.WriteLine("모든 적이 패배했습니다. 마을로 돌아갑니다.");
-                    return;
                 }
             }
-            if (gm.Player.Health > 0)
-                Console.WriteLine("모든 적을 처리했습니다. 마을로 돌아갑니다.");
+
+            // 5.2 j => 배틀 재시작, 로비로 가기 수정
+            EDungeonResultType dungeonResultType = isWin ? EDungeonResultType.VICTORY : EDungeonResultType.RETIRE;
+
+            if(dungeonResultScreen.DungeonResultScreenOn(dungeonResultType, EDungeonDifficulty.NORMAL))
+            {
+                BattleStart();
+            }
         }
 
         private int ChooseEnemy()
@@ -143,7 +148,7 @@ namespace TextRPG
 
             if (gm.Player.Health <= 0)
             {
-                BettlePlayerLoseEnd();
+                BettleEnd(false);
                 return;
             }
 
@@ -153,7 +158,7 @@ namespace TextRPG
 
             if (enemy.Health <= 0)
             {
-                BettlePlayerWinEnd();
+                BettleEnd( true);
                 Console.WriteLine($"[{enemy.Name}이(가) 쓰러졌습니다.]");
             }
             else
@@ -227,7 +232,7 @@ namespace TextRPG
             // 남은 적이 없으면 전투 승리 처리
             if (enemies.All(e => e.Health <= 0))
             {
-                BettlePlayerWinEnd();
+                BettleEnd(true);
             }
             else
             {
@@ -240,40 +245,27 @@ namespace TextRPG
         {
             if (enemy.Health <= 0)
             {
-                BettlePlayerWinEnd();
+                BettleEnd(true);
                 return;
             }
 
             Console.WriteLine($"{enemy.Name}의 공격!");
 
-            /*
-            // 적이 스킬을 보유하고 있는지 확인하고 스킬 사용
-            if (enemy.SkillList.Any())
-            {
-                Random rnd = new Random();
-                int skillIndex = rnd.Next(enemy.SkillList.Count);
-                EnemySkill skill = enemy.SkillList[skillIndex];
-                skill.Activate(player);
-                Console.WriteLine($"{enemy.Name}의 {enemy.Skills}!");
-                Thread.Sleep(2000);
-            }
-            */
-            
-            
-                string attackResult = enemy.Attack(gm.Player);
-                Console.WriteLine(attackResult);
-            
+
+            string attackResult = enemy.Attack(gm.Player);
+            Console.WriteLine(attackResult);
+
 
             if (gm.Player.Health <= 0)
             {
-                BettlePlayerLoseEnd();
+                BettleEnd(false);
             }
             else
             {
                 Thread.Sleep(2000);
             }
         }
-            
+
 
         private void BattleText()
         {
@@ -289,25 +281,10 @@ namespace TextRPG
             Console.WriteLine($"MP {gm.Player.Mana}/{gm.Player.MaxMana}");
         }
 
-        private void BettlePlayerWinEnd()
+        private void BettleEnd(bool isWin)
         {
-            if (enemies.All(e => e.Health <= 0))
-            {
-                Console.WriteLine($"{gm.Player.Name}이(가) 승리 하였습니다. 마을로 돌아갑니다.");
-                Thread.Sleep(500);
-                EnemyDied?.Invoke();
-            }
-        }
-
-        private void BettlePlayerLoseEnd()
-        {
-            Console.WriteLine($"{gm.Player.Name}이(가) 패배 하였습니다. 마을로 돌아갑니다.");
-            int RestoreHP = gm.Player.MaxHealth;
-
-            // 임시 회복
-            Thread.Sleep(2000);
-
-            PlayerDied?.Invoke();
+            isEnd = true;
+            this.isWin = isWin;
         }
     }
 }
