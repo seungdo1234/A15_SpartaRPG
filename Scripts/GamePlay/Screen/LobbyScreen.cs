@@ -51,13 +51,10 @@ namespace TextRPG
                             shopScreen.ShopScreenOn();
                             break;
                         case 4:
-                            dungeonScreen.DungeonResultScreenOn(EDungeonResultType.VICTORY , EDungeonDifficulty.HARD);
+                            dungeonBattle.CheckforBattle();
                             break;
                         case 5:
                             questScreen.QuestScreenOn();
-                            break;
-                        case 6:
-                            dungeonBattle.CheckforBattle();
                             break;
                     }
                     Console.Clear();

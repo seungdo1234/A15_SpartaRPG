@@ -6,9 +6,6 @@ namespace TextRPG
     {
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
 
-        // 이벤트로 사망 처리, LobbyScreen에서 구독 했음 확인 필요
-        //public event Action PlayerDied;  전투 결과 창에 넣을 예정
-        //public event Action EnemyDied;
 
         private bool isEnd;
         private bool isWin;
@@ -108,6 +105,9 @@ namespace TextRPG
                     Console.WriteLine($"{i + 1}. {enemies[i].Name} (HP: {enemies[i].Health}/{enemies[i].MaxHealth})");
                 }
             }
+
+            Console.Write("\n>>  ");
+            
             string input = Console.ReadLine();
             int selected = int.Parse(input) - 1;
             if (selected < 0 || selected >= enemies.Count || enemies[selected].Health <= 0)
@@ -121,9 +121,11 @@ namespace TextRPG
         private void PlayerAction(Enemy enemy)
         {
             Console.WriteLine();
-            Console.WriteLine("행동을 선택하세요:");
+            Console.WriteLine("\n행동을 선택하세요:");
             Console.WriteLine("1. 기본 공격");
-            Console.WriteLine("2. 스킬 사용");
+            Console.WriteLine("2. 스킬 사용\n");
+            MyActionText();
+
 
             string choice = Console.ReadLine();
 
@@ -150,7 +152,7 @@ namespace TextRPG
             {
                 BettleEnd(false);
                 return;
-            }
+            } 
 
             string attackResult = gm.Player.Attack(enemy);
             Console.WriteLine(attackResult);
