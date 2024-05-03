@@ -27,7 +27,7 @@ namespace TextRPG
                     }
                     else if (input == 1)
                     {
-                        if(gm.Player.Gold >= resetGold)
+                        if(gm.Player.Gold >= resetGold) // 상점 초기화.
                         {
                             gm.Player.Gold -= resetGold;
                             dm.ShopItemReset();
@@ -114,7 +114,7 @@ namespace TextRPG
             Console.WriteLine();
         }
 
-        private void BuyEquipItem(int input)
+        private void BuyEquipItem(int input) // 장비 구매
         {
             EquipItem equipItem = dm.ShopEquipItems[input - 2];
 
@@ -125,7 +125,7 @@ namespace TextRPG
             }
             else
             {
-                if (gm.Player.Gold >= equipItem.Gold) // 아이템 구매
+                if (gm.Player.Gold >= equipItem.Gold)
                 {
                     SystemMessageText(EMessageType.BUYITEM);
                     dm.BuyShopItem(equipItem);
@@ -137,7 +137,7 @@ namespace TextRPG
             }
         }
 
-        private void BuyConsumableItem(int input)
+        private void BuyConsumableItem(int input) // 소비 아이템 구매
         {
             ConsumableItem consumableItem = dm.ShopConsumableItems[input - dm.ShopEquipItems.Count - 2];
              if (gm.Player.Gold >= consumableItem.Gold)

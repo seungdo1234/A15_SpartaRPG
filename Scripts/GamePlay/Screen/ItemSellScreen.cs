@@ -5,6 +5,7 @@ namespace TextRPG
 {
     public class ItemSellScreen :Screen
     {
+        // 아이템을 판매하기 위해 보유하고 있는 소비 아이템 정보를 저장하는 리스트
         private List<ConsumableItem > playerConsumableItems = new List<ConsumableItem>();
 
         public override void ScreenOn()
@@ -57,7 +58,7 @@ namespace TextRPG
 
             Console.WriteLine();
 
-            Console.WriteLine("[장비 목록]");
+            Console.WriteLine("[ 보유 장비 목록 ]");
 
             for (int i = 0; i < gm.Player.PlayerEquipItems.Count; i++) // 판매 목록 출력
             {
@@ -82,11 +83,16 @@ namespace TextRPG
 
             }
 
-            int num = 1;
-            foreach(var cItem in gm.Player.PlayerConsumableItems.Keys)
+
+            Console.WriteLine("\n") ;
+
+            Console.WriteLine("[ 보유 물약 ]");
+
+            int num = 1; // 보유하고있는 소비 아이템 탐색
+            foreach(var cItem in gm.Player.PlayerConsumableItems.Keys) 
             {
                 playerConsumableItems.Add(cItem);
-                Console.WriteLine($"-{gm.Player.PlayerEquipItems.Count + num} {cItem.ItemName}\t| {cItem.ItemRank} | {cItem.Desc}\t| " +
+                Console.WriteLine($"- {gm.Player.PlayerEquipItems.Count + num} {cItem.ItemName}\t| {cItem.ItemRank} | {cItem.Desc}\t| " +
                     $"{MathF.Floor((float)cItem.Gold * 0.8f)} G ({gm.Player.PlayerConsumableItems[cItem]}개 보유중)");
 
                 num++;
@@ -99,7 +105,7 @@ namespace TextRPG
             Console.WriteLine();
         }
 
-        private void SellEquipItem(int input)
+        private void SellEquipItem(int input) // 장비 판매
         {
             EquipItem equipItem = gm.Player.PlayerEquipItems[input - 1];
 
@@ -116,7 +122,7 @@ namespace TextRPG
             gm.Player.RemoveEquipItem(equipItem); // 아이템 삭제
         }
 
-        private void SellConsumableItem(int input)
+        private void SellConsumableItem(int input) // 소비 아이템 판매
         {
             ConsumableItem consumableItem = playerConsumableItems[input- gm.Player.PlayerEquipItems.Count - 1];
 
