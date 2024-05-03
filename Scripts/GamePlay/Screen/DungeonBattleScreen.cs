@@ -192,12 +192,16 @@ namespace TextRPG
                     case "3":
                         // 포션넣을 곳
                         ConsumableItem selectedPotion = SelectPotion();
-                        if (selectedPotion != null) // 포션 선택이 성공했을 때만 실행
+                        if (selectedPotion != null)
                         {
                             selectedPotion.UseItem();
                             Console.WriteLine($"{selectedPotion.ItemName} 사용: {selectedPotion.Desc}");
+                            return 0;
                         }
-                        return 0;
+                        // 포션 선택을 취소한 경우
+                        Console.WriteLine("포션 선택이 취소되었습니다.");
+                        continue;
+
                     default:
                         SystemMessageText(EMessageType.ERROR);
                         continue;
