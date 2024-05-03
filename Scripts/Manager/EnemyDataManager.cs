@@ -12,7 +12,7 @@ namespace TextRPG
         public static EnemyDataManager instance = new EnemyDataManager();
 
         //전체 몬스터 리스트
-        private List<Enemy> MonsterDB;
+        public List<Enemy> MonsterDB { get; private set; }
         //스테이지별 몬스터 리스트
         private List<Enemy> SpawnMonsters;
         private Enemy BossMonster;
@@ -28,7 +28,6 @@ namespace TextRPG
 
             MonsterDB = JsonConvert.DeserializeObject<List<Enemy>>(jsonText);
         }
-
 
         public List<Enemy> GetSpawnMonsters(int CurrentDungeonLevel, EDungeonDifficulty difficulty)
         {

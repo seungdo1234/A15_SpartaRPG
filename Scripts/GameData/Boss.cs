@@ -2,8 +2,7 @@
 namespace TextRPG
 {
     public class Boss : Enemy
-    {
-        public int Phase { get; private set; }
+    {        
         public Boss()
         {
             Name = "발록";
@@ -19,7 +18,9 @@ namespace TextRPG
             Mana = MaxMana;
             Phase = 1;
             base.Skills = new List<Skill>();
-            Skills.Add(new DemonClaw(22));;
+            Skills.Add(new DemonClaw(22));
+            Skills.Add(new BloodDrain(23));
+            Skills.Add(new CallOfDeath(24));            
         }
         public override string OnDamaged(int damage) // 최소 데미지 1
         {
@@ -41,13 +42,11 @@ namespace TextRPG
         {
             if(Health <= 7000 && Phase < 2)
             {
-                Phase = 2;
-                Skills.Add(new BloodDrain(23));
+                Phase = 2;                
             }
             if(Health <= 3000 && Phase < 3)
             {
-                Phase = 3;
-                Skills.Add(new CallOfDeath(24));
+                Phase = 3;                
             }
         }
     }
