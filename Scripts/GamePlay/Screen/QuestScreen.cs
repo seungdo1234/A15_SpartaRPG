@@ -159,19 +159,19 @@ namespace TextRPG
                         }
                         else
                         {
-                            Console.WriteLine("얌체시군요!");
+                            Console.WriteLine("\n얌체시군요!");
                             Thread.Sleep(1000);
                         }
                     }
                     else
                     {
-                        Console.Write("퀘스트 선택창으로 돌아갑니다.");
+                        Console.Write("\n퀘스트 선택창으로 돌아갑니다.");
                         Thread.Sleep(1000);
                         break;
                     }
                 }else
                 {
-                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.WriteLine("\n잘못된 입력입니다.");
                     Thread.Sleep(1000);
                 }
             }
@@ -284,20 +284,20 @@ namespace TextRPG
                         }
                         else
                         {
-                            Console.WriteLine("...뭘 바라시는 거죠?");
+                            Console.WriteLine("\n...뭘 바라시는 거죠?");
                             Thread.Sleep(1000);
                         }
                     }
                     else
                     {
-                        Console.Write("퀘스트 선택창으로 돌아갑니다.");
+                        Console.Write("\n퀘스트 선택창으로 돌아갑니다.");
                         Thread.Sleep(1000);
                         break;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.WriteLine("\n잘못된 입력입니다.");
                     Thread.Sleep(1000);
                 }
             }
