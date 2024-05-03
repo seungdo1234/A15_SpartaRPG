@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace TextRPG
 {
     public class ItemSellScreen :Screen
@@ -14,27 +16,21 @@ namespace TextRPG
                 MyActionText();
 
                 // 0: 뒤로가기  아이템 번호 : 구매
-                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= gm.Player.PlayerEquipItems.Count)
+                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= gm.Player.PlayerEquipItems.Count + 2)
                 {
 
                     if (input == 0)
                     {
                         return;
                     }
-
-                    EquipItem equipItem = gm.Player.PlayerEquipItems[input - 1];
-
-                    equipItem.IsSell = false; // 판매
-
-                    if (equipItem.IsEquip) // 장착 중인 아이템을 팔 경우 장착 해제
+                    else if(input <= gm.Player.PlayerEquipItems.Count) 
                     {
-                        gm.Player.EquipItemFlag &= ~equipItem.EquipmenttType;
-                        equipItem.IsEquip = !equipItem.IsEquip;
-                        gm.Player.SwitchingEquipItem(equipItem);
+                        SellEquipItem(input);
                     }
-
-                    gm.Player.Gold += (int)((float)equipItem.Gold * 0.8f); // 골드 ++
-                    gm.Player.RemoveEquipItem(equipItem); // 아이템 삭제
+                    else
+                    {
+                        SellConsumableItem(input);
+                    }
                     
 
                 }
@@ -84,6 +80,15 @@ namespace TextRPG
 
             }
 
+            int num = 1;
+            foreach(var cItem in gm.Player.PlayerConsumableItems.Keys)
+            {
+                Console.WriteLine($"-{gm.Player.PlayerEquipItems.Count + num} {cItem.ItemName}\t| {cItem.ItemRank} | {cItem.Desc}\t| " +
+                    $"{MathF.Floor((float)cItem.Gold * 0.8f)} G ({gm.Player.PlayerConsumableItems[cItem]}개 보유중)");
+
+                num++;
+            }
+
             Console.WriteLine();
 
             Console.WriteLine("0. 나가기");
@@ -91,5 +96,29 @@ namespace TextRPG
             Console.WriteLine();
         }
 
+        private void SellEquipItem(int input)
+        {
+            EquipItem equipItem = gm.Player.PlayerEquipItems[input - 1];
+
+            equipItem.IsSell = false; // 판매
+
+            if (equipItem.IsEquip) // 장착 중인 아이템을 팔 경우 장착 해제
+            {
+                gm.Player.EquipItemFlag &= ~equipItem.EquipmenttType;
+                equipItem.IsEquip = !equipItem.IsEquip;
+                gm.Player.SwitchingEquipItem(equipItem);
+            }
+
+            gm.Player.Gold += (int)((float)equipItem.Gold * 0.8f); // 골드 ++
+            gm.Player.RemoveEquipItem(equipItem); // 아이템 삭제
+        }
+
+        private void SellConsumableItem(int input)
+        {
+            ConsumableItem consumableItem = dm.ShopConsumableItems[gm.Player.PlayerEquipItems.Count - 2];
+
+            gm.Player.Gold += consumableItem.Gold;
+            gm.Player.RemoveConsumableItem(consumableItem);
+        }
     }
 }

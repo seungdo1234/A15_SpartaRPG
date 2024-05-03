@@ -221,9 +221,13 @@ namespace TextRPG
         }
         public void RemoveConsumableItem(ConsumableItem consumableItem)
         {
-            if (PlayerConsumableItems.ContainsKey(consumableItem) && PlayerConsumableItems[consumableItem] > 0)
+            if (PlayerConsumableItems.ContainsKey(consumableItem) && PlayerConsumableItems[consumableItem] > 1)
             {
                 PlayerConsumableItems[consumableItem]--;
+            }
+            else
+            {
+                PlayerConsumableItems.Remove(consumableItem);
             }
         }
     }

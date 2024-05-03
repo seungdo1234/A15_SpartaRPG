@@ -18,12 +18,15 @@ namespace TextRPG
 
             while (true)
             {
+                cursorPosition = 0;
+                Console.Clear();
                 ShopText();
                 MyActionText();
 
                 // 0.뒤로 가기  1.아이템 구매  2.아이템 판매
                 if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= 2)
                 {
+                    messageType = EMessageType.DEFAULT;
                     switch (input)
                     {
                         case 1:
@@ -39,7 +42,7 @@ namespace TextRPG
                 }
                 else
                 {
-                    Console.WriteLine("\n잘못된 입력입니다! 로비로 돌아갈려면 0번을 입력하세요. \n");
+                    messageType = EMessageType.ERROR;
                 }
             }
 
