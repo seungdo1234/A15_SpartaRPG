@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,29 +12,29 @@ namespace TextRPG.Scripts
     {
         private List<Quest> StoryQuest;
         private List<Quest> MonsterQuest;
-        private List<Quest> MonsterCatalog;
-        //private List<Quest> EquipmentCatalog; //장비모으기 업적: 일단 제외.
 
-        public int[,] QuestSaver;
-
+        public List<(string QuestType, int QuestNumber, int CurrentProgress)> QuestSave;
 
         public QuestManager()
         {
             string jsonFilePath;
             string jsonText;
 
-            QuestSaver = new int[4, 2]; //왼쪽: 퀘스트 타입. 오른쪽: 퀘스트번호, currentProgress
-            QuestSaver[0, 0] = 0;   //임시: 이번 퀘스트 넘버.
-            QuestSaver[0, 1] = 4;   //임시: 클리어한 최대 스테이지 번호.
-            QuestSaver[1, 0] = 0;
-            QuestSaver[1, 1] = 5;
+            //플레이어의 진행에 따라 퀘스트 정보가 저장됨.
+            //QuestType: 배열 인덱스의 의미 전달.
+            //QuestNumber: 현재 진행해야 할 퀘스트의 index. (Log의 경우 최신 완료퀘의 index임.)
+            //CurrentProgress: 퀘스트의 진행도(사실 몬스터퀘만을 위한 것)
+            QuestSave = new List<(string QuestType, int QuestNumber, int CurrentProgress)>();
+            jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\SaveData\QuestSave.json");
+            jsonText = File.ReadAllText(jsonFilePath);
+            QuestSave = JsonConvert.DeserializeObject<List<(string QuestType, int QuestNumber, int CurrentProgress)>>(jsonText);
 
             //스토리 퀘스트 리스트
             StoryQuest = new List<Quest>();
             jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\SaveData\StoryQuest.json");
             jsonText = File.ReadAllText(jsonFilePath);
             StoryQuest = JsonConvert.DeserializeObject<List<Quest>>(jsonText);
-
+           
             //몬스터 퀘스트 리스트
             MonsterQuest = new List<Quest>();
             jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\SaveData\MonsterQuest.json");
@@ -44,16 +45,29 @@ namespace TextRPG.Scripts
 
         public Quest GetCurrentStoryQuest()
         {
-            StoryQuest[QuestSaver[0,0]].CurrentProgress = QuestSaver[0, 1];
-
-            return StoryQuest[QuestSaver[0,0]];
+            return StoryQuest[QuestSave[0].QuestNumber];
         }
 
         public Quest GetCurrentMonsterQuest()
         {
-            MonsterQuest[QuestSaver[1,0]].CurrentProgress = QuestSaver[1,1];
+            MonsterQuest[QuestSave[1].QuestNumber].CurrentProgress = QuestSave[1].CurrentProgress;
+            return MonsterQuest[QuestSave[1].QuestNumber];
+        }
 
-            return MonsterQuest[QuestSaver[1, 0]];
+        public List<Quest> GetStoryLog()
+        {
+            List<Quest> storyLog = new List<Quest>();
+            if (QuestSave[2].QuestNumber != -1)
+                storyLog.GetRange(QuestSave[2].CurrentProgress, QuestSave[2].QuestNumber);
+            return storyLog;
+        }
+
+        public List<Quest> GetMonsterLog()
+        {
+            List<Quest> monsterLog = new List<Quest>();
+            if (QuestSave[3].QuestNumber != -1)
+                monsterLog.GetRange(QuestSave[3].CurrentProgress, QuestSave[3].QuestNumber);
+            return monsterLog;
         }
     }
 }
