@@ -1,4 +1,7 @@
 ﻿
+using System;
+using System.Reflection;
+
 namespace TextRPG
 {
     public class InventoryScreen : Screen
@@ -11,11 +14,10 @@ namespace TextRPG
 
         // 인벤토리 화면
         public override void ScreenOn()
-        {
-            Console.Clear();
-
+        {            
             while (true)
-            {
+            {   
+                Console.Clear();
                 InventoryText();
                 MyActionText();
 
@@ -25,16 +27,16 @@ namespace TextRPG
                     switch (input)
                     {
                         case 1:
-                            equipScreen.ScreenOn();
+                            equipScreen.ScreenOn();                            
                             break;
-                        case 0:
-                            return;
-                    }
-                    Console.Clear();
+                        case 0:                            
+                            return;                        
+                    }                    
                 }
                 else
                 {
-                    Console.WriteLine("\n잘못된 입력입니다! 로비로 돌아갈려면 0번을 입력하세요. \n");
+                    //Console.WriteLine("\n잘못된 입력입니다! 로비로 돌아갈려면 0번을 입력하세요. \n");
+                    SystemMessageText(EMessageType.ERROR);
                 }
             }
         }
@@ -47,7 +49,7 @@ namespace TextRPG
             Console.WriteLine("인벤토리");
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.\n");
 
-            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("[장비 목록]");
             for (int i = 0; i < gm.Player.PlayerEquipItems.Count; i++)
             {
                 Console.Write("- ");
@@ -56,11 +58,19 @@ namespace TextRPG
 
             Console.WriteLine();
 
-            Console.WriteLine("1. 장착 관리");
-            Console.WriteLine("0. 나가기");
+            Console.WriteLine("[ 물약 ]");
+            foreach (var itemName in gm.Player.PlayerConsumableItems.Keys)
+            {
+                ConsumableItem cItem = dm.ConsumableItemDB.Find(obj => obj.ItemName == itemName);
+                Console.WriteLine($"- {cItem.ItemName}\t| {cItem.ItemRank} | {cItem.Desc} ({gm.Player.PlayerConsumableItems[cItem.ItemName]}개 보유중)");
+            }
 
             Console.WriteLine();
 
+            Console.WriteLine("1. 장착 관리");
+            Console.WriteLine("0. 나가기");
+
+            Console.WriteLine();            
         }
 
     }

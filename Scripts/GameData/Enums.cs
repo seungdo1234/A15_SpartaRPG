@@ -1,7 +1,7 @@
 
 namespace TextRPG
 {
-    public enum EUnitType { DEFAULT, WARRIOR, ARCHER, THIEF, MAGICIAN, ENEMY }
+    public enum EUnitType { DEFAULT, WARRIOR, ARCHER, THIEF, MAGICIAN, ENEMY, BOSS }
 
     [Flags]
     public enum EEquipItemType
@@ -19,4 +19,9 @@ namespace TextRPG
     public enum EDungeonResultType { DEFAULT, VICTORY, RETIRE }
 
     public enum EItemRank { DEFAULT, COMMON, RARE, EPIC }
+
+    public enum EConsumableType { DEFAULT, HEALTH, MANA}
+
+    public enum EMessageType { DEFAULT, ERROR, OTHERCLASSITEM , MANALESS, BUYITEM, SELL, GOLD , ALREADYBUYITEM , SHOPRESET   }
+
 }

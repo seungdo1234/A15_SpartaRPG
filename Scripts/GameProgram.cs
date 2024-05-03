@@ -22,6 +22,7 @@ namespace TextRPG
 
         static void Main(string[] args)
         {
+
             GameProgram program = new GameProgram();
 
             program.GameStart();

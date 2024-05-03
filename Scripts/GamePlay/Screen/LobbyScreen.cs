@@ -22,16 +22,15 @@ namespace TextRPG
         // 로비 화면
         public override void ScreenOn()
         {
-            Console.Clear();
-
             while (true)
-            {
+            {   
+                Console.Clear();
                 LobbyText();
                 MyActionText();
 
                 // 1, 2, 3만 입력 받을 수 있게 함 , 테스트를 위해 범위를 6 에서 7로 조정
-                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input < 7)
-                {
+                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input < 6)
+                {   
                     switch (input)
                     {
                         case 0:
@@ -52,12 +51,12 @@ namespace TextRPG
                         case 5:
                             questScreen.ScreenOn();
                             break;
-                    }
-                    Console.Clear();
+                    }                    
                 }
                 else
                 {
-                    Console.WriteLine("잘못된 입력입니다! 1부터 3까지의 숫자를 다시 입력하세요.\n");
+                    //Console.WriteLine("잘못된 입력입니다! 1부터 3까지의 숫자를 다시 입력하세요.\n");
+                    SystemMessageText(EMessageType.ERROR);
                 }
 
             }
@@ -81,7 +80,7 @@ namespace TextRPG
 
             Console.WriteLine("0. 저장 및 나가기");
 
-            Console.WriteLine();
+            Console.WriteLine();            
         }
     }
 }
