@@ -86,6 +86,9 @@ namespace TextRPG
                 case EMessageType.SHOPRESETFAIL:
                     Console.WriteLine("모든 장비를 다 구매하셨습니다.");
                     break;
+                case EMessageType.FULLCONDITION:
+                    Console.WriteLine("포션을 사용할 수 없습니다. (체력 또는 마나가 이미 최대입니다)");
+                    break;
             }
             Thread.Sleep(750);
         }
