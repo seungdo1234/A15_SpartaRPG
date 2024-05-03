@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace TextRPG
 {
@@ -108,21 +109,12 @@ namespace TextRPG
                 int actionResult = PlayerAction(enemies[targetIndex]);
                 if (actionResult == -1) continue;
 
-                //
                 if (!enemies.Any(e => e.Health > 0))
                 {
+                    winCounter++;  // 승리 카운터 증가
                     BattleEnd(true);  // 모든 적이 사망했으므로 승리 처리
-                    if (winCounter >= 10)
-                    {
-                        TriggerBossBattle();
-                    }
-                    if (playerInput == 1)
-                    {
-                        BattleStart();
-                    }
                     return;
                 }
-                //
 
                 foreach (var enemy in enemies.Where(e => e.Health > 0))
                 {
@@ -317,13 +309,52 @@ namespace TextRPG
             enemies.Clear();
             enemies.Add(boss);  // 현재 전투 몬스터 리스트에 보스 추가
             dungeonBattle();
+
         }
 
 
         private void BattleEnd(bool isWin)
         {
-            gm.Dungeon.resultType = isWin ? EDungeonResultType.VICTORY : EDungeonResultType.RETIRE;
-            dungeonResultScreen.ScreenOn();
+            if (isWin)
+            {
+                gm.Dungeon.resultType = EDungeonResultType.VICTORY;
+                if (winCounter >= 10) // 10번 승리 후 보스전 조건 체크
+                {
+                    while (true)  // 사용자가 유효한 선택을 할 때까지 반복
+                    {
+                        Console.Clear() ;
+                        Console.WriteLine("보스전에 도전하시겠습니까?");
+                        Console.WriteLine("1. 도전");
+                        Console.WriteLine("0. 던전 입구로");
+                        string choice = Console.ReadLine().ToUpper();
+
+                        if (choice == "1")
+                        {
+                            TriggerBossBattle(); // 보스전 시작
+                            winCounter = 0; // 승리 카운터 초기화
+                            return;
+                        }
+                        else if (choice == "0")
+                        {
+                            dungeonResultScreen.ScreenOn(); // 결과 화면으로 이동
+                            return;
+                        }
+                        else
+                        {
+                            SystemMessageText(EMessageType.ERROR);
+                        }
+                    }
+                }
+                else
+                {
+                    dungeonResultScreen.ScreenOn(); // 조건 미충족 시 결과 화면으로 이동
+                }
+            }
+            else
+            {
+                gm.Dungeon.resultType = EDungeonResultType.RETIRE;
+                dungeonResultScreen.ScreenOn(); // 패배 시 결과 화면으로 이동
+            }
         }
 
         private void BattleLogText()
