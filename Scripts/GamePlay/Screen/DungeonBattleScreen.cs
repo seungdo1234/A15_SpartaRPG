@@ -60,6 +60,10 @@ namespace TextRPG
             }
 
         }
+        public void CheckForDifficulty()
+        {
+
+        }
 
         public void BattleStart() // 전투 시작
         {
@@ -188,13 +192,12 @@ namespace TextRPG
 
         private void UseSkill(Enemy enemy)
         {
-            Console.WriteLine("사용할 스킬을 선택하세요 (0을 누르면 다른 적 선택):\n");
+            Console.WriteLine("사용할 스킬을 선택하세요 (0을 누르면 다른 적 선택):");
             for (int i = 0; i < gm.Player.Skills.Count; i++)
             {
                 var skill = gm.Player.Skills[i];
                 Console.WriteLine($"{i + 1}. {skill.Name} (MP: {skill.ManaCost}) - {skill.Content}");
             }
-
 
             while (true)
             {
