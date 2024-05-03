@@ -52,16 +52,16 @@ namespace TextRPG.Scripts
         public List<Quest> GetStoryLog()
         {
             List<Quest> storyLog = new List<Quest>();
-            if (QuestSave[2].QuestNumber != -1)
-                storyLog.GetRange(QuestSave[2].CurrentProgress, QuestSave[2].QuestNumber);
+            if (QuestSave[2].QuestNumber >= -1)
+                storyLog = StoryQuest.GetRange(QuestSave[2].CurrentProgress, QuestSave[2].QuestNumber + 1);
             return storyLog;
         }
 
-        public List<Quest> GetMonsterLog()
+        public List<Quest> GetEnemyLog()
         {
             List<Quest> monsterLog = new List<Quest>();
-            if (QuestSave[3].QuestNumber != -1)
-                monsterLog.GetRange(QuestSave[3].CurrentProgress, QuestSave[3].QuestNumber);
+            if (QuestSave[3].QuestNumber >= -1)
+                monsterLog = MonsterQuest.GetRange(QuestSave[3].CurrentProgress, QuestSave[3].QuestNumber + 1);
             return monsterLog;
         }
 

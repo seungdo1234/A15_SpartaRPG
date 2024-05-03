@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using TextRPG.Scripts;
 
 namespace TextRPG
@@ -52,21 +48,21 @@ namespace TextRPG
                             page--;
                             if (page == 0)
                             {
-                                Console.WriteLine("첫번째 페이지입니다!");
+                                Console.WriteLine("\n\n첫번째 페이지입니다!");
                                 page++;
-                                Thread.Sleep(1000);
-                                Console.SetCursorPosition(0, 6);
+                                Thread.Sleep(500);
+                                Console.SetCursorPosition(0, Console.CursorTop - 1);
                                 Console.WriteLine("                     ");
                             }
                             break;
                         case ConsoleKey.RightArrow:
                             page++;
-                            if (page == 5) //페이지 증가시 바꾸기
+                            if (page == 4) //페이지 증가시 바꾸기
                             {
-                                Console.WriteLine("마지막 페이지입니다!");
+                                Console.WriteLine("\n\n마지막 페이지입니다!");
                                 page--;
-                                Thread.Sleep(1000);
-                                Console.SetCursorPosition(0, 6);
+                                Thread.Sleep(500);
+                                Console.SetCursorPosition(0, Console.CursorTop - 1);
                                 Console.WriteLine("                     ");
                             }
                             break;
@@ -81,6 +77,7 @@ namespace TextRPG
                             page = 0;
                             break;
                         default:
+                            SystemMessageText(EMessageType.ERROR);
                             break;
                     }
                    
@@ -98,8 +95,7 @@ namespace TextRPG
                         MonsterQuestText();
                         break;
                     case 3:
-                        break;
-                    case 4:
+                        QuestArchiveText();
                         break;
                     default:
                         break;
@@ -120,7 +116,7 @@ namespace TextRPG
                 Console.WriteLine();
                 Console.WriteLine(q.QuestContent + "\n");
                 Console.WriteLine($"-스테이지 {q.TotalProgress} 깨기");
-                Console.WriteLine("-보상-");
+                Console.WriteLine("\n-보상-");
 
                 if (q.RewardItem != null)
                 {
@@ -131,11 +127,14 @@ namespace TextRPG
                     Console.WriteLine($"{q.RewardGold} G");
                 }
 
-                Console.WriteLine("\n");
+                Console.WriteLine();
 
                 if (q.CurrentProgress >= q.TotalProgress)
                 {
                     Console.WriteLine("1. 보상 받기");
+                }else
+                {
+                    Console.WriteLine();
                 }
 
                 Console.WriteLine("0. 돌아가기\n");
@@ -149,27 +148,30 @@ namespace TextRPG
                         if (q.CurrentProgress >= q.TotalProgress)
                         {
                             gm.Player.Gold += q.RewardGold;
-                            Console.WriteLine($"보상을 수령했습니다. +{q.RewardGold} G");
+                            Console.WriteLine($"\n보상을 수령했습니다. +{q.RewardGold} G");
                             var oldQ = gm.QuestManager.QuestSave[0];
                             var newQ = (oldQ.QuestType, ++oldQ.QuestNumber, oldQ.CurrentProgress);
                             gm.QuestManager.QuestSave[0] = newQ;
+
+                            oldQ = gm.QuestManager.QuestSave[2];
+                            newQ = (oldQ.QuestType, ++oldQ.QuestNumber, oldQ.CurrentProgress);
+                            gm.QuestManager.QuestSave[2] = newQ;
                         }
                         else
                         {
-                            Console.WriteLine("\n얌체시군요!");
-                            Thread.Sleep(1000);
+                            Console.WriteLine("\n\n얌체시군요!");
+                            Thread.Sleep(750);
                         }
                     }
                     else
                     {
-                        Console.Write("\n퀘스트 선택창으로 돌아갑니다.");
-                        Thread.Sleep(1000);
+                        Console.Write("\n\n퀘스트 선택창으로 돌아갑니다.");
+                        Thread.Sleep(750);
                         break;
                     }
                 }else
                 {
-                    Console.WriteLine("\n잘못된 입력입니다.");
-                    Thread.Sleep(1000);
+                    SystemMessageText(EMessageType.ERROR);
                 }
             }
         }
@@ -230,6 +232,9 @@ namespace TextRPG
                         default:
                             break;
                     }
+                }else
+                {
+                    Console.WriteLine();
                 }
 
                 Console.WriteLine("\n-보상-");
@@ -254,7 +259,7 @@ namespace TextRPG
                     Console.WriteLine("\n1. 보상 받기");
                 }else
                 {
-                    Console.WriteLine("(진행중)\n\n");
+                    Console.WriteLine("\n(진행중)");
                 }
 
                 Console.WriteLine("0. 돌아가기\n");
@@ -272,6 +277,12 @@ namespace TextRPG
                             var oldQ = gm.QuestManager.QuestSave[1];
                             var newQ = (oldQ.QuestType, ++oldQ.QuestNumber, CurrentProgress: -1);
                             gm.QuestManager.QuestSave[1] = newQ;
+
+                            oldQ = gm.QuestManager.QuestSave[3];
+                            newQ = (oldQ.QuestType, ++oldQ.QuestNumber, oldQ.CurrentProgress);
+                            gm.QuestManager.QuestSave[3] = newQ;
+
+                            Thread.Sleep(750);
                         }
                         else if (q.CurrentProgress < 0)
                         {
@@ -281,24 +292,138 @@ namespace TextRPG
                         }
                         else
                         {
-                            Console.WriteLine("\n...뭘 바라시는 거죠?");
-                            Thread.Sleep(1000);
+                            Console.WriteLine("\n\n...뭘 바라시는 거죠?");
+                            Thread.Sleep(750);
                         }
                     }
                     else
                     {
-                        Console.Write("\n퀘스트 선택창으로 돌아갑니다.");
-                        Thread.Sleep(1000);
+                        Console.Write("\n\n퀘스트 선택창으로 돌아갑니다.");
+                        Thread.Sleep(500);
                         break;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("\n잘못된 입력입니다.");
-                    Thread.Sleep(1000);
+                    SystemMessageText(EMessageType.ERROR);
                 }
             }
 
+        }
+
+        public void QuestArchiveText()
+        {
+            int page = 1;
+            int pageIndex = 0;
+            int pageContentNum;
+            bool isEnd = false;
+
+            while (!isEnd)
+            {
+                Console.Clear();
+                Console.WriteLine("~ Quest Archive ~");
+                Console.WriteLine("좌우 방향키로 페이지를 넘길 수 있습니다.\n");
+
+                List<Quest> EndQ = new List<Quest>();
+                
+                EndQ.AddRange(gm.QuestManager.GetStoryLog());
+                EndQ.AddRange(gm.QuestManager.GetEnemyLog());
+
+                if (EndQ.Count > 9)
+                {
+                    pageIndex = 9 * (page - 1);
+                    pageContentNum = 0;
+                    for (int i = pageIndex; i < pageIndex + 9; i++)
+                    {
+                        if (i >= EndQ.Count)
+                        {
+                            break;
+                        }else
+                        {
+                            pageContentNum++;
+                            Console.Write((pageContentNum) + ". ");
+                            Console.WriteLine(EndQ[i].QuestName);
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    for (int i = 0; i < EndQ.Count; i++)
+                    {
+                        Console.Write((i + 1) + ". ");
+                        Console.WriteLine(EndQ[i].QuestName);
+                    }
+                }
+                
+                Console.WriteLine("\n0. 돌아가기\n");
+                Console.WriteLine("원하시는 키를 입력해주세요.");
+
+                var key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.LeftArrow)
+                {
+                    page--;
+                    if (page == 0)
+                    {
+                        Console.WriteLine("\n\n첫번째 페이지입니다!");
+                        page++;
+                        Thread.Sleep(500);
+                        Console.SetCursorPosition(0, Console.CursorTop - 1);
+                        Console.WriteLine("                     ");
+                    }
+                }else if (key == ConsoleKey.RightArrow)
+                {
+                    page++;
+                    if (page * 9 >= EndQ.Count + 9) //페이지 초과 시
+                    {
+                        Console.WriteLine("\n\n마지막 페이지입니다!");
+                        page--;
+                        Thread.Sleep(500);
+                        Console.SetCursorPosition(0, Console.CursorTop - 1);
+                        Console.WriteLine("                     ");
+                    }
+                }else if (key == ConsoleKey.D0 || key == ConsoleKey.NumPad0)
+                {
+                    isEnd = true;
+                    break;
+                }else if ((key >= ConsoleKey.D1 && key <= ConsoleKey.D9))
+                {
+                    int inputNum = key - ConsoleKey.D1;
+
+                    if (pageIndex + inputNum < EndQ.Count)
+                    {
+                        Console.WriteLine("\n-돌아가려면 아무 키나 누르세요-\n");
+
+                        Console.WriteLine(EndQ[pageIndex + inputNum].QuestName + "\n");
+                        Console.WriteLine(EndQ[pageIndex + inputNum].QuestContent);
+                        Console.ReadKey();
+                    }else
+                    {
+                        SystemMessageText(EMessageType.ERROR);
+                    }
+                }
+                else if ((key >= ConsoleKey.NumPad1 && key <= ConsoleKey.NumPad9))
+                {
+                    int inputNum = key - ConsoleKey.NumPad1;
+
+                    if (pageIndex + inputNum < EndQ.Count)
+                    {
+                        Console.WriteLine("\n-돌아가려면 아무 키나 누르세요-\n");
+
+                        Console.WriteLine(EndQ[pageIndex + inputNum].QuestName + "\n");
+                        Console.WriteLine(EndQ[pageIndex + inputNum].QuestContent);
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        SystemMessageText(EMessageType.ERROR);
+                    }
+                }
+                else
+                {
+                    SystemMessageText(EMessageType.ERROR);
+                }
+            }
         }
     }
 }
