@@ -24,22 +24,13 @@ namespace TextRPG
         {
             string equip = equipItem.IsEquip ? "[E]" : "";
 
-            Console.Write($"{equip}{equipItem.ItemName} ({equipItem.GetEquipItemClassName()})\t| ");
-            
-            switch (equipItem.ItemRank)
-            {
-                case EItemRank.COMMON:
-                    Console.Write($"일반\t| ");
-                    break;
-                case EItemRank.RARE:
-                    Console.Write($"희귀\t| ");
-                    break;
-                case EItemRank.EPIC:
-                    Console.Write($"서사\t| ");
-                    break;
-            }            
+            Console.Write($"{equip}{equipItem.ItemName} ({equipItem.GetEquipItemClassName()}) ");
 
-            if(equipItem.AtkValue != 0)
+            equipItem.GetItemRankName();
+
+            Console.Write("\t| ");
+
+            if (equipItem.AtkValue != 0)
             {
                 Console.Write($"공격력 {equipItem.AtkValue} ");
             }
@@ -91,6 +82,9 @@ namespace TextRPG
                     break;
                 case EMessageType.SHOPRESET:
                     Console.WriteLine("상점 장비 아이템을 초기화했습니다.");
+                    break;
+                case EMessageType.SHOPRESETFAIL:
+                    Console.WriteLine("모든 장비를 다 구매하셨습니다.");
                     break;
             }
             Thread.Sleep(750);

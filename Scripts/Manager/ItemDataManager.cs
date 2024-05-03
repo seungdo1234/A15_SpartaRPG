@@ -48,7 +48,18 @@
                 {
                     break;
                 }
-                ShopEquipItems.Add(GetRandomEquipItem(equipItems));
+
+                // 5.3 J => 장비 아이템 중복 등장 버그 해결
+                EquipItem equipItem = GetRandomEquipItem(equipItems);
+
+                if (!ShopEquipItems.Contains(equipItem))
+                {
+                    ShopEquipItems.Add(equipItem);
+                }
+                else
+                {
+                    i--;
+                }
             }
         }
         // 리스트에서 아이템 랜덤으로 하나 리턴
@@ -56,7 +67,7 @@
         {
             int itemnum = rand.Next(0, equipItemList.Count);
 
-            return equipItemList[itemnum]; 
+            return equipItemList[itemnum];
         }
 
         // 4.30 J => 플레이어 아이템 추가 로직 변경 (상점 구매, 던전 드랍 아이템) / 5.3 J => 플레이어 보유 아이템 리스트 리팩토링

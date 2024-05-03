@@ -75,8 +75,8 @@ namespace TextRPG
 
             Console.WriteLine("Victory !");
             Console.WriteLine();
-
-            Console.WriteLine($"던전에서 몬스터 {EnemyDataManager.instance.GetSpawnMonsters(gm.Dungeon.CurrentDungeonLevel).Count}마리를 잡았습니다.");
+            // 5.3 A GetSpawnMonsters에 인자 추가
+            Console.WriteLine($"던전에서 몬스터 {EnemyDataManager.instance.GetSpawnMonsters(gm.Dungeon.CurrentDungeonLevel, EDungeonDifficulty.EASY).Count}마리를 잡았습니다.");
             Console.WriteLine();
 
             Console.WriteLine("[캐릭터 정보]");
