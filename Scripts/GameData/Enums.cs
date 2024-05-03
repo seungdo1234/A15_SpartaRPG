@@ -1,7 +1,7 @@
 
 namespace TextRPG
 {
-    public enum EUnitType { DEFAULT, WARRIOR, ARCHER, THIEF, MAGICIAN, ENEMY }
+    public enum EUnitType { DEFAULT, WARRIOR, ARCHER, THIEF, MAGICIAN, ENEMY, BOSS }
 
     [Flags]
     public enum EEquipItemType
