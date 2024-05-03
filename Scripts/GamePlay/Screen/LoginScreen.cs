@@ -40,8 +40,7 @@ namespace TextRPG
                     }
                     else
                     {
-                        Console.WriteLine("\n잘못된 입력입니다! 1 또는 2를 다시 입력하세요.");
-                        Thread.Sleep(1000);
+                        SystemMessageText(EMessageType.ERROR);
                     }
                 }
             }
@@ -102,8 +101,7 @@ namespace TextRPG
                     }
                     else
                     {
-                        Console.WriteLine("\n잘못된 입력입니다! 1 또는 2를 다시 입력하세요.");
-                        Thread.Sleep(1000);
+                        SystemMessageText(EMessageType.ERROR);
                         Console.SetCursorPosition(0, Console.CursorTop - 2);
                     }
                 }
