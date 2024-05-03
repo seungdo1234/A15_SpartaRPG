@@ -5,6 +5,7 @@ namespace TextRPG
 {
     public class ItemSellScreen :Screen
     {
+        private List<ConsumableItem > playerConsumableItems = new List<ConsumableItem>();
 
         public override void ScreenOn()
         {
@@ -12,6 +13,7 @@ namespace TextRPG
 
             while (true)
             {
+                playerConsumableItems.Clear();
                 ItemSellScreenText();
                 MyActionText();
 
@@ -83,6 +85,7 @@ namespace TextRPG
             int num = 1;
             foreach(var cItem in gm.Player.PlayerConsumableItems.Keys)
             {
+                playerConsumableItems.Add(cItem);
                 Console.WriteLine($"-{gm.Player.PlayerEquipItems.Count + num} {cItem.ItemName}\t| {cItem.ItemRank} | {cItem.Desc}\t| " +
                     $"{MathF.Floor((float)cItem.Gold * 0.8f)} G ({gm.Player.PlayerConsumableItems[cItem]}개 보유중)");
 
@@ -115,7 +118,7 @@ namespace TextRPG
 
         private void SellConsumableItem(int input)
         {
-            ConsumableItem consumableItem = dm.ShopConsumableItems[gm.Player.PlayerEquipItems.Count - 2];
+            ConsumableItem consumableItem = playerConsumableItems[input- gm.Player.PlayerEquipItems.Count - 1];
 
             gm.Player.Gold += consumableItem.Gold;
             gm.Player.RemoveConsumableItem(consumableItem);
