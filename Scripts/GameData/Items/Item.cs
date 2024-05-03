@@ -11,5 +11,17 @@ namespace TextRPG
         public int Gold { get; protected set; }
 
 
+        // 아이템 등급 반환하는 함수
+        public string GetItemRankName()
+        {
+            string itemRankName = ItemRank switch
+            {
+                EItemRank.COMMON => "일반",
+                EItemRank.RARE => "희귀",
+                EItemRank.EPIC => "영웅",
+            };
+
+            return itemRankName;
+        }
     }
 }

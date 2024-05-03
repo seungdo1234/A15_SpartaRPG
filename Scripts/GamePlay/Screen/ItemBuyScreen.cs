@@ -77,7 +77,7 @@ namespace TextRPG
             {
                 EquipItem equipItem = dm.ShopEquipItems[i];
 
-                Console.Write($"- {i + 2} {equipItem.ItemName} ({equipItem.GetEquipItemClassName()})\t| ");
+                Console.Write($"- {i + 2} {equipItem.ItemName} ({equipItem.GetEquipItemClassName()}) [{equipItem.GetItemRankName()}]\t| ");
 
 
                 if (equipItem.AtkValue != 0)
@@ -102,7 +102,7 @@ namespace TextRPG
             for (int i = 0; i < dm.ShopConsumableItems.Length; i++)
             {
                 int num = gm.Player.PlayerConsumableItems.ContainsKey(dm.ShopConsumableItems[i].ItemName) ? gm.Player.PlayerConsumableItems[dm.ShopConsumableItems[i].ItemName] : 0;
-                Console.WriteLine($"- {dm.ShopEquipItems.Count + i + 2} {dm.ShopConsumableItems[i].ItemName}\t| {dm.ShopConsumableItems[i].ItemRank}\t|" +
+                Console.WriteLine($"- {dm.ShopEquipItems.Count + i + 2} {dm.ShopConsumableItems[i].ItemName} [{dm.ShopConsumableItems[i].GetItemRankName()}]\t|" +
                     $" {dm.ShopConsumableItems[i].Desc}\t| {dm.ShopConsumableItems[i].Gold}G ({num}개 보유중)");
             }
 
