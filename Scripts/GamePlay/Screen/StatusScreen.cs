@@ -7,23 +7,23 @@ namespace TextRPG
         // 상태 보기 
         public override void ScreenOn()
         {
-
-            Console.Clear();
-
             while (true)
             {
+                cursorPosition = 0;
+                Console.Clear();
                 StatusText();
                 MyActionText();
 
                 // 0 입력 시 나가기
                 if (int.TryParse(Console.ReadLine(), out int input) && input == 0)
                 {
-                    Console.Clear();
+                    messageType = EMessageType.DEFAULT;
                     return;
                 }
                 else
                 {
-                    Console.WriteLine("잘못된 입력입니다! 로비로 돌아갈려면 0번을 입력하세요. \n");
+                    //Console.WriteLine("잘못된 입력입니다! 로비로 돌아갈려면 0번을 입력하세요. \n");
+                    messageType = EMessageType.ERROR;
                 }
             }
 
@@ -46,7 +46,7 @@ namespace TextRPG
             Console.WriteLine($"마나 : {gm.Player.Mana}/{gm.Player.MaxMana}");
 
             Console.WriteLine();
-
+            
             // 현재 장착중인 장비 능력치 적용
             Console.Write($"공격력 : {gm.Player.GetAtkValue():F1}");
             if (gm.Player.EquipAtkItem != null )
@@ -71,6 +71,7 @@ namespace TextRPG
             Console.WriteLine($"Gold : {gm.Player.Gold} G");
 
             Console.WriteLine("\n0. 나가기\n");
+            cursorPosition += 21;
         }
     }
 }

@@ -21,4 +21,7 @@ namespace TextRPG
     public enum EItemRank { DEFAULT, COMMON, RARE, EPIC }
 
     public enum EConsumableType { DEFAULT, HEALTH, MANA}
+
+    public enum EMessageType { DEFAULT, ERROR }
+
 }

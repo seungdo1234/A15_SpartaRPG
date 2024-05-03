@@ -153,23 +153,25 @@ namespace TextRPG
                         {
                             gm.Player.Gold += q.RewardGold;
                             Console.WriteLine($"보상을 수령했습니다. +{q.RewardGold} G");
-                            gm.QuestManager.QuestSaver[0, 0]++;
+                            var oldQ = gm.QuestManager.QuestSave[0];
+                            var newQ = (oldQ.QuestType, ++oldQ.QuestNumber, oldQ.CurrentProgress);
+                            gm.QuestManager.QuestSave[0] = newQ;
                         }
                         else
                         {
-                            Console.WriteLine("얌체시군요!");
+                            Console.WriteLine("\n얌체시군요!");
                             Thread.Sleep(1000);
                         }
                     }
                     else
                     {
-                        Console.Write("퀘스트 선택창으로 돌아갑니다.");
+                        Console.Write("\n퀘스트 선택창으로 돌아갑니다.");
                         Thread.Sleep(1000);
                         break;
                     }
                 }else
                 {
-                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.WriteLine("\n잘못된 입력입니다.");
                     Thread.Sleep(1000);
                 }
             }
@@ -190,7 +192,7 @@ namespace TextRPG
 
                 if (q.CurrentProgress >= 0)
                 {
-                    switch (gm.QuestManager.QuestSaver[1, 0])
+                    switch (gm.QuestManager.QuestSave[1].QuestNumber)
                     {
                         case 0:
                             Console.WriteLine($"-몬스터 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
@@ -244,15 +246,18 @@ namespace TextRPG
                     Console.WriteLine($"{q.RewardGold} G");
                 }
 
-                Console.WriteLine("\n");
+                Console.WriteLine("");
 
                 if (q.CurrentProgress < 0)
                 {
-                    Console.WriteLine("1. 수락하기");
+                    Console.WriteLine("\n1. 수락하기");
                 }
                 else if (q.CurrentProgress >= q.TotalProgress)
                 {
-                    Console.WriteLine("1. 보상 받기");
+                    Console.WriteLine("\n1. 보상 받기");
+                }else
+                {
+                    Console.WriteLine("(진행중)\n\n");
                 }
 
                 Console.WriteLine("0. 돌아가기\n");
@@ -267,29 +272,32 @@ namespace TextRPG
                         {
                             gm.Player.Gold += q.RewardGold;
                             Console.WriteLine($"보상을 수령했습니다. +{q.RewardGold} G");
-                            gm.QuestManager.QuestSaver[1, 0]++;
-                            gm.QuestManager.QuestSaver[1, 1] = -1;
+                            var oldQ = gm.QuestManager.QuestSave[1];
+                            var newQ = (oldQ.QuestType, ++oldQ.QuestNumber, CurrentProgress: -1);
+                            gm.QuestManager.QuestSave[1] = newQ;
                         }
                         else if (q.CurrentProgress < 0)
                         {
-                            gm.QuestManager.QuestSaver[1, 1] = 0;
+                            var oldQ = gm.QuestManager.QuestSave[1];
+                            var newQ = (oldQ.QuestType, ++oldQ.QuestNumber, CurrentProgress: 0);
+                            gm.QuestManager.QuestSave[1] = newQ;
                         }
                         else
                         {
-                            Console.WriteLine("...뭘 바라시는 거죠?");
+                            Console.WriteLine("\n...뭘 바라시는 거죠?");
                             Thread.Sleep(1000);
                         }
                     }
                     else
                     {
-                        Console.Write("퀘스트 선택창으로 돌아갑니다.");
+                        Console.Write("\n퀘스트 선택창으로 돌아갑니다.");
                         Thread.Sleep(1000);
                         break;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.WriteLine("\n잘못된 입력입니다.");
                     Thread.Sleep(1000);
                 }
             }
