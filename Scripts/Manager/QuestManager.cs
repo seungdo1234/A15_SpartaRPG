@@ -45,11 +45,6 @@ namespace TextRPG.Scripts
 
         public Quest GetCurrentStoryQuest()
         {
-            return StoryQuest[QuestSave[0].QuestNumber];
-        }
-
-        public Quest GetCurrentMonsterQuest()
-        {
             MonsterQuest[QuestSave[1].QuestNumber].CurrentProgress = QuestSave[1].CurrentProgress;
             return MonsterQuest[QuestSave[1].QuestNumber];
         }
@@ -68,6 +63,32 @@ namespace TextRPG.Scripts
             if (QuestSave[3].QuestNumber >= -1)
                 monsterLog = MonsterQuest.GetRange(QuestSave[3].CurrentProgress, QuestSave[3].QuestNumber + 1);
             return monsterLog;
+        }
+
+        public void SetMonsterQuest(Enemy deadEnemy)
+        {
+            var oldQ = QuestSave[1];
+            int currentQ = oldQ.QuestNumber;
+            int current = oldQ.CurrentProgress; 
+
+            if (current == -1)
+            {
+                return;
+            }
+            else
+            {
+                if (currentQ - 1 == EnemyDataManager.instance.MonsterDB.IndexOf(deadEnemy))
+                {
+                    var newQ = (oldQ.QuestType, oldQ.QuestNumber, ++oldQ.CurrentProgress);
+
+                    QuestSave[1] = newQ;
+                }else if (currentQ == 0)
+                {
+                    var newQ = (oldQ.QuestType, oldQ.QuestNumber, ++oldQ.CurrentProgress);
+
+                    QuestSave[1] = newQ;
+                }
+            }
         }
     }
 }
