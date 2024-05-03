@@ -59,7 +59,10 @@ namespace TextRPG
             reward = gm.Dungeon.GetDungeonReward();
 
             gm.Player.AddEquipItem(reward.rewardEquipItem);
-            gm.Player.AddConsumableItem(reward.rewardConsumableItem.ItemName);
+            if(reward.rewardEquipItem != null)
+            {
+                gm.Player.AddConsumableItem(reward.rewardConsumableItem.ItemName);
+            }
             gm.Player.Gold += reward.gold;
          //   gm.Player.ExpUp(reward.exp); 
 

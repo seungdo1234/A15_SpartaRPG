@@ -47,7 +47,7 @@ namespace TextRPG
         }
 
         private int GetGoldReward()
-        {
+        { 
             int goldReward = baseGoldReward[(int)GameManager.instance.Dungeon.dif - 1];
             int randomGold = random.Next(-100, 101);
 

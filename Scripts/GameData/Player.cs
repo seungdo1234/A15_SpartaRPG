@@ -25,7 +25,7 @@ namespace TextRPG
         {
             Name = name;
             Level = 1;
-            Atk = 10;
+            Atk = 10000;
             Def = 5;
             MaxHealth = 100;
             Health = MaxHealth;
