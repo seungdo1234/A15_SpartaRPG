@@ -131,17 +131,30 @@ namespace TextRPG
             }
         }
 
+        // 체력 및 마나 회복 함수
         public void RecoveryHealth(int health)
         {
-            if (this.Health + health > MaxHealth)
+            if (base.Health + health > MaxHealth)
             {
-                this.Health = MaxHealth;
+                base.Health = MaxHealth;
             }
             else
             {
-                this.Health += health;
+                base.Health += health;
             }
         }
+        public void RecoveryMana(int mana)
+        {
+            if (base.Mana + mana > MaxMana)
+            {
+                base.Mana = MaxMana;
+            }
+            else
+            {
+                base.Mana += mana;
+            }
+        }
+
         public void ExpUp(int exp) // 경험치 상승
         {
             // 4.30 J => 경험치 상승 수정
