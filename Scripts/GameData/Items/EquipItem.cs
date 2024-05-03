@@ -11,12 +11,12 @@ namespace TextRPG
         public bool IsSell { get; set; }
 
 
-        public EquipItem(EUnitType unitType,EItemRank itemRank, string itemName, EEquipItemType itemType, float atkValue, float defValue, string desc, int gold)
+        public EquipItem(EUnitType unitType,EItemRank itemRank, string itemName, EEquipItemType equipmenttType, float atkValue, float defValue, string desc, int gold)
         {
             UnitType = unitType;
             ItemRank = itemRank;
             ItemName = itemName;
-            EquipmenttType = itemType;
+            EquipmenttType = equipmenttType;
             AtkValue = atkValue;
             DefValue = defValue;
             Desc = desc;
