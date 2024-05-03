@@ -15,17 +15,18 @@ namespace TextRPG
             CriticalDamage = 1.6f;
         }
 
-        public Enemy(Enemy e)
+        // 5.3 A 매개변수 추가, 해당 매개변수는 EnemyDataManager에서 확인 가능)
+        public Enemy(Enemy e, float statMultiplier)
         {
             Name = e.Name;
             Level = e.Level;
-            Atk = e.Atk;
-            Def = e.Def;
-            Health = e.Health;
-            MaxHealth = e.MaxHealth;
+            Atk = e.Atk * statMultiplier;
+            Def = e.Def * statMultiplier;
+            Health = e.Health * statMultiplier;
+            MaxHealth = e.MaxHealth * statMultiplier;
             AvoidChance = e.AvoidChance;
             CriticalChance = e.CriticalChance;
-            CriticalDamage = e.CriticalDamage;
+            CriticalDamage = e.CriticalDamage * statMultiplier;
         }
 
         public override string ToString()
