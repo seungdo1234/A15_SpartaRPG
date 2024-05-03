@@ -89,8 +89,6 @@ namespace TextRPG
 
                 //새 플레이어 객체 생성
                 Player newPlayer = new Player(name);
-                string newPlayerJson = JsonConvert.SerializeObject(newPlayer);
-                File.WriteAllText(playerFile, newPlayerJson);
                 return newPlayer;
             }
         }
