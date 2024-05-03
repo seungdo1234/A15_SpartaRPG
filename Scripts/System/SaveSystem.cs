@@ -1,5 +1,6 @@
 ﻿
 using Newtonsoft.Json;
+using TextRPG.Scripts;
 
 namespace TextRPG
 {
@@ -8,6 +9,7 @@ namespace TextRPG
     { 
         public Player player;
         public List<EquipItem> shopItems;
+        public List<(string QuestType, int QuestNumber, int CurrentProgress)> questSave;
 
         public PlayerDatas()
         {
@@ -94,6 +96,12 @@ namespace TextRPG
 
                 //새 플레이어 객체 생성
                 Player newPlayer = new Player(name);
+
+                //QuestSave 초기화
+                GameManager.instance.QuestManager.QuestSave[0] = (QuestType: "story", QuestNumber: 0, CurrentProgress: -1);
+                GameManager.instance.QuestManager.QuestSave[1] = (QuestType: "monster", QuestNumber: 0, CurrentProgress: -1);
+                GameManager.instance.QuestManager.QuestSave[2] = (QuestType: "storyLog", QuestNumber: -1, CurrentProgress: 0);
+                GameManager.instance.QuestManager.QuestSave[3] = (QuestType: "monsterLog", QuestNumber: -1, CurrentProgress: 0);
                 return newPlayer;
             }
         }

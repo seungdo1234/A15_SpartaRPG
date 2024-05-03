@@ -232,7 +232,8 @@ namespace TextRPG
                         default:
                             break;
                     }
-                }else
+                }
+                else
                 {
                     Console.WriteLine();
                 }
@@ -257,7 +258,8 @@ namespace TextRPG
                 else if (q.CurrentProgress >= q.TotalProgress)
                 {
                     Console.WriteLine("\n1. 보상 받기");
-                }else
+                }
+                else
                 {
                     Console.WriteLine("\n(진행중)");
                 }
