@@ -69,5 +69,31 @@ namespace TextRPG.Scripts
                 monsterLog.GetRange(QuestSave[3].CurrentProgress, QuestSave[3].QuestNumber);
             return monsterLog;
         }
+
+        public void SetMonsterQuest(Enemy deadEnemy)
+        {
+            var oldQ = QuestSave[1];
+            int currentQ = oldQ.QuestNumber;
+            int current = oldQ.CurrentProgress; 
+
+            if (current == -1)
+            {
+                return;
+            }
+            else
+            {
+                if (currentQ - 1 == EnemyDataManager.instance.MonsterDB.IndexOf(deadEnemy))
+                {
+                    var newQ = (oldQ.QuestType, oldQ.QuestNumber, ++oldQ.CurrentProgress);
+
+                    QuestSave[1] = newQ;
+                }else if (currentQ == 0)
+                {
+                    var newQ = (oldQ.QuestType, oldQ.QuestNumber, ++oldQ.CurrentProgress);
+
+                    QuestSave[1] = newQ;
+                }
+            }
+        }
     }
 }

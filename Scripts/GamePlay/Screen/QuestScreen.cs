@@ -276,7 +276,7 @@ namespace TextRPG
                         else if (q.CurrentProgress < 0)
                         {
                             var oldQ = gm.QuestManager.QuestSave[1];
-                            var newQ = (oldQ.QuestType, ++oldQ.QuestNumber, CurrentProgress: 0);
+                            var newQ = (oldQ.QuestType, oldQ.QuestNumber, CurrentProgress: 0);
                             gm.QuestManager.QuestSave[1] = newQ;
                         }
                         else
