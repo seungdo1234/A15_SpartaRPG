@@ -15,8 +15,7 @@ namespace TextRPG
         public override void ScreenOn()
         {            
             while (true)
-            {
-                cursorPosition = 0;
+            {   
                 Console.Clear();
                 InventoryText();
                 MyActionText();
@@ -24,23 +23,19 @@ namespace TextRPG
                 // 1: 장착 관리, 2: 나가기
                 if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= 1)
                 {
-                    messageType = EMessageType.DEFAULT;
                     switch (input)
                     {
                         case 1:
                             equipScreen.ScreenOn();                            
                             break;
                         case 0:                            
-                            return;
-                        default:
-                            messageType = EMessageType.ERROR;
-                            break;
+                            return;                        
                     }                    
                 }
                 else
                 {
                     //Console.WriteLine("\n잘못된 입력입니다! 로비로 돌아갈려면 0번을 입력하세요. \n");
-                    messageType = EMessageType.ERROR;
+                    SystemMessageText(EMessageType.ERROR);
                 }
             }
         }
@@ -65,8 +60,7 @@ namespace TextRPG
             Console.WriteLine("1. 장착 관리");
             Console.WriteLine("0. 나가기");
 
-            Console.WriteLine();
-            cursorPosition += 9;
+            Console.WriteLine();            
         }
 
     }
