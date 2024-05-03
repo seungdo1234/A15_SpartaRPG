@@ -26,17 +26,14 @@ namespace TextRPG
                     switch (page)
                     {
                         case 1:
-                            Console.WriteLine("스토리 퀘스트 >     ");
+                            Console.WriteLine("스토리 퀘스트 >      ");
                             break;
                         case 2:
-                            Console.WriteLine("< 사냥 퀘스트 >       ");
+                            Console.WriteLine("< 사냥 퀘스트 >      ");
                             break;
                         case 3:
-                            Console.WriteLine("< 퀘스트 아카이브       ");
+                            Console.WriteLine("< 완료된 퀘스트      ");
                             break;
-                        //case 4:
-                        //    Console.WriteLine("< 수집한 장비 업적     ");
-                        //    break;
                         default:
                             break;
                     }
@@ -64,7 +61,7 @@ namespace TextRPG
                             break;
                         case ConsoleKey.RightArrow:
                             page++;
-                            if (page == 4) //페이지 증가시 바꾸기
+                            if (page == 5) //페이지 증가시 바꾸기
                             {
                                 Console.WriteLine("마지막 페이지입니다!");
                                 page--;
@@ -78,7 +75,7 @@ namespace TextRPG
                             IsEnterKey = true;
                             page = 0;
                             break;
-                        case ConsoleKey.NumPad0:
+                        case ConsoleKey.NumPad0: //숫자패드 0
                             isExit = true;
                             IsEnterKey = true;
                             page = 0;
@@ -102,8 +99,8 @@ namespace TextRPG
                         break;
                     case 3:
                         break;
-                    //case 4:
-                    //    break;
+                    case 4:
+                        break;
                     default:
                         break;
                 }
