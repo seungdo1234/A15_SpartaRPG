@@ -39,16 +39,36 @@ namespace TextRPG
             }
         }
 
+        public bool CheckLoad()
+        {
+            string saveDirectory = $"{path}\\SaveSlot";
+            string playerData = Path.Combine(saveDirectory, "PlayerData.json");
+
+            if (!Directory.Exists(saveDirectory)) //폴더 유무
+            {
+                Directory.CreateDirectory(saveDirectory); 
+                return false;
+            }
+            else if (!File.Exists(playerData)) //플레이어 파일 유무
+            {
+                return false;
+            }
+            {
+                return true;
+            }
+        }
+
+        //24.05.03 데이터 로드 방식 변경 - C
         public Player Load(string name)
         {
-            string filePath = $"{path}\\{name}.json";
+            string filePath = $"{path}\\SaveSlot\\PlayerData.json";
             string itemJsonFilePath = Path.Combine(path, @"..\..\..\SaveData\ItemData.json");
 
             // 전체 아이템 데이터 불러오기
             string itemJsonData = File.ReadAllText(itemJsonFilePath); 
             ItemDataManager.instance.SetShopItems(JsonConvert.DeserializeObject<List<EquipItem>>(itemJsonData));
 
-            if (File.Exists(filePath)) // 파일이 존재하는지 -> 이미 데이터가 존재하는 지
+            if (name == "") // 불러오기 승낙한 경우
             {
                 // 데이터가 존재한다면 해당 데이터를 읽어옴
                 string playerJsonData = File.ReadAllText(filePath);
@@ -61,13 +81,12 @@ namespace TextRPG
                 return playerData.player;
 
             }
-            else // 데이터가 없다면
+            else // 불러오기 거절 또는 새로운 플레이어인 경우
             {
                 // 기본 데이터로 초기화
                 ItemDataManager.instance.Init();
                 return new Player(name);
             }
         }
-
     }
 }
