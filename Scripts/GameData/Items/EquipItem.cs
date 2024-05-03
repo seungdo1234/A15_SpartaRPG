@@ -10,7 +10,6 @@ namespace TextRPG
         public bool IsEquip { get; set; }
         public bool IsSell { get; set; }
 
-
         public EquipItem(EUnitType unitType,EItemRank itemRank, string itemName, EEquipItemType equipmenttType, float atkValue, float defValue, string desc, int gold)
         {
             UnitType = unitType;
@@ -38,5 +37,14 @@ namespace TextRPG
 
             return playerClass;
         }
+       
+        // 던전 보상 장비 아이템 깊은 복사
+        public EquipItem CopyEquipItem()
+        {
+            EquipItem equipItem = new EquipItem(UnitType, ItemRank, ItemName, EquipmenttType, AtkValue,  DefValue, Desc, Gold);
+
+            return equipItem;
+        }
+
     }
 }
