@@ -25,6 +25,7 @@ namespace TextRPG
 
             reward.gold = GetGoldReward();
 
+            // 난이도 별 확률에 따라 아이템 등급 정하기
             EItemRank itemRank = GameManager.instance.Dungeon.dif switch
             {
                 EDungeonDifficulty.EASY => GetRandomItemRank(easyRewardPercent),
@@ -32,8 +33,10 @@ namespace TextRPG
                 EDungeonDifficulty.HARD =>GetRandomItemRank(hardRewardPercent),
             };
 
+            // 장비 아이템 get
             reward.rewardEquipItem = GetEquipItemReward(itemRank);
 
+            // 소비 아이템 등장 유무 
             if (random.Next(1, 101) <= consumableItemRewardPercent[(int)GameManager.instance.Dungeon.dif - 1])
             {
                 reward.rewardConsumableItem = GetConsumableItemReward(itemRank);
