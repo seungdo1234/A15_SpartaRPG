@@ -37,11 +37,17 @@
         // 5.1 J => 상점 아이템 초기화 로직 구현
         public void ShopItemReset() // 상점 아이템 초기화
         {
-            List<EquipItem> equipItems = EquipItemDB.FindAll(obj => obj.ItemRank != EItemRank.EPIC);
+            List<EquipItem> equipItems = EquipItemDB.FindAll(obj => obj.ItemRank != EItemRank.EPIC && obj.IsSell == false);
 
             ShopEquipItems.Clear();
+
             for (int i = 0; i < ShopEquipItemCount; i++)
             {
+                // 5.3 J => 남아 있는 장비 아이템이 ShopEquipItemCount보다 낮을 수 도 있기 때문에 추가
+                if (equipItems.Count <= i)
+                {
+                    break;
+                }
                 ShopEquipItems.Add(GetRandomEquipItem(equipItems));
             }
         }
