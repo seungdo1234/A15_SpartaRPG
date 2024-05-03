@@ -38,11 +38,16 @@ namespace TextRPG
                     case "1":
                         BattleStart();
                         return;
-                    default:
+
+                    case "0":
                         return;
+
+                    default:
+                        Console.WriteLine("잘못된 입력입니다.");
+                        Thread.Sleep(75);
+                        continue;
                 }
             }
-
         }
         private void AppearEnemy()
         {
