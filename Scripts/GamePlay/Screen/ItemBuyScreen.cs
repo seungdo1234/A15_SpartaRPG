@@ -31,10 +31,11 @@ namespace TextRPG
                         {
                             gm.Player.Gold -= resetGold;
                             dm.ShopItemReset();
+                            SystemMessageText(EMessageType.SHOPRESET);
                         }
                         else
                         {
-                            Console.WriteLine("Gold가 부족합니다 !\n");
+                            SystemMessageText(EMessageType.GOLD);
                         }
                     }
                     else if (dm.ShopEquipItems.Count + 1 >= input)
@@ -49,7 +50,7 @@ namespace TextRPG
                 }
                 else
                 {
-                    Console.WriteLine("잘못된 입력입니다! 숫자를 제대로 입력하세요. \n");
+                    SystemMessageText(EMessageType.ERROR);
                 }
             }
 
@@ -120,18 +121,18 @@ namespace TextRPG
             // 아이템 구매 및 실패
             if (equipItem.IsSell)
             {
-                Console.WriteLine("이미 구매한 아이템입니다. \n");
+                SystemMessageText(EMessageType.ALREADYBUYITEM);
             }
             else
             {
                 if (gm.Player.Gold >= equipItem.Gold) // 아이템 구매
                 {
-                    Console.WriteLine("구매를 완료했습니다. \n");
+                    SystemMessageText(EMessageType.BUYITEM);
                     dm.BuyShopItem(equipItem);
                 }
                 else // 실패
                 {
-                    Console.WriteLine("Gold가 부족합니다 !\n");
+                    SystemMessageText(EMessageType.GOLD);
                 }
             }
         }
@@ -141,12 +142,13 @@ namespace TextRPG
             ConsumableItem consumableItem = dm.ShopConsumableItems[input - dm.ShopEquipItems.Count - 2];
              if (gm.Player.Gold >= consumableItem.Gold)
             {
+                SystemMessageText(EMessageType.BUYITEM);
                 gm.Player.Gold -= consumableItem.Gold;
                 gm.Player.AddConsumableItem(consumableItem);
             }
             else
             {
-                Console.WriteLine("Gold가 부족합니다 !\n");
+                SystemMessageText(EMessageType.GOLD);
             }
         }
     }

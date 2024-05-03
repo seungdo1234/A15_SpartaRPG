@@ -9,10 +9,10 @@ namespace TextRPG
 
         public override void ScreenOn()
         {
-            Console.Clear();
 
             while (true)
             {
+                Console.Clear();
                 playerConsumableItems.Clear();
                 ItemSellScreenText();
                 MyActionText();
@@ -33,12 +33,12 @@ namespace TextRPG
                     {
                         SellConsumableItem(input);
                     }
-                    
 
+                    SystemMessageText(EMessageType.SELL);
                 }
                 else
                 {
-                    Console.WriteLine("잘못된 입력입니다! 숫자를 제대로 입력하세요. \n");
+                    SystemMessageText(EMessageType.ERROR);
                 }
             }
         }

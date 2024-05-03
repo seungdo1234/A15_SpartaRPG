@@ -22,5 +22,5 @@ namespace TextRPG
 
     public enum EConsumableType { DEFAULT, HEALTH, MANA}
 
-    public enum EMessageType { DEFAULT, ERROR, OTHERCLASSITEM }
+    public enum EMessageType { DEFAULT, ERROR, OTHERCLASSITEM , BUYITEM, SELL, GOLD , ALREADYBUYITEM , SHOPRESET   }
 }
