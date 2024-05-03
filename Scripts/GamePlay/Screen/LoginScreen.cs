@@ -11,46 +11,45 @@ namespace TextRPG
             classSelectionScreen = new ClassSelectionScreen();
             lobbyScreen = new LobbyScreen();
         }
+
         // 로그인
-        public override void ScreenOn()
+        public override void ScreenOn() //24.05.03 데이터 로드 방식 변경 - C
         {
-            string playerName = NameCheck();
+            bool hasLoad = gm.SaveSystem.CheckLoad();
+            string playerName;
 
-
-            // 닉네임을 입력받고 해당 닉네임의 데이터를 받아오고 게임 시작
-            gm.Player = gm.SaveSystem.Load(playerName);
-
-
-            if(gm.Player.ePlayerClass == EUnitType.DEFAULT) // 새로 생성한 플레이어 데이터라면
+            if (hasLoad)
             {
-                classSelectionScreen.ScreenOn(); // 직업 선택
-            }
-            else
-            {
-                bool isValidInput = false;
-
-                while (!isValidInput)
+                while (true)
                 {
                     Console.Clear();
-                    Console.WriteLine("같은 이름의 데이터가 있습니다! 불러오시겠습니까?");
+                    Console.WriteLine("과거 데이터가 존재합니다! 불러오시겠습니까?");
                     Console.Write("1. 예\t2. 아니오 >> ");
 
                     if (int.TryParse(Console.ReadLine(), out int input) && (input == 1 || input == 2))
                     {
-                        isValidInput = true;
-
-                        if (input == 2)
+                        if (input == 1)
                         {
-                            classSelectionScreen.ScreenOn();
+                            gm.Player = gm.SaveSystem.Load(""); //이름 입력 무시
+                        }else
+                        {
+                            playerName = NameCheck();
+                            gm.Player = gm.SaveSystem.Load(playerName); //새로운 이름 입력받기
                         }
-                        else { }
+                        break;
                     }
                     else
                     {
-                        Console.WriteLine("\n잘못된 입력입니다! 1 또는 2를 다시 입력하세요.\n");
+                        Console.WriteLine("\n잘못된 입력입니다! 1 또는 2를 다시 입력하세요.");
                         Thread.Sleep(1000);
                     }
                 }
+            }
+            else
+            {
+                playerName = NameCheck();
+                gm.Player = gm.SaveSystem.Load(playerName); //새로운 이름 입력받기
+
             }
 
             lobbyScreen.ScreenOn();
@@ -82,6 +81,13 @@ namespace TextRPG
 
                 name = Console.ReadLine();
 
+                if (name == "")
+                {
+                    Console.WriteLine("\n잘못된 입력입니다! 한 글자 이상 입력해주세요.");
+                    Thread.Sleep(1000);
+                    continue;
+                }
+
                 while (true)
                 {
                     Console.WriteLine("                                                  ");
@@ -96,15 +102,12 @@ namespace TextRPG
                     }
                     else
                     {
-                        Console.WriteLine("\n잘못된 입력입니다! 1 또는 2를 다시 입력하세요.\n");
+                        Console.WriteLine("\n잘못된 입력입니다! 1 또는 2를 다시 입력하세요.");
                         Thread.Sleep(1000);
-                        Console.SetCursorPosition(0, 9);
+                        Console.SetCursorPosition(0, Console.CursorTop - 2);
                     }
                 }
-                
-
             } while (!(yesOrNo == 1));
-
 
             return name;
         }

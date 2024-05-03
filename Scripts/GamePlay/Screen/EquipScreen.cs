@@ -8,28 +8,34 @@ namespace TextRPG
         public override void ScreenOn()
         {            
             while (true)
-            {
-                cursorPosition = 0;
+            {   
                 Console.Clear();
                 EquipText ();
                 MyActionText();
 
                 // 0. 뒤로 가기  장비 번호 : 장착/ 장착 해제
                 if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= gm.Player.PlayerEquipItems.Count)
-                {
-                    messageType = EMessageType.DEFAULT;
+                {   
                     if (input == 0) 
                     {                        
                         return;
-                    }
+                    }                    
 
                     EquipItem equipItem = gm.Player.PlayerEquipItems[input - 1];
-                    Equip(equipItem);                   
+
+                    if(equipItem.UnitType == gm.Player.ePlayerClass || equipItem.UnitType == EUnitType.DEFAULT) // 플레이어 직업장비or공용장비
+                    {
+                        Equip(equipItem);
+                    }
+                    else
+                    {
+                        SystemMessageText(EMessageType.OTHERCLASSITEM);                        
+                    }
                 }
                 else
                 {
                     //Console.WriteLine("잘못된 입력입니다! 숫자를 제대로 입력하세요. \n");
-                    messageType = EMessageType.ERROR;
+                    SystemMessageText(EMessageType.ERROR);
                }
             }
         }
@@ -84,9 +90,7 @@ namespace TextRPG
 
             Console.WriteLine("0. 나가기");
 
-            Console.WriteLine();
-            cursorPosition += 8;
-
+            Console.WriteLine();   
         }
     }
 }
