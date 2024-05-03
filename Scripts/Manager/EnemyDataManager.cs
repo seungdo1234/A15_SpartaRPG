@@ -30,8 +30,9 @@ namespace TextRPG
         }
 
 
-        public List<Enemy> GetSpawnMonsters(int CurrentDungeonLevel)
+        public List<Enemy> GetSpawnMonsters(int CurrentDungeonLevel, EDungeonDifficulty difficulty)
         {
+            float statMultiplier = GetStatMultiplier(difficulty);
             int totalLevelLimit = CurrentDungeonLevel * 2;
             int maxLevel = 10;
             int[] monsterLevels = randomMonsterEncount(totalLevelLimit, maxLevel);
@@ -41,8 +42,8 @@ namespace TextRPG
             foreach (int i in monsterLevels)
             {
                 if (i == 0) continue;
-
-                SpawnMonsters.Add(new Enemy(MonsterDB[i - 1]));
+                Enemy newEnemy = new Enemy(MonsterDB[i - 1], statMultiplier);
+                SpawnMonsters.Add(newEnemy);
             }
 
             return SpawnMonsters;
@@ -78,7 +79,23 @@ namespace TextRPG
 
         public Enemy GetBoss()
         {
+            BossMonster = new Boss();
             return BossMonster;
+        }
+
+        private float GetStatMultiplier(EDungeonDifficulty difficulty)
+        {
+            switch (difficulty)
+            {
+                case EDungeonDifficulty.EASY:
+                    return 0.8f;
+                case EDungeonDifficulty.NORMAL:
+                    return 1.0f;
+                case EDungeonDifficulty.HARD:
+                    return 1.5f;
+                default:
+                    return 1.0f; // 기본 값으로 보통 난이도 설정
+            }
         }
     }
 }

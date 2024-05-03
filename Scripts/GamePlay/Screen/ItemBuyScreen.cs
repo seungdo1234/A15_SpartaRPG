@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics;
+
 namespace TextRPG
 {
     public class ItemBuyScreen :Screen
@@ -16,7 +18,7 @@ namespace TextRPG
                 MyActionText();
 
                 // 0: 뒤로가기  아이템 번호 : 구매
-                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.ShopEquipItems.Count + 1)
+                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.ShopEquipItems.Count + 3)
                 {
 
                     if (input == 0)
@@ -25,43 +27,30 @@ namespace TextRPG
                     }
                     else if (input == 1)
                     {
-                        if(gm.Player.Gold >= resetGold)
+                        if(gm.Player.Gold >= resetGold) // 상점 초기화.
                         {
                             gm.Player.Gold -= resetGold;
                             dm.ShopItemReset();
+                            SystemMessageText(EMessageType.SHOPRESET);
                         }
                         else
                         {
-                            Console.WriteLine("Gold가 부족합니다 !\n");
+                            SystemMessageText(EMessageType.GOLD);
                         }
+                    }
+                    else if (dm.ShopEquipItems.Count + 1 >= input)
+                    {
+                        BuyEquipItem(input);
                     }
                     else
                     {
-                        EquipItem equipItem = dm.ShopEquipItems[input - 2];
-
-                        // 아이템 구매 및 실패
-                        if (equipItem.IsSell)
-                        {
-                            Console.WriteLine("이미 구매한 아이템입니다. \n");
-                        }
-                        else
-                        {
-                            if (gm.Player.Gold >= equipItem.Gold) // 아이템 구매
-                            {
-                                Console.WriteLine("구매를 완료했습니다. \n");
-                                dm.BuyShopItem(equipItem);
-                            }
-                            else // 실패
-                            {
-                                Console.WriteLine("Gold가 부족합니다 !\n");
-                            }
-                        }
+                        BuyConsumableItem(input);
                     }
 
                 }
                 else
                 {
-                    Console.WriteLine("잘못된 입력입니다! 숫자를 제대로 입력하세요. \n");
+                    SystemMessageText(EMessageType.ERROR);
                 }
             }
 
@@ -106,6 +95,16 @@ namespace TextRPG
                 Console.WriteLine($"|\t{equipItem.Desc} | {sell}");
                 
             }
+            Console.WriteLine();
+
+            Console.WriteLine("[ 물약 ]");
+
+            for (int i = 0; i < dm.ShopConsumableItems.Length; i++)
+            {
+                int num = gm.Player.PlayerConsumableItems.ContainsKey(dm.ShopConsumableItems[i].ItemName) ? gm.Player.PlayerConsumableItems[dm.ShopConsumableItems[i].ItemName] : 0;
+                Console.WriteLine($"- {dm.ShopEquipItems.Count + i + 2} {dm.ShopConsumableItems[i].ItemName}\t| {dm.ShopConsumableItems[i].ItemRank}\t|" +
+                    $" {dm.ShopConsumableItems[i].Desc}\t| {dm.ShopConsumableItems[i].Gold}G ({num}개 보유중)");
+            }
 
             Console.WriteLine();
 
@@ -113,6 +112,44 @@ namespace TextRPG
             Console.WriteLine("0. 나가기");
 
             Console.WriteLine();
+        }
+
+        private void BuyEquipItem(int input) // 장비 구매
+        {
+            EquipItem equipItem = dm.ShopEquipItems[input - 2];
+
+            // 아이템 구매 및 실패
+            if (equipItem.IsSell)
+            {
+                SystemMessageText(EMessageType.ALREADYBUYITEM);
+            }
+            else
+            {
+                if (gm.Player.Gold >= equipItem.Gold)
+                {
+                    SystemMessageText(EMessageType.BUYITEM);
+                    dm.BuyShopItem(equipItem);
+                }
+                else // 실패
+                {
+                    SystemMessageText(EMessageType.GOLD);
+                }
+            }
+        }
+
+        private void BuyConsumableItem(int input) // 소비 아이템 구매
+        {
+            ConsumableItem consumableItem = dm.ShopConsumableItems[input - dm.ShopEquipItems.Count - 2];
+             if (gm.Player.Gold >= consumableItem.Gold)
+            {
+                SystemMessageText(EMessageType.BUYITEM);
+                gm.Player.Gold -= consumableItem.Gold;
+                gm.Player.AddConsumableItem(consumableItem.ItemName);
+            }
+            else
+            {
+                SystemMessageText(EMessageType.GOLD);
+            }
         }
     }
 }

@@ -62,15 +62,35 @@ namespace TextRPG
 
         protected void SystemMessageText(EMessageType messageType)
         {
+            Console.WriteLine();
+
             switch (messageType)
             {
                 case EMessageType.DEFAULT:
                     return;
                 case EMessageType.ERROR:
-                    Console.WriteLine("\n\n잘못된 입력입니다");
+                    Console.WriteLine("잘못된 입력입니다");
                     break;
                 case EMessageType.OTHERCLASSITEM:
-                    Console.WriteLine("\n\n현재 직업에 맞지 않는 아이템입니다.");
+                    Console.WriteLine("현재 직업에 맞지 않는 아이템입니다.");
+                    break;
+                case EMessageType.MANALESS:
+                    Console.WriteLine("마나가 부족합니다.");
+                    break;
+                case EMessageType.BUYITEM:
+                    Console.WriteLine("아이템을 구매했습니다.");
+                    break;
+                case EMessageType.SELL:
+                    Console.WriteLine("아이템을 판매했습니다.");
+                    break;
+                case EMessageType.GOLD:
+                    Console.WriteLine("Gold가 부족합니다.");
+                    break;
+                case EMessageType.ALREADYBUYITEM:
+                    Console.WriteLine("이미 구매한 장비입니다.");
+                    break;
+                case EMessageType.SHOPRESET:
+                    Console.WriteLine("상점 장비 아이템을 초기화했습니다.");
                     break;
             }
             Thread.Sleep(750);

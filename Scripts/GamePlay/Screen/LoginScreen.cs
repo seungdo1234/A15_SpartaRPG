@@ -11,9 +11,8 @@ namespace TextRPG
             classSelectionScreen = new ClassSelectionScreen();
             lobbyScreen = new LobbyScreen();
         }
-
         // 로그인
-        public override void ScreenOn() //24.05.03 데이터 로드 방식 변경 - C
+        public override void ScreenOn()
         {
             bool hasLoad = gm.SaveSystem.CheckLoad();
             string playerName;
@@ -35,12 +34,14 @@ namespace TextRPG
                         {
                             playerName = NameCheck();
                             gm.Player = gm.SaveSystem.Load(playerName); //새로운 이름 입력받기
+                            classSelectionScreen.ScreenOn();
                         }
                         break;
                     }
                     else
                     {
-                        SystemMessageText(EMessageType.ERROR);
+                        Console.WriteLine("\n잘못된 입력입니다! 1 또는 2를 다시 입력하세요.");
+                        Thread.Sleep(1000);
                     }
                 }
             }
@@ -48,9 +49,11 @@ namespace TextRPG
             {
                 playerName = NameCheck();
                 gm.Player = gm.SaveSystem.Load(playerName); //새로운 이름 입력받기
+                classSelectionScreen.ScreenOn();
 
             }
 
+            
             lobbyScreen.ScreenOn();
         }
 
@@ -101,7 +104,8 @@ namespace TextRPG
                     }
                     else
                     {
-                        SystemMessageText(EMessageType.ERROR);
+                        Console.WriteLine("\n잘못된 입력입니다! 1 또는 2를 다시 입력하세요.");
+                        Thread.Sleep(1000);
                         Console.SetCursorPosition(0, Console.CursorTop - 2);
                     }
                 }

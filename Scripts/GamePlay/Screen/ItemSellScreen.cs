@@ -1,46 +1,45 @@
 ﻿
+using System;
+
 namespace TextRPG
 {
     public class ItemSellScreen :Screen
     {
+        // 아이템을 판매하기 위해 보유하고 있는 소비 아이템 정보를 저장하는 리스트
+        private List<ConsumableItem > playerConsumableItems = new List<ConsumableItem>();
 
         public override void ScreenOn()
         {
-            Console.Clear();
 
             while (true)
             {
+                Console.Clear();
+                playerConsumableItems.Clear();
                 ItemSellScreenText();
                 MyActionText();
 
                 // 0: 뒤로가기  아이템 번호 : 구매
-                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= gm.Player.PlayerEquipItems.Count)
+                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= gm.Player.PlayerEquipItems.Count + 2)
                 {
 
                     if (input == 0)
                     {
                         return;
                     }
-
-                    EquipItem equipItem = gm.Player.PlayerEquipItems[input - 1];
-
-                    equipItem.IsSell = false; // 판매
-
-                    if (equipItem.IsEquip) // 장착 중인 아이템을 팔 경우 장착 해제
+                    else if(input <= gm.Player.PlayerEquipItems.Count) 
                     {
-                        gm.Player.EquipItemFlag &= ~equipItem.EquipmenttType;
-                        equipItem.IsEquip = !equipItem.IsEquip;
-                        gm.Player.SwitchingEquipItem(equipItem);
+                        SellEquipItem(input);
+                    }
+                    else
+                    {
+                        SellConsumableItem(input);
                     }
 
-                    gm.Player.Gold += (int)((float)equipItem.Gold * 0.8f); // 골드 ++
-                    gm.Player.RemoveEquipItem(equipItem); // 아이템 삭제
-                    
-
+                    SystemMessageText(EMessageType.SELL);
                 }
                 else
                 {
-                    Console.WriteLine("잘못된 입력입니다! 숫자를 제대로 입력하세요. \n");
+                    SystemMessageText(EMessageType.ERROR);
                 }
             }
         }
@@ -59,7 +58,7 @@ namespace TextRPG
 
             Console.WriteLine();
 
-            Console.WriteLine("[장비 목록]");
+            Console.WriteLine("[ 보유 장비 목록 ]");
 
             for (int i = 0; i < gm.Player.PlayerEquipItems.Count; i++) // 판매 목록 출력
             {
@@ -84,6 +83,22 @@ namespace TextRPG
 
             }
 
+
+            Console.WriteLine("\n") ;
+
+            Console.WriteLine("[ 보유 물약 ]");
+
+            int num = 1; // 보유하고있는 소비 아이템 탐색
+            foreach(var itemName in gm.Player.PlayerConsumableItems.Keys) 
+            {
+                ConsumableItem cItem =  dm.ConsumableItemDB.Find(obj => obj.ItemName == itemName);
+                playerConsumableItems.Add(cItem);
+                Console.WriteLine($"- {gm.Player.PlayerEquipItems.Count + num} {cItem.ItemName}\t| {cItem.ItemRank} | {cItem.Desc}\t| " +
+                    $"{MathF.Floor((float)cItem.Gold * 0.8f)} G ({gm.Player.PlayerConsumableItems[cItem.ItemName]}개 보유중)");
+
+                num++;
+            }
+
             Console.WriteLine();
 
             Console.WriteLine("0. 나가기");
@@ -91,5 +106,29 @@ namespace TextRPG
             Console.WriteLine();
         }
 
+        private void SellEquipItem(int input) // 장비 판매
+        {
+            EquipItem equipItem = gm.Player.PlayerEquipItems[input - 1];
+
+            equipItem.IsSell = false; // 판매
+
+            if (equipItem.IsEquip) // 장착 중인 아이템을 팔 경우 장착 해제
+            {
+                gm.Player.EquipItemFlag &= ~equipItem.EquipmenttType;
+                equipItem.IsEquip = !equipItem.IsEquip;
+                gm.Player.SwitchingEquipItem(equipItem);
+            }
+
+            gm.Player.Gold += (int)((float)equipItem.Gold * 0.8f); // 골드 ++
+            gm.Player.RemoveEquipItem(equipItem); // 아이템 삭제
+        }
+
+        private void SellConsumableItem(int input) // 소비 아이템 판매
+        {
+            ConsumableItem consumableItem = playerConsumableItems[input- gm.Player.PlayerEquipItems.Count - 1];
+
+            gm.Player.Gold += (int)((float)consumableItem.Gold * 0.8f); ;
+            gm.Player.RemoveConsumableItem(consumableItem.ItemName);
+        }
     }
 }
