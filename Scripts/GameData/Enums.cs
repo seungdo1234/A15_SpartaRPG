@@ -20,5 +20,8 @@ namespace TextRPG
 
     public enum EItemRank { DEFAULT, COMMON, RARE, EPIC }
 
-    public enum EMessageType { DEFAULT, ERROR, OTHERCLASSITEM, MANALESS }
+    public enum EConsumableType { DEFAULT, HEALTH, MANA}
+
+    public enum EMessageType { DEFAULT, ERROR, OTHERCLASSITEM , MANALESS, BUYITEM, SELL, GOLD , ALREADYBUYITEM , SHOPRESET   }
+
 }
