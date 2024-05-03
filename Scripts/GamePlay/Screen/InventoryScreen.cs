@@ -62,7 +62,9 @@ namespace TextRPG
             foreach (var itemName in gm.Player.PlayerConsumableItems.Keys)
             {
                 ConsumableItem cItem = dm.ConsumableItemDB.Find(obj => obj.ItemName == itemName);
-                Console.WriteLine($"- {cItem.ItemName} {cItem.GetItemRankName()}\t| {cItem.Desc} ({gm.Player.PlayerConsumableItems[cItem.ItemName]}개 보유중)");
+                Console.Write($"- {cItem.ItemName}");
+                cItem.GetItemRankName();
+                Console.WriteLine($"\t| {cItem.Desc} ({gm.Player.PlayerConsumableItems[cItem.ItemName]}개 보유중)");
             }
 
             Console.WriteLine();

@@ -24,9 +24,13 @@ namespace TextRPG
         {
             string equip = equipItem.IsEquip ? "[E]" : "";
 
-            Console.Write($"{equip}{equipItem.ItemName} ({equipItem.GetEquipItemClassName()}) [{equipItem.GetItemRankName()}]\t| ");         
+            Console.Write($"{equip}{equipItem.ItemName} ({equipItem.GetEquipItemClassName()}) ");
 
-            if(equipItem.AtkValue != 0)
+            equipItem.GetItemRankName();
+
+            Console.Write("\t| ");
+
+            if (equipItem.AtkValue != 0)
             {
                 Console.Write($"공격력 {equipItem.AtkValue} ");
             }

@@ -66,8 +66,11 @@ namespace TextRPG
 
                 string equip = equipItem.IsEquip ? "[E]" : "";
 
-                Console.Write($"- {i + 1} {equip}{equipItem.ItemName} ({equipItem.GetEquipItemClassName()}) [{equipItem.GetItemRankName()}]\t| ");
+                Console.Write($"- {i + 1} {equip}{equipItem.ItemName} ({equipItem.GetEquipItemClassName()}) ");
 
+                equipItem.GetItemRankName();
+
+                Console.Write("\t| ");
 
                 if (equipItem.AtkValue != 0)
                 {
@@ -93,9 +96,9 @@ namespace TextRPG
             {
                 ConsumableItem cItem =  dm.ConsumableItemDB.Find(obj => obj.ItemName == itemName);
                 playerConsumableItems.Add(cItem);
-                Console.WriteLine($"- {gm.Player.PlayerEquipItems.Count + num} {cItem.ItemName} [{cItem.GetItemRankName()}]\t| {cItem.Desc}\t| " +
-                    $"{MathF.Floor((float)cItem.Gold * 0.8f)} G ({gm.Player.PlayerConsumableItems[cItem.ItemName]}개 보유중)");
-
+                Console.Write($"- {gm.Player.PlayerEquipItems.Count + num} {cItem.ItemName} ");
+                cItem.GetItemRankName();
+                Console.WriteLine($"\t| {cItem.Desc}\t| {MathF.Floor((float)cItem.Gold * 0.8f)} G ({gm.Player.PlayerConsumableItems[cItem.ItemName]}개 보유중) ");
                 num++;
             }
 
