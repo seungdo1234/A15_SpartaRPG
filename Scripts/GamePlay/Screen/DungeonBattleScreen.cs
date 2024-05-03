@@ -78,11 +78,12 @@ namespace TextRPG
                 int actionResult = PlayerAction(enemies[targetIndex]);
                 if (actionResult == -1) continue;
 
+                //
                 if (isEnd)
                 {
                     break;
                 }
-
+                //
 
                 foreach (var enemy in enemies.Where(e => e.Health > 0))
                 {
@@ -173,11 +174,7 @@ namespace TextRPG
             {
                 Console.WriteLine($"[{enemy.Name}이(가) 쓰러졌습니다.]");
             }
-            else
-            {
-                BattleEnd(true);
-                Console.Clear();
-            }
+
         }
 
         private void UseSkill(Enemy enemy)
@@ -224,11 +221,6 @@ namespace TextRPG
                 gm.Player.CostMana(selectedSkill.ManaCost);
                 UseSelectedSkill(selectedSkill, enemy);
                 break; // 스킬 사용 후 정상 종료
-            }
-            if (enemy.Health <= 0)
-            {
-                BattleEnd(true);
-                return;
             }
         }
 
