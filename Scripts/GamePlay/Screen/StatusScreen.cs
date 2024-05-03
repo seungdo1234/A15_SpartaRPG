@@ -47,16 +47,16 @@ namespace TextRPG
             
             // 현재 장착중인 장비 능력치 적용
             Console.Write($"공격력 : {gm.Player.GetAtkValue():F1}");
-            if (gm.Player.EquipAtkItem != null )
+            if (gm.Player.EquipAtkItem != 0)
             {
-        //        Console.Write($" (+{gm.Player.EquipAtkItem.Value:F1})");
+                Console.Write($" (+{gm.Player.EquipAtkItem:F1})");
             }
             Console.WriteLine();
 
             Console.Write($"방어력 : {gm.Player.GetDefValue():F1}");
-            if (gm.Player.EquipDefItem != null)
+            if (gm.Player.EquipDefItem != 0)
             {
-       //        Console.Write($" (+{gm.Player.EquipDefItem.Value:F1})");
+                Console.Write($" (+{gm.Player.EquipDefItem:F1})");
             }
             Console.WriteLine("\n");
 
