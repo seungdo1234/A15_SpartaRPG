@@ -54,7 +54,7 @@ namespace TextRPG
         {
             reward = gm.Dungeon.GetDungeonReward(dif);
 
-            dm.DungeonDropItem(reward.dungeonRewardItem);
+            gm.Player.AddEquipItem(reward.dungeonRewardItem);
             gm.Player.Gold += reward.gold;
             gm.Player.ExpUp(reward.exp); 
 
