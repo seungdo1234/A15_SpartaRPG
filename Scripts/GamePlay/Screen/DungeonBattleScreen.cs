@@ -6,13 +6,15 @@ namespace TextRPG
     public class DungeonBattleScreen : Screen
     {
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
-
-
         private bool isWin;
         private bool returnToChooseEnemy = false; // 스킬 예외처리
 
+        private EDungeonDifficulty selectedDifficulty = EDungeonDifficulty.NORMAL; // 난이도 반환
 
         private DungeonResultScreen dungeonResultScreen;
+
+
+
         public DungeonBattleScreen()
         {
             dungeonResultScreen = new DungeonResultScreen();
@@ -52,7 +54,9 @@ namespace TextRPG
         private void AppearEnemy()
         {
             int currentDungeonLevel = gm.Player.Level; // 임시로 집어 넣음, 원래는 던전 난이도를 집어 넣어야함
-            enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel);  // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기
+
+            // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기, 5.3 A : 배수 증가 매게변수 추가
+            enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel, selectedDifficulty); 
 
             foreach (var enemy in enemies)
             {
@@ -61,18 +65,46 @@ namespace TextRPG
 
         }
 
+        // 5.3 A : 던전 난이도 확인 추가
+        private void CheckForDifficulty()
+        {
+            Console.WriteLine("난이도를 선택하세요:");
+            Console.WriteLine("1. 쉬움 (EASY)");
+            Console.WriteLine("2. 보통 (NORMAL)");
+            Console.WriteLine("3. 어려움 (HARD)");
+            Console.Write("\n선택: ");
+            string input = Console.ReadLine();
+
+            //5.3 A : 던전 난이도 Enum활용
+            switch (input)
+            {
+                case "1":
+                    selectedDifficulty = EDungeonDifficulty.EASY;
+                    break;
+                case "2":
+                    selectedDifficulty = EDungeonDifficulty.NORMAL;
+                    break;
+                case "3":
+                    selectedDifficulty = EDungeonDifficulty.HARD;
+                    break;
+                default:
+                    Console.WriteLine("잘못된 입력입니다. 보통 난이도로 개시합니다.");
+                    selectedDifficulty = EDungeonDifficulty.NORMAL;
+                    break;
+            }
+            Console.WriteLine($"선택된 난이도: {selectedDifficulty}");
+        }
+
         public void BattleStart() // 전투 시작
         {
-            isWin = false;
-            // 5.2 J => 전투 결과 창에서 불러올 수 있도록 함
-            AppearEnemy();
-            dungeonBattle(); // 전투 시작
+            CheckForDifficulty();  // 난이도 선택
+            int currentDungeonLevel = gm.Player.Level;
+            enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel, selectedDifficulty);  // 5.3 A : 난이도 정보를 전달
+            dungeonBattle();
         }
 
         private void dungeonBattle()
         {
-            Console.Clear();
-
             while ((enemies.Any(e => e.Health > 0) && gm.Player.Health > 0))
             {
                 int targetIndex = ChooseEnemy();
@@ -103,8 +135,6 @@ namespace TextRPG
                     }
                 }
             }
-
-            // 5.2 j => 배틀 재시작, 로비로 가기 수정
         }
 
         private int ChooseEnemy()
@@ -112,7 +142,7 @@ namespace TextRPG
             while (true)
             {
                 BattleLogText();
-                Console.Write("\n>> ");
+                MyActionText();
                 string input = Console.ReadLine();
 
                 if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input, out int selected))
@@ -143,7 +173,8 @@ namespace TextRPG
                 Console.WriteLine("\n행동을 선택하세요:");
                 Console.WriteLine("0. 다른 적 선택");
                 Console.WriteLine("1. 기본 공격");
-                Console.WriteLine("2. 스킬 사용\n");
+                Console.WriteLine("2. 스킬 사용");
+                Console.WriteLine();
                 MyActionText();
 
                 string choice = Console.ReadLine();
@@ -188,16 +219,21 @@ namespace TextRPG
 
         private void UseSkill(Enemy enemy)
         {
-            Console.WriteLine("사용할 스킬을 선택하세요 (0을 누르면 다른 적 선택):\n");
+            Console.WriteLine();
+            Console.WriteLine("사용할 스킬을 선택하세요 (0을 누르면 다른 적 선택):");
             for (int i = 0; i < gm.Player.Skills.Count; i++)
             {
                 var skill = gm.Player.Skills[i];
                 Console.WriteLine($"{i + 1}. {skill.Name} (MP: {skill.ManaCost}) - {skill.Content}");
             }
 
+            Console.WriteLine();
+            MyActionText();
+            int inputLine = Console.CursorTop; // 현재 입력 줄 위치 저장
 
             while (true)
             {
+                Console.SetCursorPosition(3, inputLine); // 커서를 입력 줄의 시작 위치로 설정
                 string input = Console.ReadLine();
                 if (input == "0")
                 {
@@ -301,7 +337,7 @@ namespace TextRPG
             Console.WriteLine($"HP {gm.Player.Health}/{gm.Player.MaxHealth}");
             Console.WriteLine($"MP {gm.Player.Mana}/{gm.Player.MaxMana}");
             Console.WriteLine();
-            Console.WriteLine("\n공격할 몬스터를 선택하세요:");
+            Console.WriteLine("\n공격할 몬스터를 선택하세요:\n");
         }
     }
 }
