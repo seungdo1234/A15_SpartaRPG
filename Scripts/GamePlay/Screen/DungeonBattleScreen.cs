@@ -212,7 +212,7 @@ namespace TextRPG
         {
             Console.WriteLine();
             Console.WriteLine("사용할 스킬을 선택하세요 (0을 누르면 다른 적 선택):");
-            for (int i = 0; i < gm.Player.Skills.Count; i++)
+            for (int i = 0; i < gm.Player.Phase; i++) // 05.03 W > Phase : 해금되는 스킬의 갯수
             {
                 var skill = gm.Player.Skills[i];
                 Console.WriteLine($"{i + 1}. {skill.Name} (MP: {skill.ManaCost}) - {skill.Content}");
@@ -232,7 +232,7 @@ namespace TextRPG
                     return; // 다른 적을 선택하도록 하기 위해 메서드 종료
                 }
 
-                if (!int.TryParse(input, out int selectedSkillIndex) || selectedSkillIndex < 1 || selectedSkillIndex > gm.Player.Skills.Count)
+                if (!int.TryParse(input, out int selectedSkillIndex) || selectedSkillIndex < 1 || selectedSkillIndex > gm.Player.Phase) // 05.03 W Skill.Count > Phase
                 {
                     SystemMessageText(EMessageType.ERROR);
                     continue;

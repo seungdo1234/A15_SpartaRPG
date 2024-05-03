@@ -110,7 +110,7 @@ namespace TextRPG
 
         public float GetAtkValue() // 전체 공격력 반환
         {
-            if (EquipAtkItem == null)
+            if (EquipAtkItem == 0)
             {
                 return Atk;
             }
@@ -121,37 +121,13 @@ namespace TextRPG
         }
         public float GetDefValue() // 전체 방어력 반환
         {
-            if (EquipDefItem == null)
+            if (EquipDefItem == 0)
             {
                 return Def;
             }
             else
             {
                 return Def + EquipDefItem;
-            }
-        }
-
-        // 체력 및 마나 회복 함수
-        public void RecoveryHealth(int health)
-        {
-            if (base.Health + health > MaxHealth)
-            {
-                base.Health = MaxHealth;
-            }
-            else
-            {
-                base.Health += health;
-            }
-        }
-        public void RecoveryMana(int mana)
-        {
-            if (base.Mana + mana > MaxMana)
-            {
-                base.Mana = MaxMana;
-            }
-            else
-            {
-                base.Mana += mana;
             }
         }
 
@@ -172,6 +148,13 @@ namespace TextRPG
         {
             Atk += 0.5f;
             Def += 1;
+            UnlockSkills();
+        }        
+        private void UnlockSkills()
+        {
+            if (Level >= 7) Phase = 3;
+            else if (Level >= 4) Phase = 2;
+            else if (Level >= 2) Phase = 1;
         }
 
         public override string OnDamaged(int damage) // 회피시 0
@@ -234,7 +217,7 @@ namespace TextRPG
             {
                 PlayerConsumableItems.Add(consumableItemName, 1);
             }
-        }
+        }   
         public void RemoveConsumableItem(string consumableItemName)
         {
             if (PlayerConsumableItems.ContainsKey(consumableItemName) && PlayerConsumableItems[consumableItemName] > 1)

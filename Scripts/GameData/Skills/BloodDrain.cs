@@ -17,7 +17,7 @@ namespace TextRPG
             
             damage = Convert.ToInt32(Math.Round(damage * skillRate * critRate));
             result = target.OnDamaged(damage);
-            caster.OnDamagedDenyDef(-damage);
+            caster.RecoveryHealth(damage);
             result += critStr;
 
             return result;
