@@ -120,7 +120,7 @@ namespace TextRPG
                 {
                     Console.WriteLine();
                     Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
-                    Thread.Sleep(50);
+                    Thread.Sleep(75);
                     continue;
                 }
 
@@ -130,7 +130,7 @@ namespace TextRPG
                 {
                     Console.WriteLine();
                     Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
-                    Thread.Sleep(50);
+                    Thread.Sleep(75);
                     continue;
                 }
 
@@ -234,8 +234,6 @@ namespace TextRPG
                 {
                     Console.WriteLine();
                     Console.WriteLine("마나가 부족합니다.");
-                    Thread.Sleep(75);
-
                     BattleLogText();
                     continue;
                 }
