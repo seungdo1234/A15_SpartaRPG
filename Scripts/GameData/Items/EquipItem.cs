@@ -42,7 +42,7 @@ namespace TextRPG
         // 던전 보상 장비 아이템 깊은 복사
         public EquipItem CopyEquipItem()
         {
-            EquipItem equipItem = new EquipItem(UnitType, ItemRank, ItemName, EquipmenttType, AtkValue,  DefValue, Desc, Gold);
+            EquipItem equipItem = new EquipItem(UnitType, ItemRank, ItemName, Itemtype, AtkValue,  DefValue, Desc, Gold);
 
             return equipItem;
         }
