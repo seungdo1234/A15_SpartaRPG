@@ -19,4 +19,6 @@ namespace TextRPG
     public enum EDungeonResultType { DEFAULT, VICTORY, RETIRE }
 
     public enum EItemRank { DEFAULT, COMMON, RARE, EPIC }
+
+    public enum EMessageType { DEFAULT, ERROR }
 }

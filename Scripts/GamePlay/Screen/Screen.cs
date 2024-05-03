@@ -1,4 +1,6 @@
 ﻿
+using System.Runtime.InteropServices;
+
 namespace TextRPG
 {
 
@@ -7,12 +9,17 @@ namespace TextRPG
     {
         protected ItemDataManager dm;
         protected GameManager gm;
+        protected EMessageType messageType;
+        protected int cursorPosition;
 
         protected static int playerInput;
+        
         public Screen()
         {
             dm = ItemDataManager.instance;
             gm = GameManager.instance;
+            messageType = EMessageType.DEFAULT;
+            cursorPosition = 0;
         }
 
         // 5.1 J => 장비 추가로 인한 리팩토링
@@ -22,7 +29,19 @@ namespace TextRPG
             string equip = equipItem.IsEquip ? "[E]" : "";
 
             Console.Write($"{equip}{equipItem.ItemName} ({equipItem.GetEquipItemClassName()})\t| ");
-
+            
+            switch (equipItem.ItemRank)
+            {
+                case EItemRank.COMMON:
+                    Console.Write($"일반\t| ");
+                    break;
+                case EItemRank.RARE:
+                    Console.Write($"희귀\t| ");
+                    break;
+                case EItemRank.EPIC:
+                    Console.Write($"서사\t| ");
+                    break;
+            }            
 
             if(equipItem.AtkValue != 0)
             {
@@ -35,7 +54,7 @@ namespace TextRPG
             }
 
             Console.WriteLine($"|\t{equipItem.Desc}");
-
+            cursorPosition++;
         }
 
 
@@ -44,6 +63,17 @@ namespace TextRPG
         {
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">> ");
+            cursorPosition++;
+                        
+            switch(messageType)
+            {
+                case EMessageType.DEFAULT:
+                    return;
+                case EMessageType.ERROR:
+                    Console.WriteLine("\n\n잘못된 입력입니다");
+                    break;
+            }
+            Console.SetCursorPosition(3, cursorPosition);
         }
 
         public abstract void ScreenOn();
