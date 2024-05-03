@@ -19,12 +19,15 @@ namespace TextRPG
         [JsonProperty] public float CriticalDamage { get; protected set; }
         [JsonProperty] public int Mana { get; protected set; }
         [JsonProperty] public int MaxMana { get; protected set; }
+        [JsonProperty] public int Phase { get; protected set; } // 05.03 W 해금되는 스킬의 갯수
         [JsonProperty] public List<Skill> Skills { get; protected set; }
 
         protected Random random = new Random();
         public virtual string OnDamaged(int damage) // 최소 데미지 1
         {
-            int endDamage = (damage - Def) > 0 ? (int)(damage - Def) : 1;
+            int endDamage = Convert.ToInt32(Math.Round(damage - Def));
+            endDamage = endDamage > 0 ? endDamage : 1;
+                
             Health -= endDamage;
             return $"[데미지 {endDamage}] ";
         }
@@ -75,6 +78,31 @@ namespace TextRPG
         public virtual void CostMana(int cost)
         {
             Mana -= cost;
+        }
+
+        // 체력 및 마나 회복 함수
+        public virtual void RecoveryHealth(int health)
+        {
+            if (Health + health > MaxHealth)
+            {
+                Health = MaxHealth;
+            }
+            else
+            {
+                Health += health;
+            }
+        }
+
+        public virtual void RecoveryMana(int mana)
+        {
+            if (Mana + mana > MaxMana)
+            {
+                Mana = MaxMana;
+            }
+            else
+            {
+                Mana += mana;
+            }
         }
     }
 }
