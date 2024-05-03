@@ -43,6 +43,7 @@ namespace TextRPG
                         return;
 
                     default:
+                        Console.WriteLine();
                         Console.WriteLine("잘못된 입력입니다.");
                         Thread.Sleep(75);
                         continue;
@@ -117,6 +118,7 @@ namespace TextRPG
 
                 if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input, out int selected))
                 {
+                    Console.WriteLine();
                     Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
                     Thread.Sleep(50);
                     continue;
@@ -126,6 +128,7 @@ namespace TextRPG
 
                 if (selected < 0 || selected >= enemies.Count || enemies[selected].Health <= 0)
                 {
+                    Console.WriteLine();
                     Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
                     Thread.Sleep(50);
                     continue;
@@ -139,6 +142,7 @@ namespace TextRPG
         {
             while (true)
             {
+                BattleLogText();
                 Console.WriteLine("\n행동을 선택하세요:");
                 Console.WriteLine("0. 다른 적 선택");
                 Console.WriteLine("1. 기본 공격");
@@ -163,8 +167,9 @@ namespace TextRPG
                         }
                         return 0;
                     default:
-                        BattleLogText();
+                        Console.WriteLine();
                         Console.WriteLine("잘못된 입력입니다.");
+                        Thread.Sleep(75);
                         continue;
                 }
             }
@@ -206,24 +211,32 @@ namespace TextRPG
 
                 if (!int.TryParse(input, out int selectedSkillIndex))
                 {
-                    BattleLogText();
+                    Console.WriteLine();
                     Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(75);
+                    BattleLogText();
                     continue;
                 }
 
                 selectedSkillIndex -= 1;
                 if (selectedSkillIndex < 0 || selectedSkillIndex >= gm.Player.Skills.Count)
                 {
-                    BattleLogText();
+                    Console.WriteLine();
                     Console.WriteLine("잘못된 선택입니다.");
+                    Thread.Sleep(75);
+
+                    BattleLogText();
                     continue;
                 }
 
                 Skill selectedSkill = gm.Player.Skills[selectedSkillIndex];
                 if (gm.Player.Mana < selectedSkill.ManaCost)
                 {
-                    BattleLogText();
+                    Console.WriteLine();
                     Console.WriteLine("마나가 부족합니다.");
+                    Thread.Sleep(75);
+
+                    BattleLogText();
                     continue;
                 }
 
@@ -308,7 +321,7 @@ namespace TextRPG
             Console.WriteLine($"Lv.{gm.Player.Level} {gm.Player.Name} ({gm.Player.GetPlayerClass(gm.Player.ePlayerClass)})");
             Console.WriteLine($"HP {gm.Player.Health}/{gm.Player.MaxHealth}");
             Console.WriteLine($"MP {gm.Player.Mana}/{gm.Player.MaxMana}");
-
+            Console.WriteLine();
             Console.WriteLine("\n공격할 몬스터를 선택하세요:");
         }
     }
