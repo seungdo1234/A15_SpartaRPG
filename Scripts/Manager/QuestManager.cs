@@ -45,11 +45,6 @@ namespace TextRPG.Scripts
 
         public Quest GetCurrentStoryQuest()
         {
-            return StoryQuest[QuestSave[0].QuestNumber];
-        }
-
-        public Quest GetCurrentMonsterQuest()
-        {
             MonsterQuest[QuestSave[1].QuestNumber].CurrentProgress = QuestSave[1].CurrentProgress;
             return MonsterQuest[QuestSave[1].QuestNumber];
         }
