@@ -1,7 +1,7 @@
 ﻿
 namespace TextRPG
 {
-    public class CrisisEvasion : SkillData
+    public class CrisisEvasion : Skill
     {
         public CrisisEvasion(int id) : base(id)
         {

@@ -11,6 +11,7 @@ namespace TextRPG
         // 플레이어 경험치
         private int[] levelExp = new int[10] { 5, 7, 10, 12, 15, 20, 25, 30, 40, 50 }; // 레벨 별 경험치 통
 
+        [JsonProperty] public List<EquipItem> PlayerEquipItems { get; private set; }
         public EUnitType ePlayerClass { get;  set; }
         public int Gold { get; set; }
         [JsonProperty] public int Exp { get; private set; }
@@ -33,9 +34,9 @@ namespace TextRPG
             CriticalDamage = 1.6f;
             MaxMana = 100;
             Mana = MaxMana;
-            base.Skills = new List<SkillData>();
+            base.Skills = new List<Skill>();
+            PlayerEquipItems = new List<EquipItem>();
         }
-
 
 
         public void ChangePlayerClass(EUnitType ePlayerClass)
@@ -49,28 +50,28 @@ namespace TextRPG
                     MaxHealth += 50; /// 수정이 필요함
                     Health += 50;
                     Def += 5;
-                    Skills.Add(new SkillData(0));
-                    Skills.Add(new SkillData(1));
+                    Skills.Add(new Skill(0));
+                    Skills.Add(new Skill(1));
                     Skills.Add(new CrisisEvasion(2));                    
                     break;
                 case EUnitType.ARCHER:
                     CriticalChance += 9;
                     CriticalDamage += 0.9f;
-                    Skills.Add(new SkillData(3));
-                    Skills.Add(new SkillData(4));
+                    Skills.Add(new Skill(3));
+                    Skills.Add(new Skill(4));
                     Skills.Add(new WeaknessSniping(5));
                     break;
                 case EUnitType.THIEF:
                     AvoidChance += 10;
-                    Skills.Add(new SkillData(6));
-                    Skills.Add(new SkillData(7));
+                    Skills.Add(new Skill(6));
+                    Skills.Add(new Skill(7));
                     Skills.Add(new Assassination(8));
                     break;
                 case EUnitType.MAGICIAN:
                     MaxMana += 50;
                     Mana += 50;
-                    Skills.Add(new SkillData(9));
-                    Skills.Add(new SkillData(10));
+                    Skills.Add(new Skill(9));
+                    Skills.Add(new Skill(10));
                     Skills.Add(new ChainLighting(11));
                     break;
             }
@@ -191,6 +192,17 @@ namespace TextRPG
             result += critStr;
 
             return result;
+        }
+
+        //  5.3 J => 플레이어 보유 아이템 리스트 리팩토링
+        public void AddEquipItem(EquipItem equipItem)
+        {
+            PlayerEquipItems.Add(equipItem);
+        }
+        public void RemoveEquipItem(EquipItem equipItem)
+        {
+
+            PlayerEquipItems.Remove(equipItem);
         }
     }
 }

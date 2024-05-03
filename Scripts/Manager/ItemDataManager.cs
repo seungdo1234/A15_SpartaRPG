@@ -8,8 +8,7 @@
         public List<EquipItem> EquipItemDB { get; private set; }
         public List<ConsumableItem> ConsumableItemDB {  get; private set; }
 
-        // 플레이어, 상점 장비 아이템 리스트
-        public List<EquipItem> PlayerEquipItems {  get; private set; }
+        // 플레이어, 상점 아이템 리스트
         public List<EquipItem> ShopEquipItems { get; private set; }
         public ConsumableItem[] ShopConsumableItems { get; private set; }
 
@@ -19,18 +18,16 @@
         // 플레이어, 상점 아이템 초기화
         public void Init()
         {
-            PlayerEquipItems = new List<EquipItem>();
             ShopEquipItems = new List<EquipItem>();
             ShopItemReset();
         }
 
-        public void SetItems( List<EquipItem> shopItems, List<EquipItem> playerItems)
+        public void SetShopItems( List<EquipItem> shopItems)
         {
-            PlayerEquipItems= playerItems;
             ShopEquipItems= shopItems;
         }
 
-        public void SetItemDB(List<EquipItem> equipItemDB , List<ConsumableItem> consumableItemDB) 
+        public void SetItemDB(List<EquipItem> equipItemDB, List<ConsumableItem> consumableItemDB) 
         {
             EquipItemDB = equipItemDB;
             ConsumableItemDB = consumableItemDB;
@@ -56,25 +53,13 @@
             return equipItemList[itemnum]; 
         }
 
-        // 4.30 J => 플레이어 아이템 추가 로직 변경 (상점 구매, 던전 드랍 아이템)
+        // 4.30 J => 플레이어 아이템 추가 로직 변경 (상점 구매, 던전 드랍 아이템) / 5.3 J => 플레이어 보유 아이템 리스트 리팩토링
         // 아이템 구매
         public void BuyShopItem(EquipItem equipItem)
         {
-            PlayerEquipItems.Add(equipItem); // 구매한 아이템 플레이어 아이템 리스트에 추가
+            GameManager.instance.Player.AddEquipItem(equipItem); // 구매한 아이템 플레이어 아이템 리스트에 추가
             GameManager.instance.Player.Gold -= equipItem.Gold; // 골드 --
             equipItem.IsSell = true; // 팔렸다 표시
-        }
-        // 4.30 J => 플레이어 아이템 추가 로직 변경 (상점 구매, 던전 드랍 아이템)
-        public void DungeonDropItem(EquipItem equipItem) // 플레이어 아이템 추가
-        {
-            PlayerEquipItems.Add(equipItem);
-        }
-
-
-        // 아이템 판매 시 플레이어 보유 아이템에서 제거
-        public void RemovePlayerItem(EquipItem equipItem) {
-
-            PlayerEquipItems.Remove(equipItem);
         }
     }
 }

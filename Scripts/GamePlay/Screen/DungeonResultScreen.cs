@@ -12,11 +12,11 @@ namespace TextRPG
         private Reward reward;
 
 
-        public bool DungeonResultScreenOn(EDungeonResultType resultType , EDungeonDifficulty dif)
+        public override void ScreenOn()
         {
-            if (resultType != EDungeonResultType.RETIRE)
+            if (gm.Dungeon.resultType != EDungeonResultType.RETIRE)
             {
-                this.dif = dif;
+                this.dif = gm.Dungeon.dif;
                 DungeonReward();
             }
 
@@ -25,7 +25,7 @@ namespace TextRPG
             while (true)
             {
 
-                switch (resultType)
+                switch (gm.Dungeon.resultType)
                 {
                     case EDungeonResultType.VICTORY:
                         VictoryText();
@@ -37,17 +37,11 @@ namespace TextRPG
                 MyActionText();
 
                 // 1, 2, 3만 입력 받을 수 있게 함 
-                if (int.TryParse(Console.ReadLine(), out int input) && (input == 0 || (input == 1 && resultType == EDungeonResultType.VICTORY)))
+                if (int.TryParse(Console.ReadLine(), out int input) && (input == 0 || (input == 1 && gm.Dungeon.resultType == EDungeonResultType.VICTORY)))
                 {
                     Console.Clear();
-                    if (input == 0) // 되돌아 가기
-                    {
-                        return false;
-                    }
-                    else // 계속
-                    {
-                        return true;
-                    }
+                    playerInput = input; // Input 값 저장
+                    return;
                 }
                 else
                 {
@@ -60,7 +54,7 @@ namespace TextRPG
         {
             reward = gm.Dungeon.GetDungeonReward(dif);
 
-            dm.DungeonDropItem(reward.dungeonRewardItem);
+            gm.Player.AddEquipItem(reward.dungeonRewardItem);
             gm.Player.Gold += reward.gold;
             gm.Player.ExpUp(reward.exp); 
 
@@ -82,7 +76,7 @@ namespace TextRPG
             Console.WriteLine("Victory !");
             Console.WriteLine();
 
-            Console.WriteLine($"던전에서 몬스터 {gm.Dungeon.GetMonsterEncount(gm.Dungeon.CurrentDungeonLevel).Count}마리를 잡았습니다.");
+            Console.WriteLine($"던전에서 몬스터 {EnemyDataManager.instance.GetSpawnMonsters(gm.Dungeon.CurrentDungeonLevel).Count}마리를 잡았습니다.");
             Console.WriteLine();
 
             Console.WriteLine("[캐릭터 정보]");

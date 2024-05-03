@@ -10,7 +10,7 @@ namespace TextRPG
         }
 
         // 인벤토리 화면
-        public void InventoryScreenOn()
+        public override void ScreenOn()
         {
             Console.Clear();
 
@@ -25,7 +25,7 @@ namespace TextRPG
                     switch (input)
                     {
                         case 1:
-                            equipScreen.EquipScreenOn();
+                            equipScreen.ScreenOn();
                             break;
                         case 0:
                             return;
@@ -48,10 +48,10 @@ namespace TextRPG
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.\n");
 
             Console.WriteLine("[아이템 목록]");
-            for (int i = 0; i < dm.PlayerEquipItems.Count; i++)
+            for (int i = 0; i < gm.Player.PlayerEquipItems.Count; i++)
             {
                 Console.Write("- ");
-                InventoryItemText(dm.PlayerEquipItems[i]);
+                InventoryItemText(gm.Player.PlayerEquipItems[i]);
             }
 
             Console.WriteLine();

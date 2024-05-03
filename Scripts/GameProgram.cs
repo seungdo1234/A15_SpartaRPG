@@ -17,7 +17,7 @@ namespace TextRPG
         {
             gm.Init();
             
-            loginScreen.LoginScreenOn();
+            loginScreen.ScreenOn();
         }
 
         static void Main(string[] args)

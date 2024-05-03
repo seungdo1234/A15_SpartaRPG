@@ -7,13 +7,11 @@ namespace TextRPG
     struct PlayerDatas // Json에 저장할 플레이어 데이터 구조체
     { 
         public Player player;
-        public List<EquipItem> playerItems;
         public List<EquipItem> shopItems;
 
         public PlayerDatas()
         {
             player = GameManager.instance.Player;
-            playerItems = ItemDataManager.instance.PlayerEquipItems;
             shopItems = ItemDataManager.instance.ShopEquipItems;
         }
     }
@@ -50,7 +48,9 @@ namespace TextRPG
             // 전체 아이템 데이터 불러오기
             string equipItemJsonData = File.ReadAllText(equipItemJsonFilePath); 
             string consumableItemJsonData = File.ReadAllText(consumableJsonFilePath); 
-            ItemDataManager.instance.SetItemDB(JsonConvert.DeserializeObject<List<EquipItem>>(equipItemJsonData) , JsonConvert.DeserializeObject<List<ConsumableItem>>(consumableItemJsonData));
+
+            ItemDataManager.instance.SetItemDB(JsonConvert.DeserializeObject<List<EquipItem>>(equipItemJsonFilePath), 
+                JsonConvert.DeserializeObject<List<ConsumableItem>>(consumableItemJsonData));
 
             if (File.Exists(filePath)) // 파일이 존재하는지 -> 이미 데이터가 존재하는 지
             {
@@ -61,7 +61,7 @@ namespace TextRPG
                 PlayerDatas playerData = JsonConvert.DeserializeObject<PlayerDatas>(playerJsonData);
 
                 // 불러온 플레이어 정보 저장
-                ItemDataManager.instance.SetItems(playerData.shopItems, playerData.playerItems);
+                ItemDataManager.instance.SetShopItems(playerData.shopItems);
                 return playerData.player;
 
             }

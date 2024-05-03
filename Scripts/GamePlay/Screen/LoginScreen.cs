@@ -12,7 +12,7 @@ namespace TextRPG
             lobbyScreen = new LobbyScreen();
         }
         // 로그인
-        public void LoginScreenOn()
+        public override void ScreenOn()
         {
             string playerName = NameCheck();
 
@@ -23,7 +23,7 @@ namespace TextRPG
 
             if(gm.Player.ePlayerClass == EUnitType.DEFAULT) // 새로 생성한 플레이어 데이터라면
             {
-                classSelectionScreen.ClassSelectionScreenOn(); // 직업 선택
+                classSelectionScreen.ScreenOn(); // 직업 선택
             }
             else
             {
@@ -41,7 +41,7 @@ namespace TextRPG
 
                         if (input == 2)
                         {
-                            classSelectionScreen.ClassSelectionScreenOn();
+                            classSelectionScreen.ScreenOn();
                         }
                         else { }
                     }
@@ -53,7 +53,7 @@ namespace TextRPG
                 }
             }
 
-            lobbyScreen.LobbyScreenOn();
+            lobbyScreen.ScreenOn();
         }
 
         private void LoginText()

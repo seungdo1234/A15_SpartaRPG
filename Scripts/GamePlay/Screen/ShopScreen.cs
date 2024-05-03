@@ -12,7 +12,7 @@ namespace TextRPG
         }
 
         // 상점 화면
-        public void ShopScreenOn()
+        public override void ScreenOn()
         {
             Console.Clear();
 
@@ -27,10 +27,10 @@ namespace TextRPG
                     switch (input)
                     {
                         case 1:
-                            itemBuyScreen.ItemBuyScreenOn();
+                            itemBuyScreen.ScreenOn();
                             break;
                         case 2:
-                            itemSellScreen.ItemSellScreenOn();
+                            itemSellScreen.ScreenOn();
                             break;
                         case 0:
                             return;

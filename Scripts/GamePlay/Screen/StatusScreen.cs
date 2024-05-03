@@ -5,7 +5,7 @@ namespace TextRPG
     {
         
         // 상태 보기 
-        public void StatusScreenOn()
+        public override void ScreenOn()
         {
 
             Console.Clear();
