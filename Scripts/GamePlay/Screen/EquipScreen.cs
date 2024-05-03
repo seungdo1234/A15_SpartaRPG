@@ -50,7 +50,7 @@ namespace TextRPG
             if (equipItem.IsEquip)
             {
                 equipItem.IsEquip = !equipItem.IsEquip;
-                gm.Player.EquipItemFlag &= ~equipItem.EquipItemType;
+                gm.Player.EquipItemFlag &= ~equipItem.Itemtype;
                 gm.Player.SwitchingEquipItem(equipItem);
                 
             }
@@ -58,11 +58,11 @@ namespace TextRPG
             else
             {
                 equipItem.IsEquip = !equipItem.IsEquip;
-                gm.Player.EquipItemFlag |= equipItem.EquipItemType;
+                gm.Player.EquipItemFlag |= equipItem.Itemtype;
                 gm.Player.SwitchingEquipItem(equipItem);
                 foreach (EquipItem g in list)
                 {
-                    if (equipItem.EquipItemType == g.EquipItemType)
+                    if (equipItem.Itemtype == g.Itemtype)
                     {
                         g.IsEquip = false;
                         gm.Player.SwitchingEquipItem(g);
