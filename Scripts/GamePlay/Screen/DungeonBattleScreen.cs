@@ -194,14 +194,10 @@ namespace TextRPG
                 var skill = gm.Player.Skills[i];
                 Console.WriteLine($"{i + 1}. {skill.Name} (MP: {skill.ManaCost}) - {skill.Content}");
             }
-            Console.WriteLine();
-            int inputLine = Console.CursorTop; // 현재 입력 줄 위치 저장
-            Console.Write(">> "); // 프롬프트 출력
+
 
             while (true)
             {
-                Console.SetCursorPosition(3, inputLine); // 커서를 입력 줄의 시작 위치로 설정
-
                 string input = Console.ReadLine();
                 if (input == "0")
                 {
