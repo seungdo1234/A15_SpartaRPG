@@ -21,9 +21,9 @@ namespace TextRPG
         // Exe 파일이 들어 있는 경로 저장
         private string path = AppDomain.CurrentDomain.BaseDirectory;
 
-        public void Save()
+        public void Save() //24.05.03 데이터 로드 방식 변경 - C
         {
-            string filePath = $"{path}\\{GameManager.instance.Player.Name}.json";
+            string filePath = $"{path}\\SaveSlot\\PlayerData.json";
 
             // PlayerDatas 구조체 생성
             PlayerDatas data = new PlayerDatas(); 
@@ -42,14 +42,14 @@ namespace TextRPG
         public bool CheckLoad()
         {
             string saveDirectory = $"{path}\\SaveSlot";
-            string playerData = Path.Combine(saveDirectory, "PlayerData.json");
+            string playerFile = Path.Combine(saveDirectory, "PlayerData.json");
 
             if (!Directory.Exists(saveDirectory)) //폴더 유무
             {
                 Directory.CreateDirectory(saveDirectory); 
                 return false;
             }
-            else if (!File.Exists(playerData)) //플레이어 파일 유무
+            else if (!File.Exists(playerFile)) //플레이어 파일 유무
             {
                 return false;
             }
@@ -61,7 +61,8 @@ namespace TextRPG
         //24.05.03 데이터 로드 방식 변경 - C
         public Player Load(string name)
         {
-            string filePath = $"{path}\\SaveSlot\\PlayerData.json";
+            string saveDirectory = $"{path}\\SaveSlot";
+            string playerFile = Path.Combine(saveDirectory, "PlayerData.json");
             string itemJsonFilePath = Path.Combine(path, @"..\..\..\SaveData\ItemData.json");
 
             // 전체 아이템 데이터 불러오기
@@ -71,7 +72,7 @@ namespace TextRPG
             if (name == "") // 불러오기 승낙한 경우
             {
                 // 데이터가 존재한다면 해당 데이터를 읽어옴
-                string playerJsonData = File.ReadAllText(filePath);
+                string playerJsonData = File.ReadAllText(playerFile);
 
                 // PlayerDatas 구조체로 역직렬화해서 텍스트를 데이터로 변환
                 PlayerDatas playerData = JsonConvert.DeserializeObject<PlayerDatas>(playerJsonData);
@@ -85,7 +86,12 @@ namespace TextRPG
             {
                 // 기본 데이터로 초기화
                 ItemDataManager.instance.Init();
-                return new Player(name);
+
+                //새 플레이어 객체 생성
+                Player newPlayer = new Player(name);
+                string newPlayerJson = JsonConvert.SerializeObject(newPlayer);
+                File.WriteAllText(playerFile, newPlayerJson);
+                return newPlayer;
             }
         }
     }

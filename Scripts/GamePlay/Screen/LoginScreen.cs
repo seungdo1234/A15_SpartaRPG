@@ -28,7 +28,7 @@ namespace TextRPG
 
                     if (int.TryParse(Console.ReadLine(), out int input) && (input == 1 || input == 2))
                     {
-                        if (input == 2)
+                        if (input == 1)
                         {
                             gm.Player = gm.SaveSystem.Load(""); //이름 입력 무시
                         }else
