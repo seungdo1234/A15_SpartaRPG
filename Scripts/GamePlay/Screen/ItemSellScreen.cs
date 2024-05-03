@@ -117,7 +117,7 @@ namespace TextRPG
 
             if (equipItem.IsEquip) // 장착 중인 아이템을 팔 경우 장착 해제
             {
-                gm.Player.EquipItemFlag &= ~equipItem.Itemtype;
+                gm.Player.EquipItemFlag &= ~equipItem.EquipmenttType;
                 equipItem.IsEquip = !equipItem.IsEquip;
                 gm.Player.SwitchingEquipItem(equipItem);
             }
