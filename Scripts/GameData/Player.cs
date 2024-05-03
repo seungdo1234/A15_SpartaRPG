@@ -12,6 +12,7 @@ namespace TextRPG
         private int[] levelExp = new int[10] { 5, 7, 10, 12, 15, 20, 25, 30, 40, 50 }; // 레벨 별 경험치 통
 
         [JsonProperty] public List<EquipItem> PlayerEquipItems { get; private set; }
+        [JsonProperty] public Dictionary<string, int> PlayerConsumableItems { get; private set; } 
         public EUnitType ePlayerClass { get;  set; }
         public int Gold { get; set; }
         [JsonProperty] public int Exp { get; private set; }
@@ -36,6 +37,7 @@ namespace TextRPG
             Mana = MaxMana;
             base.Skills = new List<Skill>();
             PlayerEquipItems = new List<EquipItem>();
+            PlayerConsumableItems = new Dictionary<string, int>();
         }
 
 
@@ -129,17 +131,30 @@ namespace TextRPG
             }
         }
 
+        // 체력 및 마나 회복 함수
         public void RecoveryHealth(int health)
         {
-            if (this.Health + health > MaxHealth)
+            if (base.Health + health > MaxHealth)
             {
-                this.Health = MaxHealth;
+                base.Health = MaxHealth;
             }
             else
             {
-                this.Health += health;
+                base.Health += health;
             }
         }
+        public void RecoveryMana(int mana)
+        {
+            if (base.Mana + mana > MaxMana)
+            {
+                base.Mana = MaxMana;
+            }
+            else
+            {
+                base.Mana += mana;
+            }
+        }
+
         public void ExpUp(int exp) // 경험치 상승
         {
             // 4.30 J => 경험치 상승 수정
@@ -204,6 +219,30 @@ namespace TextRPG
         {
 
             PlayerEquipItems.Remove(equipItem);
+        }
+
+        // 소비 아이템 추가 및 삭제
+        public void AddConsumableItem(string consumableItemName)
+        {
+            if (PlayerConsumableItems.ContainsKey(consumableItemName))
+            {
+                PlayerConsumableItems[consumableItemName]++;
+            }
+            else
+            {
+                PlayerConsumableItems.Add(consumableItemName, 1);
+            }
+        }
+        public void RemoveConsumableItem(string consumableItemName)
+        {
+            if (PlayerConsumableItems.ContainsKey(consumableItemName) && PlayerConsumableItems[consumableItemName] > 1)
+            {
+                PlayerConsumableItems[consumableItemName]--;
+            }
+            else
+            {
+                PlayerConsumableItems.Remove(consumableItemName);
+            }
         }
     }
 }

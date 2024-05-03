@@ -79,6 +79,7 @@ namespace TextRPG
 
         public Enemy GetBoss()
         {
+            BossMonster = new Boss();
             return BossMonster;
         }
 

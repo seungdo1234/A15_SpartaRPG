@@ -174,5 +174,29 @@
     "ManaCost": 10,
     "Content": "질투는 당신의 눈을 멀게 한다.",
     "UnitType": 5
+  },
+  "22": {
+    "Name": "데몬클로",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "보스 몬스터가 할퀴어 현재 체력의 10%의 피해를 줍니다",
+    "UnitType": 6
+  },
+  "23": {
+    "Name": "블러드드레인",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "대상의 체력를 흡수해 시전자가 체력을 회복합니다",
+    "UnitType": 6
+  },
+  "24": {
+    "Name": "콜오브데스",
+    "MaxTargetCount": 1,
+    "IsMultiTarget": false,
+    "ManaCost": 10,
+    "Content": "마왕의 죽음의 마법입니다 대상을 죽음에 가까운 상태로 만듭니다",
+    "UnitType": 6
   }
 }
