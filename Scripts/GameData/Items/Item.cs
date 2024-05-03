@@ -30,7 +30,6 @@ namespace TextRPG
                     Console.Write("[영웅]");
                     break;
             }
-
             Console.ResetColor();
         }
     }
