@@ -62,7 +62,7 @@ namespace TextRPG.Scripts
             return storyLog;
         }
 
-        public List<Quest> GetMonsterLog()
+        public List<Quest> GetEnemyLog()
         {
             List<Quest> monsterLog = new List<Quest>();
             if (QuestSave[3].QuestNumber != -1)
