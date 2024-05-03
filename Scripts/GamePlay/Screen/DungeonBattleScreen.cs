@@ -7,8 +7,8 @@ namespace TextRPG
     {
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
         private bool isWin;
+        private int winCounter = 0;  // 승리 횟수 카운터
         private bool returnToChooseEnemy = false; // 스킬 예외처리
-
         private EDungeonDifficulty selectedDifficulty = EDungeonDifficulty.NORMAL; // 난이도 반환
 
         private DungeonResultScreen dungeonResultScreen;
@@ -23,9 +23,10 @@ namespace TextRPG
 
         public override void ScreenOn()
         {
-
             while (true)
             {
+                winCounter = 0;  // 게임 시작 시 승리 카운터 초기화
+
                 Console.Clear();
                 Console.WriteLine("\n정말 던전에 진입하시겠습니까? 끝을 보시거나, 죽기 전까지 탈출하실 수 없습니다.");
                 Console.WriteLine();
@@ -46,7 +47,6 @@ namespace TextRPG
 
                     default:
                         SystemMessageText(EMessageType.ERROR);
-
                         continue;
                 }
             }
@@ -57,17 +57,12 @@ namespace TextRPG
 
             // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기, 5.3 A : 배수 증가 매게변수 추가
             enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel, selectedDifficulty); 
-
-            foreach (var enemy in enemies)
-            {
-                Console.WriteLine($"{enemy.Name}가 나타났습니다!");
-            }
-
         }
 
         // 5.3 A : 던전 난이도 확인 추가
         private void CheckForDifficulty()
         {
+            Console.WriteLine();
             Console.WriteLine("난이도를 선택하세요:");
             Console.WriteLine("1. 쉬움 (EASY)");
             Console.WriteLine("2. 보통 (NORMAL)");
@@ -97,9 +92,8 @@ namespace TextRPG
 
         public void BattleStart() // 전투 시작
         {
-            CheckForDifficulty();  // 난이도 선택
-            int currentDungeonLevel = gm.Player.Level;
-            enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel, selectedDifficulty);  // 5.3 A : 난이도 정보를 전달
+            CheckForDifficulty();
+            AppearEnemy();
             dungeonBattle();
         }
 
@@ -107,6 +101,7 @@ namespace TextRPG
         {
             while ((enemies.Any(e => e.Health > 0) && gm.Player.Health > 0))
             {
+                winCounter++;
                 int targetIndex = ChooseEnemy();
                 if (targetIndex == -1) continue;
 
@@ -117,6 +112,10 @@ namespace TextRPG
                 if (!enemies.Any(e => e.Health > 0))
                 {
                     BattleEnd(true);  // 모든 적이 사망했으므로 승리 처리
+                    if (winCounter >= 10)
+                    {
+                        TriggerBossBattle();
+                    }
                     if (playerInput == 1)
                     {
                         BattleStart();
@@ -311,11 +310,19 @@ namespace TextRPG
             Thread.Sleep(1500);
         }
 
+        private void TriggerBossBattle()
+        {
+            Console.WriteLine("보스가 등장했습니다!");
+            Enemy boss = EnemyDataManager.instance.GetBoss();  // 보스 데이터 가져오기
+            enemies.Clear();
+            enemies.Add(boss);  // 현재 전투 몬스터 리스트에 보스 추가
+            dungeonBattle();
+        }
+
+
         private void BattleEnd(bool isWin)
         {
             gm.Dungeon.resultType = isWin ? EDungeonResultType.VICTORY : EDungeonResultType.RETIRE;
-            gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
-
             dungeonResultScreen.ScreenOn();
         }
 
