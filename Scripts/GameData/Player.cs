@@ -33,7 +33,7 @@ namespace TextRPG
             AvoidChance = 10;
             CriticalChance = 16;
             CriticalDamage = 1.6f;
-            MaxMana = 10000;
+            MaxMana = 100;
             Mana = MaxMana;
             base.Skills = new List<Skill>();
             PlayerEquipItems = new List<EquipItem>();

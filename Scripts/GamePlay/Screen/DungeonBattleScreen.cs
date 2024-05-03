@@ -54,7 +54,7 @@ namespace TextRPG
         }
         private void AppearEnemy()
         {
-            int currentDungeonLevel = gm.Player.Level; // 임시로 집어 넣음, 원래는 던전 난이도를 집어 넣어야함
+            int currentDungeonLevel = winCounter; // 임시로 집어 넣음, 원래는 던전 난이도를 집어 넣어야함
 
             // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기, 5.3 A : 배수 증가 매게변수 추가
             enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel, selectedDifficulty); 
@@ -75,12 +75,15 @@ namespace TextRPG
             switch (input)
             {
                 case "1":
+                    winCounter += 1;
                     selectedDifficulty = EDungeonDifficulty.EASY;
                     break;
                 case "2":
+                    winCounter += 2;
                     selectedDifficulty = EDungeonDifficulty.NORMAL;
                     break;
                 case "3":
+                    winCounter += 3;
                     selectedDifficulty = EDungeonDifficulty.HARD;
                     break;
                 default:
@@ -111,7 +114,6 @@ namespace TextRPG
 
                 if (!enemies.Any(e => e.Health > 0))
                 {
-                    winCounter++;  // 승리 카운터 증가
                     BattleEnd(true);  // 모든 적이 사망했으므로 승리 처리
                     return;
                 }
@@ -165,6 +167,7 @@ namespace TextRPG
                 Console.WriteLine("0. 다른 적 선택");
                 Console.WriteLine("1. 기본 공격");
                 Console.WriteLine("2. 스킬 사용");
+                Console.WriteLine("3. 아이템 사용");
                 Console.WriteLine();
                 MyActionText();
 
@@ -183,6 +186,15 @@ namespace TextRPG
                         {
                             returnToChooseEnemy = false; // 상태 초기화
                             return -1; // 다른 적을 선택하도록 플로우 변경
+                        }
+                        return 0;
+                    case "3":
+                        // 포션넣을 곳
+                        ConsumableItem selectedPotion = SelectPotion();
+                        if (selectedPotion != null)
+                        {
+                            selectedPotion.UseItem();
+                            Console.WriteLine($"{selectedPotion.ItemName} 사용: {selectedPotion.Desc}");
                         }
                         return 0;
                     default:
@@ -376,6 +388,35 @@ namespace TextRPG
             Console.WriteLine($"MP {gm.Player.Mana}/{gm.Player.MaxMana}");
             Console.WriteLine();
             Console.WriteLine("\n공격할 몬스터를 선택하세요:\n");
+        }
+
+        private ConsumableItem SelectPotion()
+        {
+            Console.WriteLine("포션을 선택하세요:");
+            int index = 1;
+            Dictionary<int, ConsumableItem> potionOptions = new Dictionary<int, ConsumableItem>();
+
+            foreach (var item in gm.Player.PlayerConsumableItems)
+            {
+                ConsumableItem potion = dm.ConsumableItemDB.Find(p => p.ItemName == item.Key);
+                if (potion != null && item.Value > 0)
+                {
+                    Console.WriteLine($"{index}: {potion.ItemName} - {potion.Desc} (보유량: {item.Value})");
+                    potionOptions[index] = potion;
+                    index++;
+                }
+            }
+
+            Console.WriteLine("번호를 입력하세요:");
+            if (int.TryParse(Console.ReadLine(), out int choice) && potionOptions.ContainsKey(choice))
+            {
+                return potionOptions[choice];
+            }
+            else
+            {
+                Console.WriteLine("올바른 번호를 입력하세요.");
+                return null;
+            }
         }
     }
 }
