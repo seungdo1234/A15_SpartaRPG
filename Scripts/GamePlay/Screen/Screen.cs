@@ -92,6 +92,9 @@ namespace TextRPG
                 case EMessageType.SHOPRESET:
                     Console.WriteLine("상점 장비 아이템을 초기화했습니다.");
                     break;
+                case EMessageType.SHOPRESETFAIL:
+                    Console.WriteLine("모든 장비를 다 구매하셨습니다.");
+                    break;
             }
             Thread.Sleep(750);
         }
