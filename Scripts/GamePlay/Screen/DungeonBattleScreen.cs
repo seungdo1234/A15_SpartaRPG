@@ -43,9 +43,8 @@ namespace TextRPG
                         return;
 
                     default:
-                        Console.WriteLine();
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Thread.Sleep(75);
+                        SystemMessageText(EMessageType.ERROR);
+
                         continue;
                 }
             }
@@ -118,9 +117,8 @@ namespace TextRPG
 
                 if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input, out int selected))
                 {
-                    Console.WriteLine();
-                    Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
-                    Thread.Sleep(75);
+                    SystemMessageText(EMessageType.ERROR);
+
                     continue;
                 }
 
@@ -128,9 +126,8 @@ namespace TextRPG
 
                 if (selected < 0 || selected >= enemies.Count || enemies[selected].Health <= 0)
                 {
-                    Console.WriteLine();
-                    Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
-                    Thread.Sleep(75);
+                    SystemMessageText(EMessageType.ERROR);
+
                     continue;
                 }
 
@@ -167,9 +164,7 @@ namespace TextRPG
                         }
                         return 0;
                     default:
-                        Console.WriteLine();
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Thread.Sleep(75);
+                        SystemMessageText(EMessageType.ERROR);
                         continue;
                 }
             }
@@ -193,14 +188,19 @@ namespace TextRPG
 
         private void UseSkill(Enemy enemy)
         {
+            Console.WriteLine("사용할 스킬을 선택하세요 (0을 누르면 다른 적 선택):\n");
+            for (int i = 0; i < gm.Player.Skills.Count; i++)
+            {
+                var skill = gm.Player.Skills[i];
+                Console.WriteLine($"{i + 1}. {skill.Name} (MP: {skill.ManaCost}) - {skill.Content}");
+            }
+            Console.WriteLine();
+            int inputLine = Console.CursorTop; // 현재 입력 줄 위치 저장
+            Console.Write(">> "); // 프롬프트 출력
+
             while (true)
             {
-                Console.WriteLine("사용할 스킬을 선택하세요 (0을 누르면 다른 적 선택):");
-                for (int i = 0; i < gm.Player.Skills.Count; i++)
-                {
-                    var skill = gm.Player.Skills[i];
-                    Console.WriteLine($"{i + 1}. {skill.Name} (MP: {skill.ManaCost}) - {skill.Content}");
-                }
+                Console.SetCursorPosition(3, inputLine); // 커서를 입력 줄의 시작 위치로 설정
 
                 string input = Console.ReadLine();
                 if (input == "0")
@@ -209,32 +209,17 @@ namespace TextRPG
                     return; // 다른 적을 선택하도록 하기 위해 메서드 종료
                 }
 
-                if (!int.TryParse(input, out int selectedSkillIndex))
+                if (!int.TryParse(input, out int selectedSkillIndex) || selectedSkillIndex < 1 || selectedSkillIndex > gm.Player.Skills.Count)
                 {
-                    Console.WriteLine();
-                    Console.WriteLine("잘못된 입력입니다.");
-                    Thread.Sleep(75);
-                    BattleLogText();
+                    SystemMessageText(EMessageType.ERROR);
                     continue;
                 }
 
                 selectedSkillIndex -= 1;
-                if (selectedSkillIndex < 0 || selectedSkillIndex >= gm.Player.Skills.Count)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("잘못된 선택입니다.");
-                    Thread.Sleep(75);
-
-                    BattleLogText();
-                    continue;
-                }
-
                 Skill selectedSkill = gm.Player.Skills[selectedSkillIndex];
                 if (gm.Player.Mana < selectedSkill.ManaCost)
                 {
-                    Console.WriteLine();
-                    Console.WriteLine("마나가 부족합니다.");
-                    BattleLogText();
+                    SystemMessageText(EMessageType.MANALESS);
                     continue;
                 }
 
@@ -254,7 +239,7 @@ namespace TextRPG
                 Console.WriteLine($"{gm.Player.Name}의 {target.Name}을(를) 향한 공격!");
                 string initialSkillResult = skill.CastSkill(gm.Player, target);
                 Console.WriteLine(initialSkillResult);
-                Thread.Sleep(2000);
+                Thread.Sleep(1500);
 
                 // 나머지 타겟들에게 스킬 적용
                 int targetsHit = 1; // 첫 번째 타겟이 이미 공격받았으므로 1로 시작
@@ -266,7 +251,7 @@ namespace TextRPG
                     Console.WriteLine($"이어지는 {enemy.Name}을(를) 향한 공격!");
                     string skillResult = skill.CastSkill(gm.Player, enemy);
                     Console.WriteLine(skillResult);
-                    Thread.Sleep(2000);
+                    Thread.Sleep(1500);
 
                     targetsHit++;
                 }

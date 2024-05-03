@@ -72,6 +72,9 @@ namespace TextRPG
                 case EMessageType.OTHERCLASSITEM:
                     Console.WriteLine("\n\n현재 직업에 맞지 않는 아이템입니다.");
                     break;
+                case EMessageType.MANALESS:
+                    Console.WriteLine("\n\n마나가 부족합니다.");
+                    break;
             }
             Thread.Sleep(750);
         }
