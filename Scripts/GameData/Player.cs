@@ -11,6 +11,7 @@ namespace TextRPG
         // 플레이어 경험치
         private int[] levelExp = new int[10] { 5, 7, 10, 12, 15, 20, 25, 30, 40, 50 }; // 레벨 별 경험치 통
 
+        [JsonProperty] public List<EquipItem> PlayerEquipItems { get; private set; }
         public EUnitType ePlayerClass { get;  set; }
         public int Gold { get; set; }
         [JsonProperty] public int Exp { get; private set; }
@@ -34,8 +35,8 @@ namespace TextRPG
             MaxMana = 100;
             Mana = MaxMana;
             base.Skills = new List<Skill>();
+            PlayerEquipItems = new List<EquipItem>();
         }
-
 
 
         public void ChangePlayerClass(EUnitType ePlayerClass)
@@ -191,6 +192,17 @@ namespace TextRPG
             result += critStr;
 
             return result;
+        }
+
+        //  5.3 J => 플레이어 보유 아이템 리스트 리팩토링
+        public void AddEquipItem(EquipItem equipItem)
+        {
+            PlayerEquipItems.Add(equipItem);
+        }
+        public void RemoveEquipItem(EquipItem equipItem)
+        {
+
+            PlayerEquipItems.Remove(equipItem);
         }
     }
 }
