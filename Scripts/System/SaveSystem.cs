@@ -61,13 +61,18 @@ namespace TextRPG
         //24.05.03 데이터 로드 방식 변경 - C
         public Player Load(string name)
         {
+            string equipItemJsonFilePath = Path.Combine(path, @"..\..\..\SaveData\EquipItemData.json");
+            string consumableJsonFilePath = Path.Combine(path, @"..\..\..\SaveData\ConsumableItemData.json");
             string saveDirectory = $"{path}\\SaveSlot";
             string playerFile = Path.Combine(saveDirectory, "PlayerData.json");
-            string itemJsonFilePath = Path.Combine(path, @"..\..\..\SaveData\ItemData.json");
 
             // 전체 아이템 데이터 불러오기
-            string itemJsonData = File.ReadAllText(itemJsonFilePath); 
-            ItemDataManager.instance.SetShopItems(JsonConvert.DeserializeObject<List<EquipItem>>(itemJsonData));
+            string equipItemJsonData = File.ReadAllText(equipItemJsonFilePath); 
+            string consumableItemJsonData = File.ReadAllText(consumableJsonFilePath); 
+
+            // DB 적용
+            ItemDataManager.instance.SetItemDB(JsonConvert.DeserializeObject<List<EquipItem>>(equipItemJsonData), 
+                JsonConvert.DeserializeObject<List<ConsumableItem>>(consumableItemJsonData));
 
             if (name == "") // 불러오기 승낙한 경우
             {
@@ -78,7 +83,7 @@ namespace TextRPG
                 PlayerDatas playerData = JsonConvert.DeserializeObject<PlayerDatas>(playerJsonData);
 
                 // 불러온 플레이어 정보 저장
-                ItemDataManager.instance.SetItems(playerData.shopItems);
+                ItemDataManager.instance.SetShopItems(playerData.shopItems);
                 return playerData.player;
 
             }

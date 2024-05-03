@@ -47,7 +47,7 @@ namespace TextRPG
             Console.Write($"플레이하실 직업을 선택해주세요. ");
 
             Console.Write("( ");
-            for ( int i = 1; i < Enum.GetNames(typeof(EUnitType)).Length - 1; i++)
+            for ( int i = 1; i < Enum.GetNames(typeof(EUnitType)).Length - 2; i++)
             {
                 Console.Write($"{i}.{gm.Player.GetPlayerClass((EUnitType)i) } ");
             }
