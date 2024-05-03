@@ -58,7 +58,7 @@ namespace TextRPG.Scripts
         {
             List<Quest> storyLog = new List<Quest>();
             if (QuestSave[2].QuestNumber != -1)
-                storyLog.GetRange(QuestSave[2].CurrentProgress, QuestSave[2].QuestNumber);
+                storyLog = StoryQuest.GetRange(QuestSave[2].CurrentProgress, QuestSave[2].QuestNumber);
             return storyLog;
         }
 
@@ -66,7 +66,7 @@ namespace TextRPG.Scripts
         {
             List<Quest> monsterLog = new List<Quest>();
             if (QuestSave[3].QuestNumber != -1)
-                monsterLog.GetRange(QuestSave[3].CurrentProgress, QuestSave[3].QuestNumber);
+                monsterLog = MonsterQuest.GetRange(QuestSave[3].CurrentProgress, QuestSave[3].QuestNumber);
             return monsterLog;
         }
 
