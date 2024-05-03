@@ -76,19 +76,19 @@ namespace TextRPG
             {
                 case "1":
                     winCounter += 1;
-                    selectedDifficulty = EDungeonDifficulty.EASY;
+                    gm.Dungeon.dif = EDungeonDifficulty.EASY;
                     break;
                 case "2":
                     winCounter += 2;
-                    selectedDifficulty = EDungeonDifficulty.NORMAL;
+                    gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
                     break;
                 case "3":
                     winCounter += 3;
-                    selectedDifficulty = EDungeonDifficulty.HARD;
+                    gm.Dungeon.dif = EDungeonDifficulty.HARD;
                     break;
                 default:
                     Console.WriteLine("잘못된 입력입니다. 보통 난이도로 개시합니다.");
-                    selectedDifficulty = EDungeonDifficulty.NORMAL;
+                    gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
                     break;
             }
             Console.WriteLine($"선택된 난이도: {selectedDifficulty}");
@@ -189,17 +189,11 @@ namespace TextRPG
                         }
                         return 0;
                     case "3":
-                        // 포션넣을 곳
-                        ConsumableItem selectedPotion = SelectPotion();
-                        if (selectedPotion != null)
+                        if (!UsePotion())
                         {
-                            selectedPotion.UseItem();
-                            Console.WriteLine($"{selectedPotion.ItemName} 사용: {selectedPotion.Desc}");
-                            return 0;
+                            continue;  // 포션 사용 취소시, 다시 행동 선택
                         }
-                        // 포션 선택을 취소한 경우
-                        Console.WriteLine("포션 선택이 취소되었습니다.");
-                        continue;
+                        return 0;
 
                     default:
                         SystemMessageText(EMessageType.ERROR);
@@ -396,7 +390,6 @@ namespace TextRPG
 
         private ConsumableItem SelectPotion()
         {
-            Console.WriteLine("포션을 선택하세요 (0을 누르면 취소):");
             int index = 1;
             Dictionary<int, ConsumableItem> potionOptions = new Dictionary<int, ConsumableItem>();
 
@@ -416,7 +409,6 @@ namespace TextRPG
             {
                 Console.WriteLine("번호를 입력하세요 (0으로 취소):");
                 string input = Console.ReadLine();
-
                 // 취소 조건 확인
                 if (input == "0")
                 {
@@ -430,6 +422,37 @@ namespace TextRPG
                 }
 
                 SystemMessageText(EMessageType.ERROR);
+            }
+        }
+
+        private bool UsePotion()
+        {
+            ConsumableItem selectedPotion = null;
+
+            while (true)
+            {
+                selectedPotion = SelectPotion();
+                if (selectedPotion != null)
+                {
+                    // 포션 사용 조건 검사
+                    if ((selectedPotion.ConsumableType == EConsumableType.HEALTH && GameManager.instance.Player.Health < GameManager.instance.Player.MaxHealth) ||
+                        (selectedPotion.ConsumableType == EConsumableType.MANA && GameManager.instance.Player.Mana < GameManager.instance.Player.MaxMana))
+                    {
+                        selectedPotion.UseItem();
+                        Console.WriteLine($"{selectedPotion.ItemName} 사용: {selectedPotion.Desc}");
+                        return true;  // 성공적으로 포션 사용
+                    }
+                    else
+                    {
+                        SystemMessageText(EMessageType.FULLCONDITION);
+                        // 포션 사용 조건이 충족되지 않았으므로 계속 포션 선택을 유도
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("포션 선택이 취소되었습니다.");
+                    return false;  // 포션 사용 취소
+                }
             }
         }
     }

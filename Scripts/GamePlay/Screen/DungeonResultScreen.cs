@@ -3,8 +3,6 @@ namespace TextRPG
 {
     public class DungeonResultScreen : Screen
     {
-
-        private EDungeonDifficulty dif; // 던전의 난이도
         private int prevHealth; // 던전 진행 전 체력
         private int prevExp; // 던전 진행 전 체력
         // private int prevLevel; // 던전 진행 전 Level
@@ -16,7 +14,6 @@ namespace TextRPG
         {
             if (gm.Dungeon.resultType != EDungeonResultType.RETIRE)
             {
-                this.dif = gm.Dungeon.dif;
                 DungeonReward();
             }
 
@@ -40,6 +37,13 @@ namespace TextRPG
                 if (int.TryParse(Console.ReadLine(), out int input) && (input == 0 || (input == 1 && gm.Dungeon.resultType == EDungeonResultType.VICTORY)))
                 {
                     Console.Clear();
+
+                    if(input == 0) // 로비로 돌아갈 때 체력 및 마나 회복
+                    {
+                        gm.Player.RecoveryMana(gm.Player.MaxMana);
+                        gm.Player.RecoveryHealth(gm.Player.MaxHealth);
+                    }
+
                     playerInput = input; // Input 값 저장
                     return;
                 }
@@ -52,11 +56,15 @@ namespace TextRPG
         }
         private void DungeonReward()
         {
-            reward = gm.Dungeon.GetDungeonReward(dif);
+            reward = gm.Dungeon.GetDungeonReward();
 
-            gm.Player.AddEquipItem(reward.dungeonRewardItem);
+            gm.Player.AddEquipItem(reward.rewardEquipItem);
+            if(reward.rewardEquipItem != null)
+            {
+                gm.Player.AddConsumableItem(reward.rewardConsumableItem.ItemName);
+            }
             gm.Player.Gold += reward.gold;
-            gm.Player.ExpUp(reward.exp); 
+         //   gm.Player.ExpUp(reward.exp); 
 
         }
        
@@ -89,9 +97,13 @@ namespace TextRPG
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{reward.gold} Gold");
 
-            if (reward.dungeonRewardItem != null)
+            if (reward.rewardEquipItem != null)
             {
-                Console.WriteLine($"{reward.dungeonRewardItem.ItemName} x 1");
+                Console.WriteLine($"{reward.rewardEquipItem.ItemName} x 1");
+            }
+            if (reward.rewardConsumableItem != null)
+            {
+                Console.WriteLine($"{reward.rewardConsumableItem.ItemName} x 1");
             }
 
             Console.WriteLine();
