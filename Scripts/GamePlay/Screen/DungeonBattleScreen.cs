@@ -76,19 +76,19 @@ namespace TextRPG
             {
                 case "1":
                     winCounter += 1;
-                    selectedDifficulty = EDungeonDifficulty.EASY;
+                    gm.Dungeon.dif = EDungeonDifficulty.EASY;
                     break;
                 case "2":
                     winCounter += 2;
-                    selectedDifficulty = EDungeonDifficulty.NORMAL;
+                    gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
                     break;
                 case "3":
                     winCounter += 3;
-                    selectedDifficulty = EDungeonDifficulty.HARD;
+                    gm.Dungeon.dif = EDungeonDifficulty.HARD;
                     break;
                 default:
                     Console.WriteLine("잘못된 입력입니다. 보통 난이도로 개시합니다.");
-                    selectedDifficulty = EDungeonDifficulty.NORMAL;
+                    gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
                     break;
             }
             Console.WriteLine($"선택된 난이도: {selectedDifficulty}");
