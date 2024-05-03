@@ -60,7 +60,7 @@ namespace TextRPG
 
             Console.WriteLine();
 
-            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("[ 장비 ]");
             for (int i = 0; i < dm.ShopEquipItems.Count; i++)
             {
                 EquipItem equipItem = dm.ShopEquipItems[i];
@@ -82,6 +82,17 @@ namespace TextRPG
 
                 Console.WriteLine($"|\t{equipItem.Desc} | {sell}");
 
+            }
+
+            Console.WriteLine();
+
+            Console.WriteLine("[ 물약 ]");
+
+            for(int i = 0; i< dm.ShopConsumableItems.Length; i++)
+            {
+                int num = gm.Player.PlayerConsumableItems.ContainsKey(dm.ShopConsumableItems[i]) ? gm.Player.PlayerConsumableItems[dm.ShopConsumableItems[i]] : 0;
+                Console.WriteLine($"- {dm.ShopConsumableItems[i].ItemName}\t| {dm.ShopConsumableItems[i].ItemRank} | {dm.ShopConsumableItems[i].Desc}\t| " +
+                    $"{dm.ShopConsumableItems[i].Gold}G ({num}개 보유중)");
             }
 
             Console.WriteLine();

@@ -49,7 +49,8 @@ namespace TextRPG
             string equipItemJsonData = File.ReadAllText(equipItemJsonFilePath); 
             string consumableItemJsonData = File.ReadAllText(consumableJsonFilePath); 
 
-            ItemDataManager.instance.SetItemDB(JsonConvert.DeserializeObject<List<EquipItem>>(equipItemJsonFilePath), 
+            // DB 적용
+            ItemDataManager.instance.SetItemDB(JsonConvert.DeserializeObject<List<EquipItem>>(equipItemJsonData), 
                 JsonConvert.DeserializeObject<List<ConsumableItem>>(consumableItemJsonData));
 
             if (File.Exists(filePath)) // 파일이 존재하는지 -> 이미 데이터가 존재하는 지
