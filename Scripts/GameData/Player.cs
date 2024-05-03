@@ -197,6 +197,7 @@ namespace TextRPG
         //  5.3 J => 플레이어 보유 아이템 리스트 리팩토링
         public void AddEquipItem(EquipItem equipItem)
         {
+            equipItem.IsSell = true;
             PlayerEquipItems.Add(equipItem);
         }
         public void RemoveEquipItem(EquipItem equipItem)
