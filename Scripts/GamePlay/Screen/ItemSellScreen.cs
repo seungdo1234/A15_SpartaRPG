@@ -89,11 +89,12 @@ namespace TextRPG
             Console.WriteLine("[ 보유 물약 ]");
 
             int num = 1; // 보유하고있는 소비 아이템 탐색
-            foreach(var cItem in gm.Player.PlayerConsumableItems.Keys) 
+            foreach(var itemName in gm.Player.PlayerConsumableItems.Keys) 
             {
+                ConsumableItem cItem =  dm.ConsumableItemDB.Find(obj => obj.ItemName == itemName);
                 playerConsumableItems.Add(cItem);
                 Console.WriteLine($"- {gm.Player.PlayerEquipItems.Count + num} {cItem.ItemName}\t| {cItem.ItemRank} | {cItem.Desc}\t| " +
-                    $"{MathF.Floor((float)cItem.Gold * 0.8f)} G ({gm.Player.PlayerConsumableItems[cItem]}개 보유중)");
+                    $"{MathF.Floor((float)cItem.Gold * 0.8f)} G ({gm.Player.PlayerConsumableItems[cItem.ItemName]}개 보유중)");
 
                 num++;
             }
@@ -126,8 +127,8 @@ namespace TextRPG
         {
             ConsumableItem consumableItem = playerConsumableItems[input- gm.Player.PlayerEquipItems.Count - 1];
 
-            gm.Player.Gold += consumableItem.Gold;
-            gm.Player.RemoveConsumableItem(consumableItem);
+            gm.Player.Gold += (int)((float)consumableItem.Gold * 0.8f); ;
+            gm.Player.RemoveConsumableItem(consumableItem.ItemName);
         }
     }
 }

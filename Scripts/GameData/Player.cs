@@ -12,7 +12,7 @@ namespace TextRPG
         private int[] levelExp = new int[10] { 5, 7, 10, 12, 15, 20, 25, 30, 40, 50 }; // 레벨 별 경험치 통
 
         [JsonProperty] public List<EquipItem> PlayerEquipItems { get; private set; }
-        [JsonProperty] public Dictionary<ConsumableItem, int> PlayerConsumableItems { get; private set; }
+        [JsonProperty] public Dictionary<string, int> PlayerConsumableItems { get; private set; } 
         public EUnitType ePlayerClass { get;  set; }
         public int Gold { get; set; }
         [JsonProperty] public int Exp { get; private set; }
@@ -37,7 +37,7 @@ namespace TextRPG
             Mana = MaxMana;
             base.Skills = new List<Skill>();
             PlayerEquipItems = new List<EquipItem>();
-            PlayerConsumableItems = new Dictionary<ConsumableItem, int>();
+            PlayerConsumableItems = new Dictionary<string, int>();
         }
 
 
@@ -208,26 +208,27 @@ namespace TextRPG
             PlayerEquipItems.Remove(equipItem);
         }
 
-        public void AddConsumableItem(ConsumableItem consumableItem)
+        // 소비 아이템 추가 및 삭제
+        public void AddConsumableItem(string consumableItemName)
         {
-            if (PlayerConsumableItems.ContainsKey(consumableItem))
+            if (PlayerConsumableItems.ContainsKey(consumableItemName))
             {
-                PlayerConsumableItems[consumableItem]++;
+                PlayerConsumableItems[consumableItemName]++;
             }
             else
             {
-                PlayerConsumableItems.Add(consumableItem, 1);
+                PlayerConsumableItems.Add(consumableItemName, 1);
             }
         }
-        public void RemoveConsumableItem(ConsumableItem consumableItem)
+        public void RemoveConsumableItem(string consumableItemName)
         {
-            if (PlayerConsumableItems.ContainsKey(consumableItem) && PlayerConsumableItems[consumableItem] > 1)
+            if (PlayerConsumableItems.ContainsKey(consumableItemName) && PlayerConsumableItems[consumableItemName] > 1)
             {
-                PlayerConsumableItems[consumableItem]--;
+                PlayerConsumableItems[consumableItemName]--;
             }
             else
             {
-                PlayerConsumableItems.Remove(consumableItem);
+                PlayerConsumableItems.Remove(consumableItemName);
             }
         }
     }

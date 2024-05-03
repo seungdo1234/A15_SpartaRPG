@@ -91,7 +91,7 @@ namespace TextRPG
 
             for(int i = 0; i< dm.ShopConsumableItems.Length; i++)
             {
-                int num = gm.Player.PlayerConsumableItems.ContainsKey(dm.ShopConsumableItems[i]) ? gm.Player.PlayerConsumableItems[dm.ShopConsumableItems[i]] : 0;
+                int num = gm.Player.PlayerConsumableItems.ContainsKey(dm.ShopConsumableItems[i].ItemName) ? gm.Player.PlayerConsumableItems[dm.ShopConsumableItems[i].ItemName] : 0;
                 Console.WriteLine($"- {dm.ShopConsumableItems[i].ItemName}\t| {dm.ShopConsumableItems[i].ItemRank} | {dm.ShopConsumableItems[i].Desc}\t| " +
                     $"{dm.ShopConsumableItems[i].Gold}G ({num}개 보유중)");
             }
