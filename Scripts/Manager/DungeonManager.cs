@@ -23,11 +23,12 @@ namespace TextRPG
             return reward;
         }
 
+        /*
         public void DungeonLevelUp(EDungeonDifficulty dif)
         {
             CurrentDungeonLevel += (int)dif;
         }
-
+        */
 
     }
 }

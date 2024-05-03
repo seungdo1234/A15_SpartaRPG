@@ -45,11 +45,6 @@ namespace TextRPG.Scripts
 
         public Quest GetCurrentStoryQuest()
         {
-            return StoryQuest[QuestSave[0].QuestNumber];
-        }
-
-        public Quest GetCurrentMonsterQuest()
-        {
             MonsterQuest[QuestSave[1].QuestNumber].CurrentProgress = QuestSave[1].CurrentProgress;
             return MonsterQuest[QuestSave[1].QuestNumber];
         }
@@ -57,17 +52,43 @@ namespace TextRPG.Scripts
         public List<Quest> GetStoryLog()
         {
             List<Quest> storyLog = new List<Quest>();
-            if (QuestSave[2].QuestNumber != -1)
-                storyLog.GetRange(QuestSave[2].CurrentProgress, QuestSave[2].QuestNumber);
+            if (QuestSave[2].QuestNumber >= -1)
+                storyLog = StoryQuest.GetRange(QuestSave[2].CurrentProgress, QuestSave[2].QuestNumber + 1);
             return storyLog;
         }
 
-        public List<Quest> GetMonsterLog()
+        public List<Quest> GetEnemyLog()
         {
             List<Quest> monsterLog = new List<Quest>();
-            if (QuestSave[3].QuestNumber != -1)
-                monsterLog.GetRange(QuestSave[3].CurrentProgress, QuestSave[3].QuestNumber);
+            if (QuestSave[3].QuestNumber >= -1)
+                monsterLog = MonsterQuest.GetRange(QuestSave[3].CurrentProgress, QuestSave[3].QuestNumber + 1);
             return monsterLog;
+        }
+
+        public void SetMonsterQuest(Enemy deadEnemy)
+        {
+            var oldQ = QuestSave[1];
+            int currentQ = oldQ.QuestNumber;
+            int current = oldQ.CurrentProgress; 
+
+            if (current == -1)
+            {
+                return;
+            }
+            else
+            {
+                if (currentQ - 1 == EnemyDataManager.instance.MonsterDB.IndexOf(deadEnemy))
+                {
+                    var newQ = (oldQ.QuestType, oldQ.QuestNumber, ++oldQ.CurrentProgress);
+
+                    QuestSave[1] = newQ;
+                }else if (currentQ == 0)
+                {
+                    var newQ = (oldQ.QuestType, oldQ.QuestNumber, ++oldQ.CurrentProgress);
+
+                    QuestSave[1] = newQ;
+                }
+            }
         }
     }
 }
