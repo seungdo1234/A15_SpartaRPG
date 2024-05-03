@@ -10,7 +10,6 @@ namespace TextRPG
         private bool isWin;
         private int winCounter = 0;  // 승리 횟수 카운터
         private bool returnToChooseEnemy = false; // 스킬 예외처리
-        private bool returnToPlayerAction = false; // 포션 예외처리
         private EDungeonDifficulty selectedDifficulty = EDungeonDifficulty.NORMAL; // 난이도 반환
 
         private DungeonResultScreen dungeonResultScreen;
