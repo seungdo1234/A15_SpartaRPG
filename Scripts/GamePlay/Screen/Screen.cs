@@ -8,18 +8,14 @@ namespace TextRPG
     public  abstract class Screen
     {
         protected ItemDataManager dm;
-        protected GameManager gm;
-        protected EMessageType messageType;
-        protected int cursorPosition;
+        protected GameManager gm;        
 
         protected static int playerInput;
         
         public Screen()
         {
             dm = ItemDataManager.instance;
-            gm = GameManager.instance;
-            messageType = EMessageType.DEFAULT;
-            cursorPosition = 0;
+            gm = GameManager.instance;               
         }
 
         // 5.1 J => 장비 추가로 인한 리팩토링
@@ -53,8 +49,7 @@ namespace TextRPG
                 Console.Write($"방어력 {equipItem.DefValue} ");
             }
 
-            Console.WriteLine($"|\t{equipItem.Desc}");
-            cursorPosition++;
+            Console.WriteLine($"|\t{equipItem.Desc}");            
         }
 
 
@@ -62,18 +57,23 @@ namespace TextRPG
         protected void MyActionText()
         {
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
-            cursorPosition++;
-                        
-            switch(messageType)
+            Console.Write(">> ");            
+        }
+
+        protected void SystemMessageText(EMessageType messageType)
+        {
+            switch (messageType)
             {
                 case EMessageType.DEFAULT:
                     return;
                 case EMessageType.ERROR:
                     Console.WriteLine("\n\n잘못된 입력입니다");
                     break;
+                case EMessageType.OTHERCLASSITEM:
+                    Console.WriteLine("\n\n현재 직업에 맞지 않는 아이템입니다.");
+                    break;
             }
-            Console.SetCursorPosition(3, cursorPosition);
+            Thread.Sleep(750);
         }
 
         public abstract void ScreenOn();

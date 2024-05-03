@@ -7,10 +7,9 @@ namespace TextRPG
         //  Enum.GetNames(typeof(PlayerClass)).Length => PlayerClass 열거형의 길이를 반환
         public override void ScreenOn()
         {
-            Console.Clear();
-
             while (true)
             {
+                Console.Clear();
                 ClassSelectionText();
 
                 // 직업을 선택
@@ -29,7 +28,8 @@ namespace TextRPG
                 }
                 else
                 {
-                    Console.WriteLine("잘못된 입력입니다! 숫자를 다시 입력하세요.\n");
+                    Console.WriteLine("\n잘못된 입력입니다! 숫자를 다시 입력하세요.\n");
+                    Thread.Sleep(750);
                 }
             }
 
