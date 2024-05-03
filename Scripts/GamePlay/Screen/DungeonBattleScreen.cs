@@ -8,7 +8,6 @@ namespace TextRPG
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
 
 
-        private bool isEnd;
         private bool isWin;
         private bool returnToChooseEnemy = false; // 스킬 예외처리
 
@@ -60,7 +59,6 @@ namespace TextRPG
         public void BattleStart() // 전투 시작
         {
             isWin = false;
-            isEnd = false;
             // 5.2 J => 전투 결과 창에서 불러올 수 있도록 함
             AppearEnemy();
             dungeonBattle(); // 전투 시작
@@ -79,29 +77,33 @@ namespace TextRPG
                 if (actionResult == -1) continue;
 
                 //
-                if (isEnd)
+                if (!enemies.Any(e => e.Health > 0))
                 {
-                    break;
+                    BattleEnd(true);  // 모든 적이 사망했으므로 승리 처리
+                    if (playerInput == 1)
+                    {
+                        BattleStart();
+                    }
+                    return;
                 }
                 //
 
                 foreach (var enemy in enemies.Where(e => e.Health > 0))
                 {
                     EnemyTurn(enemy);
+
+                    if (gm.Player.Health <= 0)  // 플레이어가 사망한 경우, 패배 처리
+                    {
+                        BattleEnd(false);
+                    }
                 }
             }
 
             // 5.2 j => 배틀 재시작, 로비로 가기 수정
-            if(playerInput == 1)
-            {
-                BattleStart();
-            }
         }
 
         private int ChooseEnemy()
         {
-            bool CEerrorOccurred = false; // 오류 발생 여부를 추적하는 플래그
-
             while (true)
             {
                 BattleLogText();
@@ -111,6 +113,7 @@ namespace TextRPG
                 if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input, out int selected))
                 {
                     Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
+                    Thread.Sleep(50);
                     continue;
                 }
 
@@ -119,6 +122,7 @@ namespace TextRPG
                 if (selected < 0 || selected >= enemies.Count || enemies[selected].Health <= 0)
                 {
                     Console.WriteLine("입력이 잘못되었습니다. 다시 입력해주세요.");
+                    Thread.Sleep(50);
                     continue;
                 }
 
@@ -154,8 +158,8 @@ namespace TextRPG
                         }
                         return 0;
                     default:
-                        Console.Clear();
                         BattleLogText();
+                        Console.WriteLine("잘못된 입력입니다.");
                         continue;
                 }
             }
@@ -271,20 +275,11 @@ namespace TextRPG
             string attackResult = enemy.Attack(gm.Player);
             Console.WriteLine(attackResult);
 
-
-            if (gm.Player.Health <= 0)
-            {
-                BattleEnd(false);
-            }
-            else
-            {
-                Thread.Sleep(2000);
-            }
+            Thread.Sleep(1500);
         }
 
         private void BattleEnd(bool isWin)
         {
-            isEnd = true;
             gm.Dungeon.resultType = isWin ? EDungeonResultType.VICTORY : EDungeonResultType.RETIRE;
             gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
 
