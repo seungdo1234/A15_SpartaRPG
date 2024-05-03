@@ -47,7 +47,7 @@ namespace TextRPG
                     }
                     else
                     {
-                        Console.WriteLine("잘못된 입력입니다! 1 또는 2를 다시 입력하세요.\n");
+                        Console.WriteLine("\n잘못된 입력입니다! 1 또는 2를 다시 입력하세요.\n");
                         Thread.Sleep(1000);
                     }
                 }
@@ -96,7 +96,7 @@ namespace TextRPG
                     }
                     else
                     {
-                        Console.WriteLine("잘못된 입력입니다! 1 또는 2를 다시 입력하세요.\n");
+                        Console.WriteLine("\n잘못된 입력입니다! 1 또는 2를 다시 입력하세요.\n");
                         Thread.Sleep(1000);
                         Console.SetCursorPosition(0, 9);
                     }

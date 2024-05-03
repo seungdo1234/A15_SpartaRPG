@@ -14,7 +14,7 @@ namespace TextRPG
                 MyActionText();
 
                 // 0: 뒤로가기  아이템 번호 : 구매
-                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= dm.PlayerEquipItems.Count)
+                if (int.TryParse(Console.ReadLine(), out int input) && input >= 0 && input <= gm.Player.PlayerEquipItems.Count)
                 {
 
                     if (input == 0)
@@ -22,19 +22,19 @@ namespace TextRPG
                         return;
                     }
 
-                    EquipItem item = dm.PlayerEquipItems[input - 1];
+                    EquipItem equipItem = gm.Player.PlayerEquipItems[input - 1];
 
-                    item.IsSell = false; // 판매
+                    equipItem.IsSell = false; // 판매
 
-                    if (item.IsEquip) // 장착 중인 아이템을 팔 경우 장착 해제
+                    if (equipItem.IsEquip) // 장착 중인 아이템을 팔 경우 장착 해제
                     {
-                        gm.Player.EquipItemFlag &= ~item.EquipmenttType;
-                        item.IsEquip = !item.IsEquip;
-                        gm.Player.SwitchingEquipItem(item);
+                        gm.Player.EquipItemFlag &= ~equipItem.EquipmenttType;
+                        equipItem.IsEquip = !equipItem.IsEquip;
+                        gm.Player.SwitchingEquipItem(equipItem);
                     }
 
-                    gm.Player.Gold += (int)((float)item.Gold * 0.8f); // 골드 ++
-                    dm.RemovePlayerItem(item); // 아이템 삭제
+                    gm.Player.Gold += (int)((float)equipItem.Gold * 0.8f); // 골드 ++
+                    gm.Player.RemoveEquipItem(equipItem); // 아이템 삭제
                     
 
                 }
@@ -61,9 +61,9 @@ namespace TextRPG
 
             Console.WriteLine("[장비 목록]");
 
-            for (int i = 0; i < dm.PlayerEquipItems.Count; i++) // 판매 목록 출력
+            for (int i = 0; i < gm.Player.PlayerEquipItems.Count; i++) // 판매 목록 출력
             {
-                EquipItem equipItem = dm.PlayerEquipItems[i];
+                EquipItem equipItem = gm.Player.PlayerEquipItems[i];
 
                 string equip = equipItem.IsEquip ? "[E]" : "";
 

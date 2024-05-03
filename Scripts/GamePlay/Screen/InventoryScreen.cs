@@ -1,4 +1,6 @@
 ﻿
+using System.Reflection;
+
 namespace TextRPG
 {
     public class InventoryScreen : Screen
@@ -11,11 +13,10 @@ namespace TextRPG
 
         // 인벤토리 화면
         public override void ScreenOn()
-        {
-            Console.Clear();
-
+        {            
             while (true)
-            {
+            {   
+                Console.Clear();
                 InventoryText();
                 MyActionText();
 
@@ -25,16 +26,16 @@ namespace TextRPG
                     switch (input)
                     {
                         case 1:
-                            equipScreen.ScreenOn();
+                            equipScreen.ScreenOn();                            
                             break;
-                        case 0:
-                            return;
-                    }
-                    Console.Clear();
+                        case 0:                            
+                            return;                        
+                    }                    
                 }
                 else
                 {
-                    Console.WriteLine("\n잘못된 입력입니다! 로비로 돌아갈려면 0번을 입력하세요. \n");
+                    //Console.WriteLine("\n잘못된 입력입니다! 로비로 돌아갈려면 0번을 입력하세요. \n");
+                    SystemMessageText(EMessageType.ERROR);
                 }
             }
         }
@@ -48,10 +49,10 @@ namespace TextRPG
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.\n");
 
             Console.WriteLine("[아이템 목록]");
-            for (int i = 0; i < dm.PlayerEquipItems.Count; i++)
+            for (int i = 0; i < gm.Player.PlayerEquipItems.Count; i++)
             {
                 Console.Write("- ");
-                InventoryItemText(dm.PlayerEquipItems[i]);
+                InventoryItemText(gm.Player.PlayerEquipItems[i]);
             }
 
             Console.WriteLine();
@@ -59,8 +60,7 @@ namespace TextRPG
             Console.WriteLine("1. 장착 관리");
             Console.WriteLine("0. 나가기");
 
-            Console.WriteLine();
-
+            Console.WriteLine();            
         }
 
     }
