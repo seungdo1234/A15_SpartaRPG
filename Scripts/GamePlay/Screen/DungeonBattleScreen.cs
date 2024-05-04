@@ -62,37 +62,50 @@ namespace TextRPG
         // 5.3 A : 던전 난이도 확인 추가
         private void CheckForDifficulty()
         {
-            Console.WriteLine();
-            Console.WriteLine("난이도를 선택하세요:");
-            Console.WriteLine("1. 쉬움 (EASY)");
-            Console.WriteLine("2. 보통 (NORMAL)");
-            Console.WriteLine("3. 어려움 (HARD)");
-            Console.Write("\n선택: ");
-            string input = Console.ReadLine();
+            int input;
+
+            // 올바른 숫자가 입력될 때까지 반복
+            while (true)
+            {
+                Console.WriteLine();
+                Console.WriteLine("난이도를 선택하세요:");
+                Console.WriteLine("1. 쉬움 (EASY)");
+                Console.WriteLine("2. 보통 (NORMAL)");
+                Console.WriteLine("3. 어려움 (HARD)");
+                Console.Write("\n선택: ");
+                string inputs = Console.ReadLine();
+
+                // 5.4 A input int화
+                if (int.TryParse(inputs, out input) && input >= 1 && input <= 3)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다. 다시 입력하세요.");
+                }
+            }
+
+            winCounter += input;
 
             //5.3 A : 던전 난이도 Enum활용
             switch (input)
             {
-                case "1":
+                case 1:
                     gm.Dungeon.dif = EDungeonDifficulty.EASY;
-                    winCounter += 1;
                     break;
-                case "2":
+                case 2:
                     gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
-                    winCounter += 2;
                     break;
-                case "3":
+                case 3:
                     gm.Dungeon.dif = EDungeonDifficulty.HARD;
-                    winCounter += 3;
-                    break;
-                default:
-                    Console.WriteLine("잘못된 입력입니다. 보통 난이도로 개시합니다.");
-                    gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
                     break;
             }
+
             Console.WriteLine($"선택된 난이도: {gm.Dungeon.dif}");
+
             // 5.4 J => 전투 결과 창에 나올 전투 들어가기 전 체력 정보 저장
-            gm.Dungeon.PrevHealth = gm.Player.Health; 
+            gm.Dungeon.PrevHealth = gm.Player.Health;
         }
 
         public void BattleStart() // 전투 시작
@@ -329,7 +342,7 @@ namespace TextRPG
             if (isWin)
             {
                 gm.Dungeon.DungeonResultType = EDungeonResultType.VICTORY;
-                if (winCounter >= 11) // 10번 승리 후 보스전 조건 체크
+                if (winCounter <= 11) // 10번 승리 후 보스전 조건 체크
                 {
                     while (true)  // 사용자가 유효한 선택을 할 때까지 반복
                     {
