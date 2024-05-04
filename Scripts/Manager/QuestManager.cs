@@ -25,9 +25,6 @@ namespace TextRPG.Scripts
             //QuestNumber: 현재 진행해야 할 퀘스트의 index. (Log의 경우 최신 완료퀘의 index임.)
             //CurrentProgress: 퀘스트의 진행도(사실 몬스터퀘만을 위한 것)
             QuestSave = new List<(string QuestType, int QuestNumber, int CurrentProgress)>();
-            jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\SaveData\QuestSave.json");
-            jsonText = File.ReadAllText(jsonFilePath);
-            QuestSave = JsonConvert.DeserializeObject<List<(string QuestType, int QuestNumber, int CurrentProgress)>>(jsonText);
 
             //스토리 퀘스트 리스트
             StoryQuest = new List<Quest>();

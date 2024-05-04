@@ -15,6 +15,7 @@ namespace TextRPG
         {
             player = GameManager.instance.Player;
             shopItems = ItemDataManager.instance.ShopEquipItems;
+            questSave = GameManager.instance.QuestManager.QuestSave;
         }
     }
 
@@ -23,7 +24,7 @@ namespace TextRPG
         // Exe 파일이 들어 있는 경로 저장
         private string path = AppDomain.CurrentDomain.BaseDirectory;
 
-        public void Save() //24.05.03 데이터 로드 방식 변경 - C
+        public void Save()
         {
             string filePath = $"{path}\\SaveSlot\\PlayerData.json";
 
@@ -60,9 +61,10 @@ namespace TextRPG
             }
         }
 
-        //24.05.03 데이터 로드 방식 변경 - C
         public Player Load(string name)
         {
+            var questSave = GameManager.instance.QuestManager.QuestSave;
+
             string equipItemJsonFilePath = Path.Combine(path, @"..\..\..\SaveData\EquipItemData.json");
             string consumableJsonFilePath = Path.Combine(path, @"..\..\..\SaveData\ConsumableItemData.json");
             string saveDirectory = $"{path}\\SaveSlot";
@@ -70,7 +72,7 @@ namespace TextRPG
 
             // 전체 아이템 데이터 불러오기
             string equipItemJsonData = File.ReadAllText(equipItemJsonFilePath); 
-            string consumableItemJsonData = File.ReadAllText(consumableJsonFilePath); 
+            string consumableItemJsonData = File.ReadAllText(consumableJsonFilePath);
 
             // DB 적용
             ItemDataManager.instance.SetItemDB(JsonConvert.DeserializeObject<List<EquipItem>>(equipItemJsonData), 
@@ -83,9 +85,16 @@ namespace TextRPG
 
                 // PlayerDatas 구조체로 역직렬화해서 텍스트를 데이터로 변환
                 PlayerDatas playerData = JsonConvert.DeserializeObject<PlayerDatas>(playerJsonData);
+                
+                //Quest 진행정보 로드하기.
+                var loadQuestSave = playerData.questSave;
+                questSave.Clear();
+                foreach (var q in loadQuestSave) 
+                    questSave.Add(q);
 
                 // 불러온 플레이어 정보 저장
                 ItemDataManager.instance.SetShopItems(playerData.shopItems);
+
                 return playerData.player;
 
             }
@@ -98,10 +107,11 @@ namespace TextRPG
                 Player newPlayer = new Player(name);
 
                 //QuestSave 초기화
-                GameManager.instance.QuestManager.QuestSave[0] = (QuestType: "story", QuestNumber: 0, CurrentProgress: -1);
-                GameManager.instance.QuestManager.QuestSave[1] = (QuestType: "monster", QuestNumber: 0, CurrentProgress: -1);
-                GameManager.instance.QuestManager.QuestSave[2] = (QuestType: "storyLog", QuestNumber: -1, CurrentProgress: 0);
-                GameManager.instance.QuestManager.QuestSave[3] = (QuestType: "monsterLog", QuestNumber: -1, CurrentProgress: 0);
+                questSave.Add((QuestType: "story", QuestNumber: 0, CurrentProgress: -1));
+                questSave.Add((QuestType: "monster", QuestNumber: 0, CurrentProgress: -1));
+                questSave.Add((QuestType: "storyLog", QuestNumber: -1, CurrentProgress: 0));
+                questSave.Add((QuestType: "monsterLog", QuestNumber: -1, CurrentProgress: 0));
+
                 return newPlayer;
             }
         }
