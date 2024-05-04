@@ -38,13 +38,15 @@ namespace TextRPG
 
         private void ClassSelectionText() // 텍스트
         {
-            Console.WriteLine();
+            PrintLogo();
 
-            Console.WriteLine($"안녕하세요. {gm.Player.Name}님");
+            Console.Write($"안녕하세요. ");
+            PrintName(gm.Player.Name);
+            Console.WriteLine("님");
 
-            Console.WriteLine() ;
-
-            Console.Write($"플레이하실 직업을 선택해주세요. ");
+            Console.Write($"플레이하실 ");
+            PrintNotice("직업");
+            Console.WriteLine("을 선택해주세요. \n");
 
             Console.Write("( ");
             for ( int i = 1; i < Enum.GetNames(typeof(EUnitType)).Length - 2; i++)

@@ -32,48 +32,78 @@ namespace TextRPG
         {
             Console.WriteLine();
 
-            Console.WriteLine("상태 보기");
+            PrintTitle("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.\n");
 
-            Console.WriteLine($"Lv.{gm.Player.Level}  ( {gm.Player.Name} )");
-            Console.WriteLine($"직업 ( {gm.Player.GetPlayerClass(gm.Player.ePlayerClass)} )");
+            Console.Write("Lv.");
+            PrintNotice(gm.Player.Level.ToString());
+            Console.Write("  ( ");
+            PrintName(gm.Player.Name);
+            Console.WriteLine(" )");
+
+            Console.Write("직업 ( ");
+            PrintNotice(gm.Player.GetPlayerClass(gm.Player.ePlayerClass));
+            Console.WriteLine(" )");
 
             Console.WriteLine();
 
-            Console.WriteLine($"체력 : {gm.Player.Health}/{gm.Player.MaxHealth}");
-            Console.WriteLine($"마나 : {gm.Player.Mana}/{gm.Player.MaxMana}");
-
+            Console.Write($"체력 : ");
+            PrintNotice(gm.Player.Health.ToString());
+            Console.Write("/");
+            PrintNotice(gm.Player.MaxHealth.ToString());
             Console.WriteLine();
-            
+            Console.Write($"마나 : ");
+            PrintNotice(gm.Player.Mana.ToString());
+            Console.Write("/");
+            PrintNotice(gm.Player.MaxMana.ToString());
+            Console.WriteLine("\n");
+
             // 현재 장착중인 장비 능력치 적용
-            Console.Write($"공격력 : {gm.Player.GetAtkValue():F1}");
+            Console.Write($"공격력 : ");
+            PrintNotice(gm.Player.GetAtkValue().ToString("N1"));
+            Console.ForegroundColor = ConsoleColor.Green;
             if (gm.Player.EquipAtkItem != 0)
             {
                 Console.Write($" (+{gm.Player.EquipAtkItem:F1})");
             }
+            Console.ResetColor();
             Console.WriteLine();
 
-            Console.Write($"방어력 : {gm.Player.GetDefValue():F1}");
-            if (gm.Player.EquipDefItem != 0)
+            Console.Write($"방어력 : ");
+            PrintNotice(gm.Player.GetDefValue().ToString("N1"));
+            Console.ForegroundColor = ConsoleColor.Green;
+            if (gm.Player.EquipAtkItem != 0)
+                if (gm.Player.EquipDefItem != 0)
             {
                 Console.Write($" (+{gm.Player.EquipDefItem:F1})");
             }
+            Console.ResetColor();
             Console.WriteLine("\n");
 
-            Console.WriteLine($"치명타 확률 : {gm.Player.CriticalChance}%");
-            Console.WriteLine($"치명타 데미지 : {gm.Player.CriticalDamage * 100}%");
-            Console.WriteLine($"회피율 : {gm.Player.AvoidChance}%");
+            Console.Write($"치명타 확률 : ");
+            PrintNotice(gm.Player.CriticalChance.ToString());
+            Console.WriteLine("%");
+
+            Console.Write($"치명타 데미지 : ");
+            PrintNotice((gm.Player.CriticalDamage * 100).ToString());
+            Console.WriteLine("%");
+
+            Console.Write($"회피율 : ");
+            PrintNotice(gm.Player.AvoidChance.ToString());
+            Console.WriteLine("%");
 
             Console.WriteLine();
 
-            Console.WriteLine("[스킬 정보]");
+            PrintTitle("스킬 정보");
 
             for(int i = 0; i < gm.Player.Skills.Count; i++)
             {
                 Skill skill = gm.Player.Skills[i];
                 if(gm.Player.Phase > i)
                 {
-                    Console.WriteLine($"[{skill.Name}] 마나소모 : {skill.ManaCost} ");
+                    Console.Write("[");
+                    PrintName(skill.Name);
+                    Console.WriteLine($"] 마나소모 : {skill.ManaCost} ");
                     Console.WriteLine($"\t{skill.Content}");
                 }
                 else
@@ -97,7 +127,9 @@ namespace TextRPG
                 Console.ResetColor();
             }
 
-            Console.WriteLine($"Gold : {gm.Player.Gold} G");
+            Console.Write($"Gold : ");
+            PrintNotice(gm.Player.Gold.ToString());
+            Console.WriteLine(" G");
 
             Console.WriteLine("\n0. 나가기\n");            
         }

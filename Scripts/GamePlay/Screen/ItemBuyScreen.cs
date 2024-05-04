@@ -61,18 +61,15 @@ namespace TextRPG
         {
             Console.WriteLine();
 
-            Console.WriteLine("상점 - 아이템 구매");
-            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+            PrintTitle("상점 - 아이템 구매");
+            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.\n");
 
-            Console.WriteLine();
+            PrintTitle("보유 골드");
+            PrintNotice(gm.Player.Gold.ToString());
+            Console.WriteLine(" G\n");
 
-            Console.WriteLine("[보유 골드]");
-            Console.WriteLine($"{gm.Player.Gold} G");
 
-            Console.WriteLine();
-
-            Console.WriteLine("[장비 목록]");
-
+            PrintTitle("장비 목록");
             for (int i = 0; i < dm.ShopEquipItems.Count; i++) // 판매 목록 출력
             {
                 EquipItem equipItem = dm.ShopEquipItems[i];
@@ -100,8 +97,7 @@ namespace TextRPG
             }
             Console.WriteLine();
 
-            Console.WriteLine("[ 물약 ]");
-
+            PrintTitle("물약");
             for (int i = 0; i < dm.ShopConsumableItems.Length; i++)
             {
                 int num = gm.Player.PlayerConsumableItems.ContainsKey(dm.ShopConsumableItems[i].ItemName) ? gm.Player.PlayerConsumableItems[dm.ShopConsumableItems[i].ItemName] : 0;
