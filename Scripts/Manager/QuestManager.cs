@@ -42,6 +42,14 @@ namespace TextRPG.Scripts
 
         public Quest GetCurrentStoryQuest()
         {
+            if (GameManager.instance.Dungeon.CurrentDungeonLevel > QuestSave[0].CurrentProgress)
+            {
+                var oldQ = QuestSave[0];
+                QuestSave[0] = (oldQ.QuestType, oldQ.QuestNumber, oldQ.CurrentProgress);
+            }
+
+            StoryQuest[QuestSave[0].QuestNumber].CurrentProgress = QuestSave[0].CurrentProgress;
+
             return StoryQuest[QuestSave[0].QuestNumber];
         }
 
