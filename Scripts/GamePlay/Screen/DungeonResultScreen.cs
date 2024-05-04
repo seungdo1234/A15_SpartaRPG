@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel.Design;
+
 namespace TextRPG
 {
     public class DungeonResultScreen : Screen
@@ -11,7 +13,7 @@ namespace TextRPG
 
         public override void ScreenOn()
         {
-            if (gm.Dungeon.resultType != EDungeonResultType.RETIRE)
+            if (gm.Dungeon.DungeonResultType != EDungeonResultType.RETIRE)
             {
                 DungeonReward();
             }
@@ -21,7 +23,7 @@ namespace TextRPG
             while (true)
             {
 
-                switch (gm.Dungeon.resultType)
+                switch (gm.Dungeon.DungeonResultType)
                 {
                     case EDungeonResultType.VICTORY:
                         VictoryText();
@@ -33,7 +35,7 @@ namespace TextRPG
                 MyActionText();
 
                 // 1, 2, 3만 입력 받을 수 있게 함 
-                if (int.TryParse(Console.ReadLine(), out int input) && (input == 0 || (input == 1 && gm.Dungeon.resultType == EDungeonResultType.VICTORY)))
+                if (int.TryParse(Console.ReadLine(), out int input) && (input == 0 || (input == 1 && gm.Dungeon.DungeonResultType == EDungeonResultType.VICTORY)))
                 {
                     Console.Clear();
 
@@ -44,6 +46,14 @@ namespace TextRPG
                     }
 
                     playerInput = input; // Input 값 저장
+
+                    // 5.4 A : 배틀 계속이 아닌 로비로 돌아가는 현상 고치기 위해 넣음
+                    if(input == 1)
+                    {
+                        DungeonBattleScreen dungeonBattle = new DungeonBattleScreen();
+                        dungeonBattle.BattleStart(); ; // 바로 다음 스테이지로 이동
+                    }
+                    //
                     return;
                 }
                 else
