@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel.Design;
+
 namespace TextRPG
 {
     public class DungeonResultScreen : Screen
@@ -45,6 +47,14 @@ namespace TextRPG
                     }
 
                     playerInput = input; // Input 값 저장
+
+                    // 5.4 A : 배틀 계속이 아닌 로비로 돌아가는 현상 고치기 위해 넣음
+                    if(input == 1)
+                    {
+                        DungeonBattleScreen dungeonBattle = new DungeonBattleScreen();
+                        dungeonBattle.BattleStart(); ; // 바로 다음 스테이지로 이동
+                    }
+                    //
                     return;
                 }
                 else

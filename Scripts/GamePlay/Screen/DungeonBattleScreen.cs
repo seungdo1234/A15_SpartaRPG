@@ -25,7 +25,7 @@ namespace TextRPG
         {
             while (true)
             {
-                winCounter = 3;  // 게임 시작 시 승리 카운터 초기화
+                winCounter = 1;  // 게임 시작 시 승리 카운터 초기화
 
                 Console.Clear();
                 Console.WriteLine("\n정말 던전에 진입하시겠습니까? 끝을 보시거나, 죽기 전까지 탈출하실 수 없습니다.");
