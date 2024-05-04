@@ -3,9 +3,8 @@ namespace TextRPG
 {
     public class DungeonResultScreen : Screen
     {
-        private int prevHealth; // 던전 진행 전 체력
         private int prevExp; // 던전 진행 전 체력
-        // private int prevLevel; // 던전 진행 전 Level
+        private int prevLevel; // 던전 진행 전 Level
 
         private Reward reward;
 
@@ -54,18 +53,19 @@ namespace TextRPG
 
             }
         }
-        private void DungeonReward()
+        private void DungeonReward() // 던전 보상
         {
             reward = gm.Dungeon.GetDungeonReward();
 
             gm.Player.AddEquipItem(reward.rewardEquipItem);
-            if(reward.rewardEquipItem != null)
+            if(reward.rewardConsumableItem != null)
             {
                 gm.Player.AddConsumableItem(reward.rewardConsumableItem.ItemName);
             }
             gm.Player.Gold += reward.gold;
-         //   gm.Player.ExpUp(reward.exp); 
-
+            prevLevel = gm.Player.Level;
+            prevExp = gm.Player.Exp;
+            gm.Player.ExpUp(gm.Dungeon.BattleExp);
         }
        
         private void TitleText()
@@ -88,8 +88,8 @@ namespace TextRPG
             Console.WriteLine();
 
             Console.WriteLine("[캐릭터 정보]");
-            Console.WriteLine($"Lv.{gm.Player.Level} {gm.Player.Name}-> Lv.{gm.Player.Level} {gm.Player.Name}");
-            Console.WriteLine($"HP {prevHealth} ->  {gm.Player.Health}");
+            Console.WriteLine($"Lv.{prevLevel} {gm.Player.Name}-> Lv.{gm.Player.Level} {gm.Player.Name}");
+            Console.WriteLine($"HP {gm.Dungeon.PrevHealth} ->  {gm.Player.Health}");
             Console.WriteLine($"exp {prevExp} ->  {gm.Player.Exp}");
 
             Console.WriteLine();
