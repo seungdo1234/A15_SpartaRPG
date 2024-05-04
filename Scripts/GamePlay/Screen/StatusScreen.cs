@@ -66,6 +66,37 @@ namespace TextRPG
 
             Console.WriteLine();
 
+            Console.WriteLine("[스킬 정보]");
+
+            for(int i = 0; i < gm.Player.Skills.Count; i++)
+            {
+                Skill skill = gm.Player.Skills[i];
+                if(gm.Player.Phase > i)
+                {
+                    Console.WriteLine($"[{skill.Name}] 마나소모 : {skill.ManaCost} ");
+                    Console.WriteLine($"\t{skill.Content}");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine($"[{skill.Name}] 마나소모 : {skill.ManaCost} ");
+                    Console.Write("\t[잠김]\t해금레벨 : ");
+                    switch (i)
+                    {
+                        case 0:
+                            Console.WriteLine("2");
+                            break;
+                        case 1:
+                            Console.WriteLine("5");
+                            break;
+                        case 2:
+                            Console.WriteLine("7");
+                            break;
+                    }                    
+                }
+                Console.ResetColor();
+            }
+
             Console.WriteLine($"Gold : {gm.Player.Gold} G");
 
             Console.WriteLine("\n0. 나가기\n");            
