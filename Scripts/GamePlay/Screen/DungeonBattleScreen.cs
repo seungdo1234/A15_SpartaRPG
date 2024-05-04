@@ -90,11 +90,9 @@ namespace TextRPG
                     gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
                     break;
             }
-            Console.WriteLine($"선택된 난이도: {selectedDifficulty}");
-
+            Console.WriteLine($"선택된 난이도: {gm.Dungeon.dif}");
             // 5.4 J => 전투 결과 창에 나올 전투 들어가기 전 체력 정보 저장
             gm.Dungeon.PrevHealth = gm.Player.Health; 
-            Console.WriteLine($"선택된 난이도: {gm.Dungeon.dif}");
         }
 
         public void BattleStart() // 전투 시작
@@ -330,7 +328,7 @@ namespace TextRPG
         {
             if (isWin)
             {
-                gm.Dungeon.resultType = EDungeonResultType.VICTORY;
+                gm.Dungeon.DungeonResultType = EDungeonResultType.VICTORY;
                 if (winCounter >= 11) // 10번 승리 후 보스전 조건 체크
                 {
                     while (true)  // 사용자가 유효한 선택을 할 때까지 반복
@@ -365,7 +363,7 @@ namespace TextRPG
             }
             else
             {
-                gm.Dungeon.resultType = EDungeonResultType.RETIRE;
+                gm.Dungeon.DungeonResultType = EDungeonResultType.RETIRE;
                 dungeonResultScreen.ScreenOn(); // 패배 시 결과 화면으로 이동
             }
         }
