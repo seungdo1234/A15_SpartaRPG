@@ -35,6 +35,7 @@ namespace TextRPG
             CriticalDamage = 1.6f;
             MaxMana = 10000;
             Mana = MaxMana;
+            Phase = 0;
             base.Skills = new List<Skill>();
             PlayerEquipItems = new List<EquipItem>();
             PlayerConsumableItems = new Dictionary<string, int>();
