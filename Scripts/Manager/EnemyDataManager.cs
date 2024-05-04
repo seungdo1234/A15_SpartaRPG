@@ -29,9 +29,9 @@ namespace TextRPG
             MonsterDB = JsonConvert.DeserializeObject<List<Enemy>>(jsonText);
         }
 
-        public List<Enemy> GetSpawnMonsters(int CurrentDungeonLevel, EDungeonDifficulty difficulty)
+        public List<Enemy> GetSpawnMonsters(int CurrentDungeonLevel, EDungeonDifficulty dif)
         {
-            float statMultiplier = GetStatMultiplier(difficulty);
+            float statMultiplier = GetStatMultiplier(dif);
             int totalLevelLimit = CurrentDungeonLevel * 2;
             int maxLevel = 10;
             int[] monsterLevels = randomMonsterEncount(totalLevelLimit, maxLevel);
@@ -82,9 +82,9 @@ namespace TextRPG
             return BossMonster;
         }
 
-        private float GetStatMultiplier(EDungeonDifficulty difficulty)
+        private float GetStatMultiplier(EDungeonDifficulty dif)
         {
-            switch (difficulty)
+            switch (dif)
             {
                 case EDungeonDifficulty.EASY:
                     return 0.8f;

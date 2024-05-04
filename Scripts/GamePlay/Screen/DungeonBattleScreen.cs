@@ -10,7 +10,6 @@ namespace TextRPG
         private bool isWin;
         private int winCounter = 0;  // 승리 횟수 카운터
         private bool returnToChooseEnemy = false; // 스킬 예외처리
-        private EDungeonDifficulty selectedDifficulty = EDungeonDifficulty.NORMAL; // 난이도 반환
 
         private DungeonResultScreen dungeonResultScreen;
 
@@ -26,7 +25,7 @@ namespace TextRPG
         {
             while (true)
             {
-                winCounter = 0;  // 게임 시작 시 승리 카운터 초기화
+                winCounter = 3;  // 게임 시작 시 승리 카운터 초기화
 
                 Console.Clear();
                 Console.WriteLine("\n정말 던전에 진입하시겠습니까? 끝을 보시거나, 죽기 전까지 탈출하실 수 없습니다.");
@@ -57,7 +56,7 @@ namespace TextRPG
             int currentDungeonLevel = winCounter; // 임시로 집어 넣음, 원래는 던전 난이도를 집어 넣어야함
 
             // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기, 5.3 A : 배수 증가 매게변수 추가
-            enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel, selectedDifficulty);
+            enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel, gm.Dungeon.dif);
         }
 
         // 5.3 A : 던전 난이도 확인 추가
@@ -75,23 +74,23 @@ namespace TextRPG
             switch (input)
             {
                 case "1":
-                    winCounter += 1;
                     gm.Dungeon.dif = EDungeonDifficulty.EASY;
+                    winCounter += 1;
                     break;
                 case "2":
-                    winCounter += 2;
                     gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
+                    winCounter += 2;
                     break;
                 case "3":
-                    winCounter += 3;
                     gm.Dungeon.dif = EDungeonDifficulty.HARD;
+                    winCounter += 3;
                     break;
                 default:
                     Console.WriteLine("잘못된 입력입니다. 보통 난이도로 개시합니다.");
                     gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
                     break;
             }
-            Console.WriteLine($"선택된 난이도: {selectedDifficulty}");
+            Console.WriteLine($"선택된 난이도: {gm.Dungeon.dif}");
         }
 
         public void BattleStart() // 전투 시작
@@ -328,7 +327,7 @@ namespace TextRPG
             if (isWin)
             {
                 gm.Dungeon.resultType = EDungeonResultType.VICTORY;
-                if (winCounter >= 10) // 10번 승리 후 보스전 조건 체크
+                if (winCounter >= 11) // 10번 승리 후 보스전 조건 체크
                 {
                     while (true)  // 사용자가 유효한 선택을 할 때까지 반복
                     {
