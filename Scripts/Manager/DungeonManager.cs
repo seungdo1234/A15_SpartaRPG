@@ -4,7 +4,7 @@ namespace TextRPG
 
     public class DungeonManager : DungeonData
     {
-        public EDungeonResultType resultType { get; set; }
+        public EDungeonResultType DungeonResultType { get; set; }
         public EDungeonDifficulty dif {  get; set; }
         public RandomReward RandomReward { get; private set; }
         public int BattleExp {  get;  set; } // 전투 경험치 보상
