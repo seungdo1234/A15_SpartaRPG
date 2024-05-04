@@ -342,7 +342,7 @@ namespace TextRPG
             if (isWin)
             {
                 gm.Dungeon.DungeonResultType = EDungeonResultType.VICTORY;
-                if (winCounter <= 11) // 10번 승리 후 보스전 조건 체크
+                if (winCounter >= 11) // 10번 승리 후 보스전 조건 체크
                 {
                     while (true)  // 사용자가 유효한 선택을 할 때까지 반복
                     {
