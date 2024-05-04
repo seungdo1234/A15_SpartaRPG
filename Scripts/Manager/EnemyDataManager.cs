@@ -37,12 +37,15 @@ namespace TextRPG
             int[] monsterLevels = randomMonsterEncount(totalLevelLimit, maxLevel);
              
             SpawnMonsters.Clear();
+            // 5.4 J => 던전 보상 (경험치) 추가
+            GameManager.instance.Dungeon.BattleExp = 0;
 
             foreach (int i in monsterLevels)
             {
                 if (i == 0) continue;
                 Enemy newEnemy = new Enemy(MonsterDB[i - 1], statMultiplier);
                 SpawnMonsters.Add(newEnemy);
+                GameManager.instance.Dungeon.BattleExp += newEnemy.Level;
             }
 
             return SpawnMonsters;
