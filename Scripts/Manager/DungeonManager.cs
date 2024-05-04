@@ -7,6 +7,9 @@ namespace TextRPG
         public EDungeonResultType resultType { get; set; }
         public EDungeonDifficulty dif {  get; set; }
         public RandomReward RandomReward { get; private set; }
+        public int BattleExp {  get;  set; } // 전투 경험치 보상
+        public int PrevHealth {  get; set; }
+
         public DungeonManager()
         {
             EnemyDataManager.instance.Init();

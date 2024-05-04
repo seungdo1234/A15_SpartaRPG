@@ -90,6 +90,10 @@ namespace TextRPG
                     gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
                     break;
             }
+            Console.WriteLine($"선택된 난이도: {selectedDifficulty}");
+
+            // 5.4 J => 전투 결과 창에 나올 전투 들어가기 전 체력 정보 저장
+            gm.Dungeon.PrevHealth = gm.Player.Health; 
             Console.WriteLine($"선택된 난이도: {gm.Dungeon.dif}");
         }
 
