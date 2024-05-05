@@ -19,7 +19,7 @@
 
         private void GameOverPanalty() // 게임 오버 시 패널티
         {
-            if (gm.Dungeon.PlayerRewards.rewardEquipItems[0] != null)
+            if (gm.Dungeon.PlayerRewards.rewardEquipItems.Count != 0)
             {
                 panaltyEquipItem = dm.GetRandomEquipItem(gm.Dungeon.PlayerRewards.rewardEquipItems);
                 gm.Player.AddEquipItem(panaltyEquipItem);
@@ -43,6 +43,7 @@
 
             while (true)
             {
+                Console.Clear();
 
                 switch (gm.Dungeon.DungeonResultType)
                 {
@@ -64,6 +65,7 @@
                     {
                         gm.Player.RecoveryMana(gm.Player.MaxMana);
                         gm.Player.RecoveryHealth(gm.Player.MaxHealth);
+                        SetDungeonReward();
                     }
 
                     playerInput = input; // Input 값 저장
@@ -84,7 +86,7 @@
 
             }
         }
-        private void DungeonReward() // 던전 보상
+        private void DungeonReward() // 던전 보상 (골드 및 장비 아이템 X)
         {
             reward = gm.Dungeon.GetDungeonReward();
 
@@ -96,7 +98,15 @@
             prevExp = gm.Player.Exp;
             gm.Player.ExpUp(gm.Dungeon.BattleExp);
         }
-
+        private void SetDungeonReward() // 골드 및 장비 아이템 획득
+        {
+            gm.Player.Gold += gm.Dungeon.PlayerRewards.totalGold;
+            
+            for(int i = 0; i < gm.Dungeon.PlayerRewards.rewardEquipItems.Count; i++)
+            {
+                gm.Player.AddEquipItem(gm.Dungeon.PlayerRewards.rewardEquipItems[i]);
+            }
+        }
         private void TitleText()
         {
             Console.WriteLine();
