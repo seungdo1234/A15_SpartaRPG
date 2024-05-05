@@ -9,6 +9,7 @@ namespace TextRPG
         private DungeonResultScreen dungeonScreen;
         private QuestScreen questScreen;
         private DungeonBattleScreen dungeonBattle;
+        private CreditScreen creditScreen;
         public LobbyScreen()
         {
             statusScreen = new StatusScreen();
@@ -17,6 +18,7 @@ namespace TextRPG
             dungeonScreen = new DungeonResultScreen();
             questScreen = new QuestScreen();
             dungeonBattle = new DungeonBattleScreen();
+            creditScreen = new CreditScreen();
         }
 
         // 로비 화면
@@ -25,6 +27,8 @@ namespace TextRPG
             while (true)
             {   
                 Console.Clear();
+                creditScreen.ScreenOn();
+
                 LobbyText();
                 MyActionText();
 
