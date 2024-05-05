@@ -30,7 +30,7 @@ namespace TextRPG
             return reward;
         }
 
-        public void StartDungeon()
+        public void RewardInit()
         {
             PlayerRewards = new PlayerRewards();
         }
