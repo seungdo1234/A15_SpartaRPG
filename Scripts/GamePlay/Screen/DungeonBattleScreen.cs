@@ -171,7 +171,9 @@ namespace TextRPG
                 {
                     BattleEnd(true);  // 모든 적이 사망했으므로 승리 처리
                     return;
-                }                
+                }
+
+                gm.Player.OnDebuffActive(); // 05.06 W 플레이어 디버프 표시
 
                 foreach (var enemy in enemies.Where(e => e.Health > 0))
                 {   
@@ -375,6 +377,12 @@ namespace TextRPG
 
 
             string attackResult = enemy.Attack(gm.Player);
+            Console.WriteLine(attackResult);
+
+            Thread.Sleep(1500);
+
+            Console.WriteLine($"{enemy.Name}의 {enemy.Skills[0].Name} 스킬 시전");
+            attackResult = enemy.Skills[0].CastSkill(enemy, gm.Player); // 05.06 W 무조건 스킬 발동
             Console.WriteLine(attackResult);
 
             Thread.Sleep(1500);

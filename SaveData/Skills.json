@@ -100,79 +100,79 @@
     "MaxTargetCount": 1,
     "IsMultiTarget": false,
     "ManaCost": 10,
-    "Content": "목을 노려 평소보다 강하다.",
+    "Content": "앞니로 적을 가격합니다",
     "UnitType": 5
   },
   "13": {
-    "Name": "달그림자",
+    "Name": "깨물다",
     "MaxTargetCount": 1,
     "IsMultiTarget": false,
     "ManaCost": 10,
-    "Content": "늑대의 암습은 도망칠 수 없다.",
+    "Content": "강력한 이빨로 적을 물어 출혈을 발생시킵니다",
     "UnitType": 5
   },
   "14": {
-    "Name": "생자탐닉",
+    "Name": "생기흡수",
     "MaxTargetCount": 1,
     "IsMultiTarget": false,
     "ManaCost": 10,
-    "Content": "산자의 정기를 갈취한다.",
+    "Content": "대상의 정기를 갈취해 체력을 회복합니다",
     "UnitType": 5
   },
   "15": {
-    "Name": "사망예고",
+    "Name": "사망선고",
     "MaxTargetCount": 1,
     "IsMultiTarget": false,
     "ManaCost": 10,
-    "Content": "당신이 죽길 기다리는 흐느낌이다.",
+    "Content": "대상을 길동무 삼습니다. 1%확률로 대상을 즉사시킵니다.",
     "UnitType": 5
   },
   "16": {
-    "Name": "시선고정",
+    "Name": "암전",
     "MaxTargetCount": 1,
     "IsMultiTarget": false,
     "ManaCost": 10,
-    "Content": "바라볼수록 그는 강해진다.",
+    "Content": "대상의 시야를 빼앗어 실명시킵니다",
     "UnitType": 5
   },
   "17": {
-    "Name": "바다유혹",
+    "Name": "세이렌의노래",
     "MaxTargetCount": 1,
     "IsMultiTarget": false,
     "ManaCost": 10,
-    "Content": "당신의 마음을 녹여 생존을 꾀한다.",
+    "Content": "인어의 노래로 상대방을 현혹시켜 침묵을 겁니다.",
     "UnitType": 5
   },
   "18": {
-    "Name": "흉내내기",
+    "Name": "포효",
     "MaxTargetCount": 1,
     "IsMultiTarget": false,
     "ManaCost": 10,
-    "Content": "당신은 혹시 하는 생각을 멈출수 없었다.",
+    "Content": "포효를 내질러 대상을 겁에 질리게 하여 기절 시킵니다",
     "UnitType": 5
   },
   "19": {
-    "Name": "불태워라",
+    "Name": "인페르노",
     "MaxTargetCount": 1,
     "IsMultiTarget": false,
     "ManaCost": 10,
-    "Content": "당신께 꺼지지 않는 불을 선사한다.",
+    "Content": "대상에게 꺼지지 않는 불을 선사하여 화상을 입힙니다",
     "UnitType": 5
   },
   "20": {
-    "Name": "짐승의왕",
+    "Name": "맹수의분노",
     "MaxTargetCount": 1,
     "IsMultiTarget": false,
     "ManaCost": 10,
-    "Content": "날짐승과 들짐승의 왕의 패기가 당신을 짓누른다.",
+    "Content": "맹수의 분노로 강력한 일격을 날립니다",
     "UnitType": 5
   },
   "21": {
-    "Name": "시각갈취",
+    "Name": "베놈",
     "MaxTargetCount": 1,
     "IsMultiTarget": false,
     "ManaCost": 10,
-    "Content": "질투는 당신의 눈을 멀게 한다.",
+    "Content": "지옥의 독으로 대상을 중독시킵니다",
     "UnitType": 5
   },
   "22": {

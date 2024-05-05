@@ -14,6 +14,8 @@ namespace TextRPG
         public string Content { get; private set; } // 스킬 설명
         public EUnitType UnitType { get; private set; }
 
+        protected Random random = new Random();
+
         [JsonConstructor]
         public Skill(string name, int maxTargetCount, bool isMultiTarget, int manaCost, string content, EUnitType unitType)
         {
@@ -24,6 +26,8 @@ namespace TextRPG
             Content = content;
             UnitType = unitType;
         }
+
+        
 
         public Skill(int id)
         {
