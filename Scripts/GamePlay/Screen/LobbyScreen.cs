@@ -9,7 +9,7 @@ namespace TextRPG
         private DungeonResultScreen dungeonScreen;
         private QuestScreen questScreen;
         private DungeonBattleScreen dungeonBattle;
-        private CreditScreen creditScreen;
+        // 5.5 A 크레딧 스크린 삭제, DungeonBattle클래스로 이동
         public LobbyScreen()
         {
             statusScreen = new StatusScreen();
@@ -18,7 +18,7 @@ namespace TextRPG
             dungeonScreen = new DungeonResultScreen();
             questScreen = new QuestScreen();
             dungeonBattle = new DungeonBattleScreen();
-            creditScreen = new CreditScreen();
+            // 5.5 A 크레딧 스크린 삭제, DungeonBattle클래스로 이동
         }
 
         // 로비 화면
@@ -27,7 +27,7 @@ namespace TextRPG
             while (true)
             {   
                 Console.Clear();
-              //  creditScreen.ScreenOn(); // 5.5 A 테스트를 위한 크레딧 스크린 주석처리
+                // 5.5 A 크레딧 스크린 삭제, DungeonBattle클래스로 이동
 
                 LobbyText();
                 MyActionText();

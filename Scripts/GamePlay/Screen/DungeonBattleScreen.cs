@@ -10,6 +10,7 @@ namespace TextRPG
         private bool isWin;
         private int winCounter = 0;  // 승리 횟수 카운터
         private bool returnToChooseEnemy = false; // 스킬 예외처리
+        private CreditScreen creditScreen; // 5.5 A 보스 클리어 추가, 크레딧 BattleEnd에 연결함
 
         private DungeonResultScreen dungeonResultScreen;
 
@@ -19,6 +20,7 @@ namespace TextRPG
         {
             dungeonResultScreen = new DungeonResultScreen();
             enemies = new List<Enemy>(); ;  // 몬스터를 저장할 리스트 초기화
+            creditScreen = new CreditScreen();
         }
 
         public override void ScreenOn()
@@ -341,7 +343,13 @@ namespace TextRPG
         {
             // 5.5 A 보스전 트리거 조정
 
-            if (isWin == true && winCounter >= 2)
+            if (isWin == true && gm.Dungeon.IsBossFightAvailable == true)
+            {
+                gm.Dungeon.IsBossFightAvailable = false; // 보스 전투 가능 상태 초기화
+                creditScreen.ScreenOn();
+            }
+
+            else if (isWin == true && winCounter >= 10)
             {
                 gm.Dungeon.IsBossFightAvailable = true;
             }
