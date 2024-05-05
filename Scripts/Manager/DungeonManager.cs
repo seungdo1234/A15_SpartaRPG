@@ -10,6 +10,8 @@ namespace TextRPG
         public int BattleExp {  get;  set; } // 전투 경험치 보상
         public int PrevHealth {  get; set; }
 
+        public bool IsBossFightAvailable { get; set; } // 5.5 A 보스전 플래그 추적
+
         public DungeonManager()
         {
             EnemyDataManager.instance.Init();
