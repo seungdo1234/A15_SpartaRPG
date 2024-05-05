@@ -7,7 +7,6 @@ namespace TextRPG
     public class DungeonBattleScreen : Screen
     {
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
-        private bool isWin;
         private int winCounter = 0;  // 승리 횟수 카운터
         private bool returnToChooseEnemy = false; // 스킬 예외처리
 
@@ -45,6 +44,7 @@ namespace TextRPG
                 switch (choice)
                 {
                     case "1":
+                        dungeonResultScreen.RewardInit();
                         BattleStart();
                         return;
 
@@ -119,6 +119,11 @@ namespace TextRPG
             CheckForDifficulty();
             AppearEnemy();
             dungeonBattle();
+
+            if(playerInput == 1)
+            {
+                BattleStart();
+            }
         }
 
         private void dungeonBattle()
@@ -152,6 +157,7 @@ namespace TextRPG
                     if (gm.Player.Health <= 0)  // 플레이어가 사망한 경우, 패배 처리
                     {
                         BattleEnd(false);
+                        return;
                     }
                 }
             }
