@@ -76,10 +76,10 @@ namespace TextRPG
         {
             Console.WriteLine();
 
-            Console.WriteLine("인벤토리 - 장착 관리");
+            PrintTitle("인벤토리 - 장착 관리");
             Console.WriteLine("보유 중인 아이템을 장착할 수 있습니다.\n");
 
-            Console.WriteLine("[아이템 목록]");
+            PrintTitle("아이템 목록");
             for (int i = 0; i < gm.Player.PlayerEquipItems.Count; i++)
             {
                 Console.Write($"- {i + 1} ");

@@ -46,10 +46,10 @@ namespace TextRPG
         {
             Console.WriteLine();
 
-            Console.WriteLine("인벤토리");
+            PrintTitle("인벤토리");
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.\n");
 
-            Console.WriteLine("[장비 목록]");
+            PrintTitle("장비 목록");
             for (int i = 0; i < gm.Player.PlayerEquipItems.Count; i++)
             {
                 Console.Write("- ");
@@ -58,7 +58,7 @@ namespace TextRPG
 
             Console.WriteLine();
 
-            Console.WriteLine("[ 물약 ]");
+            PrintTitle("물약");
             foreach (var itemName in gm.Player.PlayerConsumableItems.Keys)
             {
                 ConsumableItem cItem = dm.ConsumableItemDB.Find(obj => obj.ItemName == itemName);
