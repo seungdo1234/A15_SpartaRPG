@@ -65,7 +65,10 @@
                     {
                         gm.Player.RecoveryMana(gm.Player.MaxMana);
                         gm.Player.RecoveryHealth(gm.Player.MaxHealth);
-                        SetDungeonReward();
+                        if(gm.Dungeon.DungeonResultType == EDungeonResultType.VICTORY)
+                        {
+                            SetDungeonReward();
+                        }
                     }
 
                     playerInput = input; // Input 값 저장
@@ -170,7 +173,7 @@
 
                 Console.WriteLine("[던전 보상]");
                 Console.WriteLine($"{panaltyGold} Gold");
-                Console.WriteLine($"{panaltyEquipItem} x 1");
+                Console.WriteLine($"{panaltyEquipItem.ItemName} x 1");
             }
 
             Console.WriteLine();
