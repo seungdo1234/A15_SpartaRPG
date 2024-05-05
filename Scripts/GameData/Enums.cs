@@ -24,4 +24,11 @@ namespace TextRPG
 
     public enum EMessageType { DEFAULT, ERROR, OTHERCLASSITEM , MANALESS, BUYITEM, SELL, GOLD , ALREADYBUYITEM , SHOPRESET , SHOPRESETFAIL, FULLCONDITION  }
 
+    public enum ECrowdControlType
+    {
+        DEFAULT = 0, 
+        STUN = 1 << 1, 
+        BLIND = 1 << 2, 
+        SILENCE = 1 << 3
+    }
 }
