@@ -27,6 +27,40 @@ namespace TextRPG
             CriticalDamage = e.CriticalDamage * statMultiplier;
             base.Skills = new List<Skill>();
             base.DeBuffs = new List<DeBuff>();
+
+            switch (e.Level)
+            {
+                case 1:
+                    Skills.Add(new Bite(12));
+                    break;
+                case 2:
+                    Skills.Add(new Chomp(13));
+                    break;
+                case 3:
+                    Skills.Add(new LifeDrain(14));
+                    break;
+                case 4:
+                    Skills.Add(new DeathSentence(15));
+                    break;
+                case 5:
+                    Skills.Add(new BlackOut(16));
+                    break;
+                case 6:
+                    Skills.Add(new SongOfSiren(17));
+                    break;
+                case 7:
+                    Skills.Add(new Roar(18));
+                    break;
+                case 8:
+                    Skills.Add(new Inferno(19));
+                    break;
+                case 9:
+                    Skills.Add(new FuryOfBeast(20));
+                    break;
+                case 10:
+                    Skills.Add(new Venom(21));
+                    break;
+            }
         }
 
         public override string ToString()

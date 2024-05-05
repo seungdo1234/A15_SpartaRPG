@@ -6,6 +6,7 @@ namespace TextRPG
         public DemonClaw(int id) : base(id)
         {
         }
+
         public override string CastSkill(Unit caster, Unit target)
         {
             string result;
