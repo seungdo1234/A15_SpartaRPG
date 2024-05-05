@@ -9,6 +9,7 @@ namespace TextRPG
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
         private int winCounter = 0;  // 승리 횟수 카운터
         private bool returnToChooseEnemy = false; // 스킬 예외처리
+        private bool BossClear = false; // 5.5 A 보스 클리어 여부
         private CreditScreen creditScreen; // 5.5 A 보스 클리어 추가, 크레딧 BattleEnd에 연결함
 
         private DungeonResultScreen dungeonResultScreen;
@@ -111,17 +112,32 @@ namespace TextRPG
 
             if (playerInput == 1)
             {
-                if (winCounter >= 10)
+                if (winCounter >= 2)
                 {
-                    // 보스
-                }
-                else
-                {
-                    BattleStart();
-                    return;
+                    while (true) // 사용자가 유효한 선택을 할 때까지 반복
+                    {
+                        Console.Clear();
+                        Console.WriteLine("보스전에 도전하시겠습니까?");
+                        Console.WriteLine("1. 도전");
+                        Console.WriteLine("0. 던전 입구로");
+                        string choice = Console.ReadLine().ToUpper();
+
+                        if (choice == "1")
+                        {
+                            TriggerBossBattle(); // 보스전 시작
+                            return;
+                        }
+                        else if (choice == "0")
+                        {
+                            return; // 던전 입구로 돌아갈 경우 추가 처리
+                        }
+                        else
+                        {
+                            SystemMessageText(EMessageType.ERROR);
+                        }
+                    }
                 }
             }
-
         }
 
         private void dungeonBattle()
@@ -349,33 +365,27 @@ namespace TextRPG
 
         public void TriggerBossBattle() // 5.5 A 프라이베잇 > 퍼블릭
         {
+            BossClear = true;
             Console.WriteLine("보스가 등장했습니다!");
             Enemy boss = EnemyDataManager.instance.GetBoss();  // 보스 데이터 가져오기
             enemies.Clear();
             enemies.Add(boss);  // 현재 전투 몬스터 리스트에 보스 추가
             dungeonBattle();
-
         } 
 
 
         private void BattleEnd(bool isWin)
         {
-            // 5.5 A 보스전 트리거 조정
-
-            if (isWin == true && gm.Dungeon.IsBossFightAvailable == true)
+            gm.Dungeon.DungeonResultType = isWin ? EDungeonResultType.VICTORY : EDungeonResultType.RETIRE;
+            if (BossClear == true)
             {
-                gm.Dungeon.IsBossFightAvailable = false; // 보스 전투 가능 상태 초기화
+                Console.WriteLine("스파르타 던전을 지배하던 발록이 쓰러졌다!");
+                Thread.Sleep(2000);
                 creditScreen.ScreenOn();
             }
 
-            else if (isWin == true && winCounter >= 10)
-            {
-                gm.Dungeon.IsBossFightAvailable = true;
-            }
-
-            gm.Dungeon.DungeonResultType = isWin ? EDungeonResultType.VICTORY : EDungeonResultType.RETIRE;
-
             dungeonResultScreen.ScreenOn();
+        
         }
 
         private void BattleLogText()
