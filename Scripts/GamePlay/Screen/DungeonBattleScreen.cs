@@ -13,12 +13,18 @@ namespace TextRPG
 
         private DungeonResultScreen dungeonResultScreen;
 
-
+        public delegate void TurnChange(); // 05.05 W 턴 전환용 핸들러
+        public event TurnChange? TurnChangeHandler;        
 
         public DungeonBattleScreen()
         {
             dungeonResultScreen = new DungeonResultScreen();
             enemies = new List<Enemy>(); ;  // 몬스터를 저장할 리스트 초기화
+        }
+
+        public void OnTurnChange()
+        {
+            TurnChangeHandler?.Invoke();
         }
 
         public override void ScreenOn()
@@ -117,6 +123,11 @@ namespace TextRPG
 
         private void dungeonBattle()
         {
+            TurnChangeHandler += gm.Player.OnDebuffActive;
+            foreach(Enemy e in enemies)
+            {
+                TurnChangeHandler += e.OnDebuffActive;
+            }
             while ((enemies.Any(e => e.Health > 0) && gm.Player.Health > 0))
             {
                 winCounter++;
@@ -131,6 +142,8 @@ namespace TextRPG
                     BattleEnd(true);  // 모든 적이 사망했으므로 승리 처리
                     return;
                 }
+
+                OnTurnChange();
 
                 foreach (var enemy in enemies.Where(e => e.Health > 0))
                 {

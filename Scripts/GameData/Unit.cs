@@ -21,6 +21,10 @@ namespace TextRPG
         [JsonProperty] public int MaxMana { get; protected set; }
         [JsonProperty] public int Phase { get; protected set; } // 05.03 W 해금되는 스킬의 갯수
         [JsonProperty] public List<Skill> Skills { get; protected set; }
+        [JsonProperty] public List<DeBuff> DeBuffs { get; protected set; }
+
+        public delegate void DebuffAction(Unit target); // 05.05 W 디버프 메소드를 저장할 델리게이트 & 이벤트핸들러
+        public event DebuffAction? DebuffActiveHandler;
 
         protected Random random = new Random();
         public virtual string OnDamaged(int damage) // 최소 데미지 1
@@ -73,6 +77,11 @@ namespace TextRPG
             result += critStr;
 
             return result;
+        }
+
+        public void OnDebuffActive() // 05.05 W 이벤트핼들러 실행 함수
+        {
+            DebuffActiveHandler?.Invoke(this);
         }
 
         public virtual void CostMana(int cost)

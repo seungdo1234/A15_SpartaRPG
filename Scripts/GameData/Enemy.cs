@@ -25,6 +25,8 @@ namespace TextRPG
             AvoidChance = e.AvoidChance;
             CriticalChance = e.CriticalChance;
             CriticalDamage = e.CriticalDamage * statMultiplier;
+            base.Skills = new List<Skill>();
+            base.DeBuffs = new List<DeBuff>();
         }
 
         public override string ToString()

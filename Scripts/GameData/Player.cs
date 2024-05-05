@@ -19,7 +19,7 @@ namespace TextRPG
         public float EquipAtkItem { get; set; }
         public float EquipDefItem { get; set; }    
         public EEquipItemType EquipItemFlag { get; set; }
-
+              
 
         public Player(string name)
         {
@@ -35,8 +35,9 @@ namespace TextRPG
             CriticalDamage = 1.6f;
             MaxMana = 100;
             Mana = MaxMana;
-            Phase = 0;
+            Phase = 3;
             base.Skills = new List<Skill>();
+            base.DeBuffs = new List<DeBuff>();
             PlayerEquipItems = new List<EquipItem>();
             PlayerConsumableItems = new Dictionary<string, int>();
         }
@@ -53,7 +54,8 @@ namespace TextRPG
                     MaxHealth += 50; /// 수정이 필요함
                     Health += 50;
                     Def += 5;
-                    Skills.Add(new Skill(0));
+                    //Skills.Add(new Skill(0));
+                    Skills.Add(new Chomp(0));
                     Skills.Add(new Skill(1));
                     Skills.Add(new CrisisEvasion(2));                    
                     break;
