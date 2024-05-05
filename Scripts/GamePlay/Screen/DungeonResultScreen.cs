@@ -74,6 +74,10 @@
                     }
 
                     playerInput = input; // Input 값 저장
+                    if (input == 1)
+                    {
+                        DungeonBattleScreen.Instance.BattleStart();
+                    }
                     return;
                 }
                 else

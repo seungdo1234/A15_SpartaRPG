@@ -8,7 +8,7 @@ namespace TextRPG
         private ShopScreen shopScreen;
         private DungeonResultScreen dungeonScreen;
         private QuestScreen questScreen;
-        private DungeonBattleScreen dungeonBattle;
+        // 5.5 A 던전배틀 싱글톤화
         // 5.5 A 크레딧 스크린 삭제, DungeonBattle클래스로 이동
         public LobbyScreen()
         {
@@ -17,7 +17,7 @@ namespace TextRPG
             shopScreen = new ShopScreen();
             dungeonScreen = new DungeonResultScreen();
             questScreen = new QuestScreen();
-            dungeonBattle = new DungeonBattleScreen();
+            // 5.5 A 던전배틀 싱글톤화
             // 5.5 A 크레딧 스크린 삭제, DungeonBattle클래스로 이동
         }
 
@@ -49,7 +49,7 @@ namespace TextRPG
                             shopScreen.ScreenOn();
                             break;
                         case 4:
-                            dungeonBattle.ScreenOn();
+                            DungeonBattleScreen.Instance.ScreenOn(); // 5.5 A 던전 배틀 싱글톤화
                             break;
                         case 5:
                             questScreen.ScreenOn();
