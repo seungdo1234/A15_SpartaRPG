@@ -24,18 +24,18 @@ namespace TextRPG
         public Player(string name)
         {
             Name = name;
-            Level = 7;
-            Atk = 10000;
-            Def = 500;
-            MaxHealth = 10000;
+            Level = 1;
+            Atk = 10;
+            Def = 5;
+            MaxHealth = 100;
             Health = MaxHealth;
             Gold = 10000;
             AvoidChance = 10;
             CriticalChance = 16;
             CriticalDamage = 1.6f;
-            MaxMana = 10000;
+            MaxMana = 100;
             Mana = MaxMana;
-            Phase = 3;
+            Phase = 0;
             base.Skills = new List<Skill>();
             base.DeBuffs = new List<DeBuff>();
             PlayerEquipItems = new List<EquipItem>();
