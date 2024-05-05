@@ -1,7 +1,4 @@
-﻿
-using System.ComponentModel.Design;
-
-namespace TextRPG
+﻿namespace TextRPG
 {
     public class DungeonResultScreen : Screen
     {
@@ -10,12 +7,36 @@ namespace TextRPG
 
         private Reward reward;
 
+        private EquipItem panaltyEquipItem;
+        private int panaltyGold;
 
+        public void RewardInit() // 보상 초기화, 던전에 입장할 때 호출
+        {
+            gm.Dungeon.RewardInit();
+            panaltyEquipItem = null;
+            panaltyGold = 0;
+        }
+
+        private void GameOverPanalty() // 게임 오버 시 패널티
+        {
+            if (gm.Dungeon.PlayerRewards.rewardEquipItems[0] != null)
+            {
+                panaltyEquipItem = dm.GetRandomEquipItem(gm.Dungeon.PlayerRewards.rewardEquipItems);
+                gm.Player.AddEquipItem(panaltyEquipItem);
+                panaltyGold = gm.Dungeon.PlayerRewards.totalGold * 20 / 100;
+                gm.Player.Gold += panaltyGold;
+            }
+        }
         public override void ScreenOn()
         {
+
             if (gm.Dungeon.DungeonResultType != EDungeonResultType.RETIRE)
             {
                 DungeonReward();
+            }
+            else
+            {
+                GameOverPanalty();
             }
 
             Console.Clear();
@@ -39,7 +60,7 @@ namespace TextRPG
                 {
                     Console.Clear();
 
-                    if(input == 0) // 로비로 돌아갈 때 체력 및 마나 회복
+                    if (input == 0) // 로비로 돌아갈 때 체력 및 마나 회복
                     {
                         gm.Player.RecoveryMana(gm.Player.MaxMana);
                         gm.Player.RecoveryHealth(gm.Player.MaxHealth);
@@ -48,7 +69,7 @@ namespace TextRPG
                     playerInput = input; // Input 값 저장
 
                     // 5.4 A : 배틀 계속이 아닌 로비로 돌아가는 현상 고치기 위해 넣음
-                    if(input == 1)
+                    if (input == 1)
                     {
                         DungeonBattleScreen dungeonBattle = new DungeonBattleScreen();
                         dungeonBattle.BattleStart(); ; // 바로 다음 스테이지로 이동
@@ -67,17 +88,15 @@ namespace TextRPG
         {
             reward = gm.Dungeon.GetDungeonReward();
 
-            gm.Player.AddEquipItem(reward.rewardEquipItem);
-            if(reward.rewardConsumableItem != null)
+            if (reward.rewardConsumableItem != null)
             {
                 gm.Player.AddConsumableItem(reward.rewardConsumableItem.ItemName);
             }
-            gm.Player.Gold += reward.gold;
             prevLevel = gm.Player.Level;
             prevExp = gm.Player.Exp;
             gm.Player.ExpUp(gm.Dungeon.BattleExp);
         }
-       
+
         private void TitleText()
         {
             Console.WriteLine();
@@ -104,7 +123,7 @@ namespace TextRPG
 
             Console.WriteLine();
 
-            Console.WriteLine("[획득 아이템]");
+            Console.WriteLine("[던전 보상]");
             Console.WriteLine($"{reward.gold} Gold");
 
             if (reward.rewardEquipItem != null)
@@ -133,6 +152,16 @@ namespace TextRPG
             Console.WriteLine();
 
             Console.WriteLine($"클리어 실패 스테이지 : {gm.Dungeon.CurrentDungeonLevel}");
+
+            if (panaltyEquipItem != null)
+            {
+                Console.WriteLine();
+                Console.WriteLine("던전에서 얻은 대부분의 골드와 장비를 잃었습니다.");
+
+                Console.WriteLine("[던전 보상]");
+                Console.WriteLine($"{panaltyGold} Gold");
+                Console.WriteLine($"{panaltyEquipItem} x 1");
+            }
 
             Console.WriteLine();
 
