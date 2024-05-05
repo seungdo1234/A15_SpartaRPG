@@ -45,6 +45,8 @@ namespace TextRPG
                     {
                         gm.Player.RecoveryMana(gm.Player.MaxMana);
                         gm.Player.RecoveryHealth(gm.Player.MaxHealth);
+                        LobbyScreen lobbyScreen = new LobbyScreen();
+                        lobbyScreen.ScreenOn();
                     }
 
                     playerInput = input; // Input 값 저장
