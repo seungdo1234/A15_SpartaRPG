@@ -9,6 +9,7 @@ namespace TextRPG
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
         private int winCounter = 0;  // 승리 횟수 카운터
         private bool returnToChooseEnemy = false; // 스킬 예외처리
+        private CreditScreen creditScreen; // 5.5 A 보스 클리어 추가, 크레딧 BattleEnd에 연결함
 
         private DungeonResultScreen dungeonResultScreen;
 
@@ -19,6 +20,7 @@ namespace TextRPG
         {
             dungeonResultScreen = new DungeonResultScreen();
             enemies = new List<Enemy>(); ;  // 몬스터를 저장할 리스트 초기화
+            creditScreen = new CreditScreen();
         }
 
         //public void OnTurnChange()
@@ -30,7 +32,7 @@ namespace TextRPG
         {
             while (true)
             {
-                winCounter = 1;  // 게임 시작 시 승리 카운터 초기화
+                winCounter = 0;  // 게임 시작 시 승리 카운터 초기화
 
                 Console.Clear();
                 Console.WriteLine("\n정말 던전에 진입하시겠습니까? 끝을 보시거나, 죽기 전까지 탈출하실 수 없습니다.");
@@ -100,7 +102,7 @@ namespace TextRPG
             gm.Dungeon.PrevHealth = gm.Player.Health;
         }
 
-        public void BattleStart() // 전투 시작
+        public void BattleStart() // 전투 시작, 5.4 A 결과창 보스전 순서 조정을 위한, 보스전 트리거 BattleStart로 이동
         {
 
             CheckForDifficulty();
@@ -345,7 +347,7 @@ namespace TextRPG
             Thread.Sleep(1500);
         }
 
-        private void TriggerBossBattle()
+        public void TriggerBossBattle() // 5.5 A 프라이베잇 > 퍼블릭
         {
             Console.WriteLine("보스가 등장했습니다!");
             Enemy boss = EnemyDataManager.instance.GetBoss();  // 보스 데이터 가져오기
@@ -358,46 +360,22 @@ namespace TextRPG
 
         private void BattleEnd(bool isWin)
         {
-            if (isWin)
-            {
-                gm.Dungeon.DungeonResultType = EDungeonResultType.VICTORY;
-                if (winCounter >= 11) // 10번 승리 후 보스전 조건 체크
-                {
-                    while (true)  // 사용자가 유효한 선택을 할 때까지 반복
-                    {
-                        Console.Clear();
-                        Console.WriteLine("보스전에 도전하시겠습니까?");
-                        Console.WriteLine("1. 도전");
-                        Console.WriteLine("0. 던전 입구로");
-                        string choice = Console.ReadLine().ToUpper();
+            // 5.5 A 보스전 트리거 조정
 
-                        if (choice == "1")
-                        {
-                            TriggerBossBattle(); // 보스전 시작
-                            winCounter = 0; // 승리 카운터 초기화
-                            return;
-                        }
-                        else if (choice == "0")
-                        {
-                            dungeonResultScreen.ScreenOn(); // 결과 화면으로 이동
-                            return;
-                        }
-                        else
-                        {
-                            SystemMessageText(EMessageType.ERROR);
-                        }
-                    }
-                }
-                else
-                {
-                    dungeonResultScreen.ScreenOn(); // 조건 미충족 시 결과 화면으로 이동
-                }
-            }
-            else
+            if (isWin == true && gm.Dungeon.IsBossFightAvailable == true)
             {
-                gm.Dungeon.DungeonResultType = EDungeonResultType.RETIRE;
-                dungeonResultScreen.ScreenOn(); // 패배 시 결과 화면으로 이동
+                gm.Dungeon.IsBossFightAvailable = false; // 보스 전투 가능 상태 초기화
+                creditScreen.ScreenOn();
             }
+
+            else if (isWin == true && winCounter >= 10)
+            {
+                gm.Dungeon.IsBossFightAvailable = true;
+            }
+
+            gm.Dungeon.DungeonResultType = isWin ? EDungeonResultType.VICTORY : EDungeonResultType.RETIRE;
+
+            dungeonResultScreen.ScreenOn();
         }
 
         private void BattleLogText()

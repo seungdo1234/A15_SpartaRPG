@@ -29,6 +29,8 @@
         }
         public override void ScreenOn()
         {
+            playerInput = -1; // 5.5 A 플레이어 인풋 값 초기화
+
 
             if (gm.Dungeon.DungeonResultType != EDungeonResultType.RETIRE)
             {
@@ -72,7 +74,6 @@
                     }
 
                     playerInput = input; // Input 값 저장
-
                     return;
                 }
                 else

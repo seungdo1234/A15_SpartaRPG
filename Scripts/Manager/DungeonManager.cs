@@ -12,6 +12,8 @@ namespace TextRPG
         public PlayerRewards PlayerRewards { get; private set; }
 
 
+        public bool IsBossFightAvailable { get; set; } // 5.5 A 보스전 플래그 추적
+
         public DungeonManager()
         {
             EnemyDataManager.instance.Init();
