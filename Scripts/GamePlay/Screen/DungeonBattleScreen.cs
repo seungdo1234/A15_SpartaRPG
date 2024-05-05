@@ -13,8 +13,8 @@ namespace TextRPG
 
         private DungeonResultScreen dungeonResultScreen;
 
-        public delegate void TurnChange(); // 05.05 W 턴 전환용 핸들러
-        public event TurnChange? TurnChangeHandler;        
+        //public delegate void TurnChange(); // 05.05 W 턴 전환용 핸들러
+        //public event TurnChange? TurnChangeHandler;        
 
         public DungeonBattleScreen()
         {
@@ -22,10 +22,10 @@ namespace TextRPG
             enemies = new List<Enemy>(); ;  // 몬스터를 저장할 리스트 초기화
         }
 
-        public void OnTurnChange()
-        {
-            TurnChangeHandler?.Invoke();
-        }
+        //public void OnTurnChange()
+        //{
+        //    TurnChangeHandler?.Invoke();
+        //}
 
         public override void ScreenOn()
         {
@@ -122,12 +122,7 @@ namespace TextRPG
         }
 
         private void dungeonBattle()
-        {
-            TurnChangeHandler += gm.Player.OnDebuffActive;
-            foreach(Enemy e in enemies)
-            {
-                TurnChangeHandler += e.OnDebuffActive;
-            }
+        {               
             while ((enemies.Any(e => e.Health > 0) && gm.Player.Health > 0))
             {
                 winCounter++;
@@ -141,12 +136,17 @@ namespace TextRPG
                 {
                     BattleEnd(true);  // 모든 적이 사망했으므로 승리 처리
                     return;
-                }
-
-                OnTurnChange();
+                }                
 
                 foreach (var enemy in enemies.Where(e => e.Health > 0))
-                {
+                {   
+                    if (enemy.CheckCrowdControl(ECrowdControlType.STUN)) // 05.05 W 몬스터 스턴 적용
+                    {
+                        PrintNotice($"{enemy.Name}는 기절로 인해 행동불가\n");
+                        enemy.OnDebuffActive();
+                        continue;
+                    }
+                    enemy.OnDebuffActive();
                     EnemyTurn(enemy);
 
                     if (gm.Player.Health <= 0)  // 플레이어가 사망한 경우, 패배 처리
@@ -208,6 +208,10 @@ namespace TextRPG
                         PlayerTurn(enemy);
                         return 0;
                     case "2":
+                        if (gm.Player.CheckCrowdControl(ECrowdControlType.SILENCE)) // 05.05 w 플레이어 침묵 적용
+                        {
+                            PrintNotice("침묵으로 인해 스킬을 사용할 수 없습니다.\n");
+                        }
                         UseSkill(enemy);
                         if (returnToChooseEnemy)
                         {
@@ -402,13 +406,15 @@ namespace TextRPG
             {
                 if (enemies[i].Health > 0)
                 {
-                    Console.WriteLine($"{i + 1}. {enemies[i].Name} (HP: {enemies[i].Health}/{enemies[i].MaxHealth}) ATK: {enemies[i].Atk}");
+                    Console.Write($"{i + 1}. {enemies[i].Name} (HP: {enemies[i].Health}/{enemies[i].MaxHealth}) ATK: {enemies[i].Atk}");
+                    PrintCrowdControl(enemies[i]);
                 }
             }
 
             Console.WriteLine();
             Console.WriteLine("=== 내 정보 ===");
-            Console.WriteLine($"Lv.{gm.Player.Level} {gm.Player.Name} ({gm.Player.GetPlayerClass(gm.Player.ePlayerClass)})");
+            Console.Write($"Lv.{gm.Player.Level} {gm.Player.Name} ({gm.Player.GetPlayerClass(gm.Player.ePlayerClass)})");
+            PrintCrowdControl(gm.Player);
             Console.WriteLine($"HP {gm.Player.Health}/{gm.Player.MaxHealth}");
             Console.WriteLine($"MP {gm.Player.Mana}/{gm.Player.MaxMana}");
             Console.WriteLine();

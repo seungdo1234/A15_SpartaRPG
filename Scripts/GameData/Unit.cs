@@ -20,6 +20,7 @@ namespace TextRPG
         [JsonProperty] public int Mana { get; protected set; }
         [JsonProperty] public int MaxMana { get; protected set; }
         [JsonProperty] public int Phase { get; protected set; } // 05.03 W 해금되는 스킬의 갯수
+        [JsonProperty] public ECrowdControlType CrowdControlFlag { get; protected set; } // 05.05 W CC상태 
         [JsonProperty] public List<Skill> Skills { get; protected set; }
         [JsonProperty] public List<DeBuff> DeBuffs { get; protected set; }
 
@@ -67,7 +68,7 @@ namespace TextRPG
             float critRate = critStr != null ? CriticalDamage : 1f;                        
             int damage = GetDamagePerHit();
 
-            if (avoidRange <= AvoidChance) // 회피 시 리턴
+            if (CheckCrowdControl(ECrowdControlType.BLIND) || avoidRange <= AvoidChance) // 회피 시 리턴 05.05 W 실명 추가
             {
                 return "Miss!!";
             }
@@ -81,6 +82,7 @@ namespace TextRPG
 
         public void OnDebuffActive() // 05.05 W 이벤트핼들러 실행 함수
         {
+            //Console.WriteLine($"[{Name}의 디버프]");
             DebuffActiveHandler?.Invoke(this);
         }
 
@@ -112,6 +114,22 @@ namespace TextRPG
             {
                 Mana += mana;
             }
+        }
+
+        public bool CheckCrowdControl(ECrowdControlType type)
+        {
+            if ((CrowdControlFlag & type) > 0) return true; // 05.05 W bit flag 해당타입 활성화 확인
+            return false;
+        }
+
+        public void SetCrowdControl(ECrowdControlType type)
+        {
+            CrowdControlFlag |= type; // 05.05 W bit flag 해당타입 추가
+        }
+
+        public void DispelCrowdControl(ECrowdControlType type)
+        {
+            CrowdControlFlag &= ~type; // 05.05 W bit flag 해당타입 제거
         }
     }
 }

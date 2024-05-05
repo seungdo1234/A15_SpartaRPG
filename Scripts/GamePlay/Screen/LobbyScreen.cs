@@ -27,7 +27,7 @@ namespace TextRPG
             while (true)
             {   
                 Console.Clear();
-                creditScreen.ScreenOn();
+                //creditScreen.ScreenOn();
 
                 LobbyText();
                 MyActionText();

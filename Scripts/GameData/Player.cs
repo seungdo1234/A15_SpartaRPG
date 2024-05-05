@@ -24,7 +24,7 @@ namespace TextRPG
         public Player(string name)
         {
             Name = name;
-            Level = 1;
+            Level = 10;
             Atk = 10;
             Def = 5;
             MaxHealth = 100;
@@ -54,8 +54,7 @@ namespace TextRPG
                     MaxHealth += 50; /// 수정이 필요함
                     Health += 50;
                     Def += 5;
-                    //Skills.Add(new Skill(0));
-                    Skills.Add(new Chomp(0));
+                    Skills.Add(new Skill(0));                    
                     Skills.Add(new Skill(1));
                     Skills.Add(new CrisisEvasion(2));                    
                     break;
@@ -185,7 +184,7 @@ namespace TextRPG
             float critRate = critStr != null ? CriticalDamage : 1f;
             int damage = GetDamagePerHit();
 
-            if (avoidRange <= AvoidChance) // 회피 시 리턴
+            if (CheckCrowdControl(ECrowdControlType.BLIND) || avoidRange <= AvoidChance) // 회피 시 리턴
             {
                 return "Miss!! ";
             }

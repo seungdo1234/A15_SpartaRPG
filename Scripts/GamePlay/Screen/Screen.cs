@@ -144,6 +144,29 @@ namespace TextRPG
             Console.ResetColor();
         }
 
+        protected void PrintCrowdControl(Unit unit)
+        {
+            if (unit.CheckCrowdControl(ECrowdControlType.STUN))
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write($" [스턴]");
+                Console.ResetColor();
+            }
+            if (unit.CheckCrowdControl(ECrowdControlType.SILENCE))
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write($" [침묵]");
+                Console.ResetColor();
+            }
+            if (unit.CheckCrowdControl(ECrowdControlType.BLIND))
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.Write($" [실명]");
+                Console.ResetColor();
+            }
+            Console.WriteLine();
+        }
+
         public abstract void ScreenOn();
     }
 }
