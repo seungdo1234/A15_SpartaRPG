@@ -112,7 +112,7 @@ namespace TextRPG
 
             if (playerInput == 1)
             {
-                if (winCounter >= 2)
+                if (winCounter >= 10)
                 {
                     while (true) // 사용자가 유효한 선택을 할 때까지 반복
                     {
