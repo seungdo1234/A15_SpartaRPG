@@ -119,7 +119,7 @@ namespace TextRPG
                         Console.Clear();
                         Console.WriteLine("보스전에 도전하시겠습니까?");
                         Console.WriteLine("1. 도전");
-                        Console.WriteLine("0. 던전 입구로");
+                        Console.WriteLine("0. 마을로 돌아간다.");
                         string choice = Console.ReadLine().ToUpper();
 
                         if (choice == "1")
