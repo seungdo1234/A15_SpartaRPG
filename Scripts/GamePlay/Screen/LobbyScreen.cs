@@ -66,15 +66,20 @@ namespace TextRPG
         private void LobbyText()
         {
             Console.WriteLine();
+            Console.Write("이곳은 ");
+            PrintNotice("스파르타 던전");
+            Console.WriteLine("에 가기 전 들를 수 있는 마지막 마을,");
+            PrintNotice("스파르타 마을");
+            Console.WriteLine("이다.\n");
 
-            Console.WriteLine($"스파르타 마을에 오신 {gm.Player.Name}님 환영합니다.");
-            Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다. \n");
-
+            PrintName(gm.Player.Name);
+            Console.WriteLine(" 은(는) 지금 무엇을 할지 고민하고 있다...\n");
+            
             Console.WriteLine("1. 상태 보기");
-            Console.WriteLine("2. 인벤토리");
-            Console.WriteLine("3. 상점");
-            Console.WriteLine("4. 던전입장");
-            Console.WriteLine("5. 퀘스트");
+            Console.WriteLine("2. 인벤토리 열기");
+            Console.WriteLine("3. 상점 가기");
+            Console.WriteLine("4. 던전 탐험하기");
+            Console.WriteLine("5. 퀘스트 보드 확인");
 
             Console.WriteLine();
 

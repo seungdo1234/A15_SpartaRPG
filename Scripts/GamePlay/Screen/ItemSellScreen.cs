@@ -48,18 +48,14 @@ namespace TextRPG
         {
             Console.WriteLine();
 
-            Console.WriteLine("상점 - 아이템 판매");
-            Console.WriteLine("보유중인 아이템을 판매할 수 있습니다.");
+            PrintTitle("상점 - 아이템 판매");
+            Console.WriteLine("보유중인 아이템을 판매할 수 있습니다.\n");
 
-            Console.WriteLine();
+            PrintTitle("보유 골드");
+            PrintNotice(gm.Player.Gold.ToString());
+            Console.WriteLine(" G\n");
 
-            Console.WriteLine("[보유 골드]");
-            Console.WriteLine($"{gm.Player.Gold} G");
-
-            Console.WriteLine();
-
-            Console.WriteLine("[ 보유 장비 목록 ]");
-
+            PrintTitle("보유 장비 목록");
             for (int i = 0; i < gm.Player.PlayerEquipItems.Count; i++) // 판매 목록 출력
             {
                 EquipItem equipItem = gm.Player.PlayerEquipItems[i];
@@ -89,8 +85,7 @@ namespace TextRPG
 
             Console.WriteLine("\n") ;
 
-            Console.WriteLine("[ 보유 물약 ]");
-
+            PrintTitle("보유 물약");
             int num = 1; // 보유하고있는 소비 아이템 탐색
             foreach(var itemName in gm.Player.PlayerConsumableItems.Keys) 
             {
