@@ -77,6 +77,7 @@ namespace TextRPG.Scripts
 
         public void SetMonsterQuest(Enemy deadEnemy)
         {
+            int deadEnemyIndex = EnemyDataManager.instance.MonsterDB.FindIndex(monster => monster.Name == deadEnemy.Name); // 5.6 A 몬스터 추적
             var oldQ = QuestSave[1];
             int currentQ = oldQ.QuestNumber;
             int current = oldQ.CurrentProgress; 
@@ -86,19 +87,13 @@ namespace TextRPG.Scripts
                 return;
             }
             else
-            {
-                if (currentQ - 1 == EnemyDataManager.instance.MonsterDB.IndexOf(deadEnemy))
+            {    // 5.6 A 몬스터 추적을 위한 코드 수정
+                if (currentQ - 1 == deadEnemyIndex || currentQ == 0)
                 {
                     var newQ = (oldQ.QuestType, oldQ.QuestNumber, ++oldQ.CurrentProgress);
-
-                    QuestSave[1] = newQ;
-                }else if (currentQ == 0)
-                {
-                    var newQ = (oldQ.QuestType, oldQ.QuestNumber, ++oldQ.CurrentProgress);
-
                     QuestSave[1] = newQ;
                 }
-            }
+            }   //
         }
     }
 }
