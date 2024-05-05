@@ -27,7 +27,7 @@ namespace TextRPG
             while (true)
             {   
                 Console.Clear();
-                creditScreen.ScreenOn();
+              //  creditScreen.ScreenOn(); // 5.5 A 테스트를 위한 크레딧 스크린 주석처리
 
                 LobbyText();
                 MyActionText();

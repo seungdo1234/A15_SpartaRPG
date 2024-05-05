@@ -13,6 +13,8 @@ namespace TextRPG
 
         public override void ScreenOn()
         {
+            playerInput = -1; // 5.5 A 플레이어 인풋 값 초기화
+
             if (gm.Dungeon.DungeonResultType != EDungeonResultType.RETIRE)
             {
                 DungeonReward();
@@ -48,10 +50,37 @@ namespace TextRPG
                     playerInput = input; // Input 값 저장
 
                     // 5.4 A : 배틀 계속이 아닌 로비로 돌아가는 현상 고치기 위해 넣음
-                    if(input == 1)
+                    if(input == 1 && gm.Dungeon.IsBossFightAvailable == false)
                     {
                         DungeonBattleScreen dungeonBattle = new DungeonBattleScreen();
                         dungeonBattle.BattleStart(); ; // 바로 다음 스테이지로 이동
+                    }
+                    // 5.5 A : 던전 보스 도전 조건 설정
+                    else if(input == 1 && gm.Dungeon.IsBossFightAvailable == true)
+                    {
+                        DungeonBattleScreen dungeonBattle = new DungeonBattleScreen();
+                        while (true) // 사용자가 유효한 선택을 할 때까지 반복
+                        {
+                            Console.Clear();
+                            Console.WriteLine("보스전에 도전하시겠습니까?");
+                            Console.WriteLine("1. 도전");
+                            Console.WriteLine("0. 던전 입구로");
+                            string choice = Console.ReadLine().ToUpper();
+
+                            if (choice == "1")
+                            {
+                                dungeonBattle.TriggerBossBattle(); // 보스전 시작
+                                return;
+                            }
+                            else if (choice == "0")
+                            {
+                                return; // 던전 입구로 돌아갈 경우 추가 처리
+                            }
+                            else
+                            {
+                                SystemMessageText(EMessageType.ERROR);
+                            }
+                        }
                     }
                     //
                     return;
