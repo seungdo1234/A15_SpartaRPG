@@ -8,6 +8,6 @@ namespace TextRPG.Scripts.Interface
 {
     public interface IDebuff
     {
-        void ActiveDebuff();
+        void ActiveDebuff(Unit caster, Unit target);
     }
 }
