@@ -84,28 +84,14 @@ namespace TextRPG
                 // 5.4 A input int화
                 if (int.TryParse(inputs, out input) && input >= 1 && input <= 3)
                 {
+                    gm.Dungeon.dif = (EDungeonDifficulty)input;
+                    winCounter += input;
                     break;
                 }
                 else
                 {
                     Console.WriteLine("잘못된 입력입니다. 다시 입력하세요.");
                 }
-            }
-
-            winCounter += input;
-
-            //5.3 A : 던전 난이도 Enum활용
-            switch (input)
-            {
-                case 1:
-                    gm.Dungeon.dif = EDungeonDifficulty.EASY;
-                    break;
-                case 2:
-                    gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
-                    break;
-                case 3:
-                    gm.Dungeon.dif = EDungeonDifficulty.HARD;
-                    break;
             }
 
             Console.WriteLine($"선택된 난이도: {gm.Dungeon.dif}");
@@ -116,14 +102,24 @@ namespace TextRPG
 
         public void BattleStart() // 전투 시작
         {
+
             CheckForDifficulty();
             AppearEnemy();
             dungeonBattle();
 
-            if(playerInput == 1)
+            if (playerInput == 1)
             {
-                BattleStart();
+                if (winCounter >= 10)
+                {
+                    // 보스
+                }
+                else
+                {
+                    BattleStart();
+                    return;
+                }
             }
+
         }
 
         private void dungeonBattle()
@@ -357,7 +353,7 @@ namespace TextRPG
             enemies.Add(boss);  // 현재 전투 몬스터 리스트에 보스 추가
             dungeonBattle();
 
-        }
+        } 
 
 
         private void BattleEnd(bool isWin)
