@@ -1,29 +1,33 @@
 ﻿
+using TextRPG.Scripts.Interface;
+
 namespace TextRPG
 {
-    internal class ChainLighting : Skill
+    public class Chomp : Skill
     {
-        public ChainLighting(int id) : base(id)
+        public Chomp(int id) : base(id)
         {
-        }
+        }       
 
         public override string CastSkill(Unit caster, Unit target)
         {
             string result;
             string? critStr = caster.IsCriticalHit();
             float critRate = critStr != null ? caster.CriticalDamage : 1f;
-            float skillRate = 3;            
+            float skillRate = 1.2f;
             int damage = caster.GetDamagePerHit();
 
             damage = Convert.ToInt32(Math.Round(damage * skillRate * critRate));
             result = target.OnDamaged(damage);
-            result += critStr + "대상에 침묵 ";
+            result += critStr;
 
-            DeBuff? debuff = target.DeBuffs?.Find(x => x.Caster == caster.Name); // 스킬이 아닌 시전자로 검색
-            if (debuff == null) // 타겟의 디버프목록에 없을 시 새 디버프 추가 
+            // 05.05 W 디버프 연결부
+            result += "대상에 출혈 ";            
+
+            DeBuff? debuff = target.DeBuffs?.Find(x => x.Caster ==  caster.Name); // 스킬이 아닌 시전자로 검색
+            if( debuff == null ) // 타겟의 디버프목록에 없을 시 새 디버프 추가 
             {
-                target.SetCrowdControl(ECrowdControlType.SILENCE);
-                debuff = new Silence(Name, 2, caster.Name);
+                debuff = new Bleeding(Name, 4, caster.Name);
                 target.DeBuffs.Add(debuff);
                 target.DebuffActiveHandler += debuff.ActiveDebuff;
             }
@@ -31,8 +35,8 @@ namespace TextRPG
             {
                 debuff.Reapply();
             }
-
+            
             return result;
-        }
+        }        
     }
 }
