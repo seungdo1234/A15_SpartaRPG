@@ -1,7 +1,4 @@
-﻿
-using System.ComponentModel.Design;
-
-namespace TextRPG
+﻿namespace TextRPG
 {
     public class DungeonResultScreen : Screen
     {
@@ -10,20 +7,45 @@ namespace TextRPG
 
         private Reward reward;
 
+        private EquipItem panaltyEquipItem;
+        private int panaltyGold;
 
+        public void RewardInit() // 보상 초기화, 던전에 입장할 때 호출
+        {
+            gm.Dungeon.RewardInit();
+            panaltyEquipItem = null;
+            panaltyGold = 0;
+        }
+
+        private void GameOverPanalty() // 게임 오버 시 패널티
+        {
+            if (gm.Dungeon.PlayerRewards.rewardEquipItems.Count != 0)
+            {
+                panaltyEquipItem = dm.GetRandomEquipItem(gm.Dungeon.PlayerRewards.rewardEquipItems);
+                gm.Player.AddEquipItem(panaltyEquipItem);
+                panaltyGold = gm.Dungeon.PlayerRewards.totalGold * 20 / 100;
+                gm.Player.Gold += panaltyGold;
+            }
+        }
         public override void ScreenOn()
         {
             playerInput = -1; // 5.5 A 플레이어 인풋 값 초기화
 
+
             if (gm.Dungeon.DungeonResultType != EDungeonResultType.RETIRE)
             {
                 DungeonReward();
+            }
+            else
+            {
+                GameOverPanalty();
             }
 
             Console.Clear();
 
             while (true)
             {
+                Console.Clear();
 
                 switch (gm.Dungeon.DungeonResultType)
                 {
@@ -41,76 +63,47 @@ namespace TextRPG
                 {
                     Console.Clear();
 
-                    if(input == 0) // 로비로 돌아갈 때 체력 및 마나 회복
+                    if (input == 0) // 로비로 돌아갈 때 체력 및 마나 회복
                     {
                         gm.Player.RecoveryMana(gm.Player.MaxMana);
                         gm.Player.RecoveryHealth(gm.Player.MaxHealth);
-
-                        // 5.5 A 부활 전투 지속 현상 해결하기 위한, 로비돌아가기 처리 추가
-                        LobbyScreen lobbyScreen = new LobbyScreen();
-                        lobbyScreen.ScreenOn();
+                        if(gm.Dungeon.DungeonResultType == EDungeonResultType.VICTORY)
+                        {
+                            SetDungeonReward();
+                        }
                     }
 
                     playerInput = input; // Input 값 저장
-
-                    // 5.4 A : 배틀 계속이 아닌 로비로 돌아가는 현상 고치기 위해 넣음
-                    if(input == 1 && gm.Dungeon.IsBossFightAvailable == false)
-                    {
-                        DungeonBattleScreen dungeonBattle = new DungeonBattleScreen();
-                        dungeonBattle.BattleStart(); ; // 바로 다음 스테이지로 이동
-                    }
-                    // 5.5 A : 던전 보스 도전 조건 설정
-                    else if(input == 1 && gm.Dungeon.IsBossFightAvailable == true)
-                    {
-                        DungeonBattleScreen dungeonBattle = new DungeonBattleScreen();
-                        while (true) // 사용자가 유효한 선택을 할 때까지 반복
-                        {
-                            Console.Clear();
-                            Console.WriteLine("보스전에 도전하시겠습니까?");
-                            Console.WriteLine("1. 도전");
-                            Console.WriteLine("0. 던전 입구로");
-                            string choice = Console.ReadLine().ToUpper();
-
-                            if (choice == "1")
-                            {
-                                dungeonBattle.TriggerBossBattle(); // 보스전 시작
-                                return;
-                            }
-                            else if (choice == "0")
-                            {
-                                return; // 던전 입구로 돌아갈 경우 추가 처리
-                            }
-                            else
-                            {
-                                SystemMessageText(EMessageType.ERROR);
-                            }
-                        }
-                    }
-                    //
                     return;
                 }
                 else
                 {
-                    Console.WriteLine("잘못된 입력입니다! 숫자를 다시 입력하세요.\n");
+                    SystemMessageText(EMessageType.ERROR);
                 }
 
             }
         }
-        private void DungeonReward() // 던전 보상
+        private void DungeonReward() // 던전 보상 (골드 및 장비 아이템 X)
         {
             reward = gm.Dungeon.GetDungeonReward();
 
-            gm.Player.AddEquipItem(reward.rewardEquipItem);
-            if(reward.rewardConsumableItem != null)
+            if (reward.rewardConsumableItem != null)
             {
                 gm.Player.AddConsumableItem(reward.rewardConsumableItem.ItemName);
             }
-            gm.Player.Gold += reward.gold;
             prevLevel = gm.Player.Level;
             prevExp = gm.Player.Exp;
             gm.Player.ExpUp(gm.Dungeon.BattleExp);
         }
-       
+        private void SetDungeonReward() // 골드 및 장비 아이템 획득
+        {
+            gm.Player.Gold += gm.Dungeon.PlayerRewards.totalGold;
+            
+            for(int i = 0; i < gm.Dungeon.PlayerRewards.rewardEquipItems.Count; i++)
+            {
+                gm.Player.AddEquipItem(gm.Dungeon.PlayerRewards.rewardEquipItems[i]);
+            }
+        }
         private void TitleText()
         {
             Console.WriteLine();
@@ -137,7 +130,7 @@ namespace TextRPG
 
             Console.WriteLine();
 
-            Console.WriteLine("[획득 아이템]");
+            Console.WriteLine("[던전 보상]");
             Console.WriteLine($"{reward.gold} Gold");
 
             if (reward.rewardEquipItem != null)
@@ -166,6 +159,16 @@ namespace TextRPG
             Console.WriteLine();
 
             Console.WriteLine($"클리어 실패 스테이지 : {gm.Dungeon.CurrentDungeonLevel}");
+
+            if (panaltyEquipItem != null)
+            {
+                Console.WriteLine();
+                Console.WriteLine("던전에서 얻은 대부분의 골드와 장비를 잃었습니다.");
+
+                Console.WriteLine("[던전 보상]");
+                Console.WriteLine($"{panaltyGold} Gold");
+                Console.WriteLine($"{panaltyEquipItem.ItemName} x 1");
+            }
 
             Console.WriteLine();
 

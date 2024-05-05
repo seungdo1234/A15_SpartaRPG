@@ -7,7 +7,6 @@ namespace TextRPG
     public class DungeonBattleScreen : Screen
     {
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
-        private bool isWin;
         private int winCounter = 0;  // 승리 횟수 카운터
         private bool returnToChooseEnemy = false; // 스킬 예외처리
         private CreditScreen creditScreen; // 5.5 A 보스 클리어 추가, 크레딧 BattleEnd에 연결함
@@ -47,6 +46,7 @@ namespace TextRPG
                 switch (choice)
                 {
                     case "1":
+                        dungeonResultScreen.RewardInit();
                         BattleStart();
                         return;
 
@@ -86,28 +86,14 @@ namespace TextRPG
                 // 5.4 A input int화
                 if (int.TryParse(inputs, out input) && input >= 1 && input <= 3)
                 {
+                    gm.Dungeon.dif = (EDungeonDifficulty)input;
+                    winCounter += input;
                     break;
                 }
                 else
                 {
                     Console.WriteLine("잘못된 입력입니다. 다시 입력하세요.");
                 }
-            }
-
-            winCounter += input;
-
-            //5.3 A : 던전 난이도 Enum활용
-            switch (input)
-            {
-                case 1:
-                    gm.Dungeon.dif = EDungeonDifficulty.EASY;
-                    break;
-                case 2:
-                    gm.Dungeon.dif = EDungeonDifficulty.NORMAL;
-                    break;
-                case 3:
-                    gm.Dungeon.dif = EDungeonDifficulty.HARD;
-                    break;
             }
 
             Console.WriteLine($"선택된 난이도: {gm.Dungeon.dif}");
@@ -118,9 +104,24 @@ namespace TextRPG
 
         public void BattleStart() // 전투 시작, 5.4 A 결과창 보스전 순서 조정을 위한, 보스전 트리거 BattleStart로 이동
         {
+
             CheckForDifficulty();
             AppearEnemy();
             dungeonBattle();
+
+            if (playerInput == 1)
+            {
+                if (winCounter >= 10)
+                {
+                    // 보스
+                }
+                else
+                {
+                    BattleStart();
+                    return;
+                }
+            }
+
         }
 
         private void dungeonBattle()
@@ -154,6 +155,7 @@ namespace TextRPG
                     if (gm.Player.Health <= 0)  // 플레이어가 사망한 경우, 패배 처리
                     {
                         BattleEnd(false);
+                        return;
                     }
                 }
             }
@@ -353,7 +355,7 @@ namespace TextRPG
             enemies.Add(boss);  // 현재 전투 몬스터 리스트에 보스 추가
             dungeonBattle();
 
-        }
+        } 
 
 
         private void BattleEnd(bool isWin)

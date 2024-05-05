@@ -27,7 +27,6 @@ namespace TextRPG
             while (true)
             {   
                 Console.Clear();
-                // 5.5 A 크레딧 스크린 삭제, DungeonBattle클래스로 이동
 
                 LobbyText();
                 MyActionText();

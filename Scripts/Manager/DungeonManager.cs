@@ -9,6 +9,8 @@ namespace TextRPG
         public RandomReward RandomReward { get; private set; }
         public int BattleExp {  get;  set; } // 전투 경험치 보상
         public int PrevHealth {  get; set; }
+        public PlayerRewards PlayerRewards { get; private set; }
+
 
         public bool IsBossFightAvailable { get; set; } // 5.5 A 보스전 플래그 추적
 
@@ -21,7 +23,18 @@ namespace TextRPG
         // 던전 보상 만드는 함수
         public Reward GetDungeonReward()
         {
-            return RandomReward.GetRandomReward();
+            Reward reward =  RandomReward.GetRandomReward();
+
+            PlayerRewards.rewardEquipItems.Add(reward.rewardEquipItem);
+            PlayerRewards.totalGold += reward.gold;
+            PlayerRewards.currentGold = reward.gold;
+
+            return reward;
+        }
+
+        public void RewardInit()
+        {
+            PlayerRewards = new PlayerRewards();
         }
 
         /*
