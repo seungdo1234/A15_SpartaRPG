@@ -12,10 +12,26 @@ namespace TextRPG
         private bool BossClear = false; // 5.5 A 보스 클리어 여부
         private CreditScreen creditScreen; // 5.5 A 보스 클리어 추가, 크레딧 BattleEnd에 연결함
 
+        private static DungeonBattleScreen instance;
+
+
         private DungeonResultScreen dungeonResultScreen;
 
         //public delegate void TurnChange(); // 05.05 W 턴 전환용 핸들러
         //public event TurnChange? TurnChangeHandler;        
+
+        public static DungeonBattleScreen Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new DungeonBattleScreen();
+                }
+
+                return instance;
+            }
+        }
 
         public DungeonBattleScreen()
         {
@@ -265,6 +281,7 @@ namespace TextRPG
             if (enemy.Health <= 0)
             {
                 Console.WriteLine($"[{enemy.Name}이(가) 쓰러졌습니다.]");
+                gm.QuestManager.SetMonsterQuest(enemy);
             }
 
         }
