@@ -342,6 +342,13 @@ namespace TextRPG
                 Console.WriteLine(initialSkillResult);
                 Thread.Sleep(1500);
 
+                // 5.5 A 스킬 공격시 사망에도 퀘스트 카운팅 추적
+                if (target.Health <= 0)
+                {
+                    Console.WriteLine($"[{target.Name}이(가) 쓰러졌습니다.]");
+                    gm.QuestManager.SetMonsterQuest(target);
+                }
+
                 // 나머지 타겟들에게 스킬 적용
                 int targetsHit = 1; // 첫 번째 타겟이 이미 공격받았으므로 1로 시작
                 foreach (var enemy in enemies.Where(e => e.Health > 0 && e != target))
@@ -354,6 +361,13 @@ namespace TextRPG
                     Console.WriteLine(skillResult);
                     Thread.Sleep(1500);
 
+                    // 5.5 A 만약 나머지 타겟의 체력이 0 이하라면 퀘스트 진행 업데이트
+                    if (enemy.Health <= 0)
+                    {
+                        Console.WriteLine($"[{enemy.Name}이(가) 쓰러졌습니다.]");
+                        gm.QuestManager.SetMonsterQuest(enemy);
+                    }
+
                     targetsHit++;
                 }
             }
@@ -364,6 +378,12 @@ namespace TextRPG
                 string skillResult = skill.CastSkill(gm.Player, target);
                 Console.WriteLine(skillResult);
                 Thread.Sleep(2000);
+                // 5.5 A 퀘스트 추적
+                if (target.Health <= 0)
+                {
+                    Console.WriteLine($"[{target.Name}이(가) 쓰러졌습니다.]");
+                    gm.QuestManager.SetMonsterQuest(target);
+                }
             }
             Console.Clear();
         }
