@@ -45,6 +45,8 @@ namespace TextRPG
                     {
                         gm.Player.RecoveryMana(gm.Player.MaxMana);
                         gm.Player.RecoveryHealth(gm.Player.MaxHealth);
+
+                        // 5.5 A 부활 전투 지속 현상 해결하기 위한, 로비돌아가기 처리 추가
                         LobbyScreen lobbyScreen = new LobbyScreen();
                         lobbyScreen.ScreenOn();
                     }
