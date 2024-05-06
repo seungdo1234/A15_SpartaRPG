@@ -48,15 +48,28 @@ namespace TextRPG.Scripts
                 QuestSave[0] = (oldQ.QuestType, oldQ.QuestNumber, GameManager.instance.Dungeon.CurrentDungeonLevel);
             }
 
-            StoryQuest[QuestSave[0].QuestNumber].CurrentProgress = QuestSave[0].CurrentProgress;
-
-            return StoryQuest[QuestSave[0].QuestNumber];
+            if (QuestSave[0].QuestNumber < StoryQuest.Count)
+            {
+                StoryQuest[QuestSave[0].QuestNumber].CurrentProgress = QuestSave[0].CurrentProgress;
+                return StoryQuest[QuestSave[0].QuestNumber];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public Quest GetCurrentMonsterQuest()
         {
-            MonsterQuest[QuestSave[1].QuestNumber].CurrentProgress = QuestSave[1].CurrentProgress;
-            return MonsterQuest[QuestSave[1].QuestNumber];
+            if (QuestSave[1].QuestNumber < MonsterQuest.Count)
+            {
+                MonsterQuest[QuestSave[1].QuestNumber].CurrentProgress = QuestSave[1].CurrentProgress;
+                return MonsterQuest[QuestSave[1].QuestNumber];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public List<Quest> GetStoryLog()
@@ -93,8 +106,7 @@ namespace TextRPG.Scripts
                     var newQ = (oldQ.QuestType, oldQ.QuestNumber, ++oldQ.CurrentProgress);
                     QuestSave[1] = newQ;
                 }
-            }   //
-        } }
+            }   
         }
     }
 }
