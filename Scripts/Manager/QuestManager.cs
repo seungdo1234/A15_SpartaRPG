@@ -45,7 +45,7 @@ namespace TextRPG.Scripts
             if (GameManager.instance.Dungeon.CurrentDungeonLevel > QuestSave[0].CurrentProgress)
             {
                 var oldQ = QuestSave[0];
-                QuestSave[0] = (oldQ.QuestType, oldQ.QuestNumber, oldQ.CurrentProgress);
+                QuestSave[0] = (oldQ.QuestType, oldQ.QuestNumber, GameManager.instance.Dungeon.CurrentDungeonLevel);
             }
 
             StoryQuest[QuestSave[0].QuestNumber].CurrentProgress = QuestSave[0].CurrentProgress;
@@ -94,15 +94,7 @@ namespace TextRPG.Scripts
                     QuestSave[1] = newQ;
                 }
             }   //
-        }
-
-        // 5.5 A : 다음 스토리 퀘스트로 이동
-        public void AdvanceToNextStoryQuest()
-        {
-            if (QuestSave[0].QuestNumber < StoryQuest.Count - 1)
-            {
-                QuestSave[0] = (QuestSave[0].QuestType, QuestSave[0].QuestNumber + 1, 0);
-            }
+        } }
         }
     }
 }

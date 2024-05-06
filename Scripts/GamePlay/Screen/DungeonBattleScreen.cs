@@ -496,7 +496,7 @@ namespace TextRPG
             if (stageCounter >= currentStoryQuest.TotalProgress)
             {
                 Console.WriteLine($"퀘스트 완료: {currentStoryQuest.QuestName}");
-                questManager.AdvanceToNextStoryQuest();
+                //questManager.AdvanceToNextStoryQuest();
             }
             else
             {
