@@ -22,7 +22,7 @@ namespace TextRPG
             Def = e.Def * statMultiplier;
             Health = (int)Math.Round(e.Health * statMultiplier);
             MaxHealth = (int)Math.Round(e.MaxHealth * statMultiplier);
-            AvoidChance = 0; // e.AvoidChance; 5.5A 원할한 테스트를 위한 주석화
+            AvoidChance = e.AvoidChance;
             CriticalChance = e.CriticalChance;
             CriticalDamage = e.CriticalDamage * statMultiplier;
             base.Skills = new List<Skill>();

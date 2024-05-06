@@ -7,7 +7,7 @@ namespace TextRPG
     public class DungeonBattleScreen : Screen
     {
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
-        private int winCounter = 0;  // 승리 횟수 카운터
+        private int stageCounter = 0;  // 승리 횟수 카운터
         private bool returnToChooseEnemy = false; // 스킬 예외처리
         private bool BossClear = false; // 5.5 A 보스 클리어 여부
         private CreditScreen creditScreen; // 5.5 A 보스 클리어 추가, 크레딧 BattleEnd에 연결함
@@ -49,7 +49,7 @@ namespace TextRPG
         {
             while (true)
             {
-                winCounter = 0;  // 게임 시작 시 승리 카운터 초기화
+                stageCounter = 0;  // 게임 시작 시 승리 카운터 초기화
 
                 Console.Clear();
                 Console.WriteLine("\n정말 던전에 진입하시겠습니까? 끝을 보시거나, 죽기 전까지 탈출하실 수 없습니다.");
@@ -68,7 +68,7 @@ namespace TextRPG
                         return;
 
                     case "0":
-                        winCounter = 0;
+                        stageCounter = 0;
                         return;
 
                     default:
@@ -79,12 +79,12 @@ namespace TextRPG
         }
         private void AppearEnemy()
         {
-            if (winCounter > 10)
+            if (stageCounter > 10)
             {
-                winCounter = 10;
+                stageCounter = 10;
             }
 
-            int currentDungeonLevel = winCounter; // 임시로 집어 넣음, 원래는 던전 난이도를 집어 넣어야함
+            int currentDungeonLevel = stageCounter; // 임시로 집어 넣음, 원래는 던전 난이도를 집어 넣어야함
 
             // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기, 5.3 A : 배수 증가 매게변수 추가
             enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel, gm.Dungeon.dif);
@@ -96,13 +96,13 @@ namespace TextRPG
             switch (gm.Dungeon.dif)
             {
                 case EDungeonDifficulty.EASY:
-                    winCounter = 1;
+                    stageCounter = 1;
                     break;
                 case EDungeonDifficulty.NORMAL:
-                    winCounter = 2;
+                    stageCounter = 2;
                     break;
                 case EDungeonDifficulty.HARD:
-                    winCounter = 3;
+                    stageCounter = 3;
                     break;
             }
         }
@@ -125,7 +125,7 @@ namespace TextRPG
                 if (int.TryParse(inputs, out input) && input >= 1 && input <= 3)
                 {
                     gm.Dungeon.dif = (EDungeonDifficulty)input;
-                    if(winCounter == 0)
+                    if(stageCounter == 0)
                     {
                         SetInitialWinCounter(); // 5.5 A :난이도에 따라 초기 winCounter 설정
                     }
@@ -143,17 +143,17 @@ namespace TextRPG
 
         public void BattleStart() // 전투 시작, 5.4 A 결과창 보스전 순서 조정을 위한, 보스전 트리거 BattleStart로 이동
         {
-            Console.WriteLine($"스파르타 던전 지하 {winCounter}층");
+            Console.WriteLine($"스파르타 던전 지하 {stageCounter}층");
             Thread.Sleep(1000);
 
             if (playerInput == 1)
             {
-                if (winCounter >= 10)
+                if (stageCounter >= 10)
                 {
                     while (true) // 사용자가 유효한 선택을 할 때까지 반복
                     {
                         Console.Clear();
-                        Console.WriteLine($"승리 카운터: {winCounter}");
+                        Console.WriteLine($"승리 카운터: {stageCounter}");
                         Console.WriteLine("보스전에 도전하시겠습니까?");
                         Console.WriteLine("1. 도전");
                         Console.WriteLine("0. 마을로 돌아간다.");
@@ -162,7 +162,7 @@ namespace TextRPG
                         if (choice == "1")
                         {
                             TriggerBossBattle(); // 보스전 시작
-                            winCounter = 0;
+                            stageCounter = 0;
                             return;
                         }
                         else if (choice == "0")
@@ -183,7 +183,7 @@ namespace TextRPG
 
         private void dungeonBattle()
         {
-            winCounter++;
+            stageCounter++;
             gm.Player.DispelAllDebuff(); // 05.06 W 새로운 스테이지 시 디버프 초기화
             while ((enemies.Any(e => e.Health > 0) && gm.Player.Health > 0))
             {
