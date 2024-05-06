@@ -95,5 +95,14 @@ namespace TextRPG.Scripts
                 }
             }   //
         }
+
+        // 5.5 A : 다음 스토리 퀘스트로 이동
+        public void AdvanceToNextStoryQuest()
+        {
+            if (QuestSave[0].QuestNumber < StoryQuest.Count - 1)
+            {
+                QuestSave[0] = (QuestSave[0].QuestType, QuestSave[0].QuestNumber + 1, 0);
+            }
+        }
     }
 }

@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
+using TextRPG.Scripts;
 
 namespace TextRPG
 {
     public class DungeonBattleScreen : Screen
     {
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
-        private int winCounter = 0;  // 승리 횟수 카운터
+        private int stageCounter = 0;  // 5.6 A 스테이지 단계 측정 변수
         private bool returnToChooseEnemy = false; // 스킬 예외처리
         private bool BossClear = false; // 5.5 A 보스 클리어 여부
         private CreditScreen creditScreen; // 5.5 A 보스 클리어 추가, 크레딧 BattleEnd에 연결함
+        private Dictionary<Enemy, bool> skillWarnings = new Dictionary<Enemy, bool>(); // 5.6 A 스킬 발동 확률을 위한 변수
+
 
         private static DungeonBattleScreen instance;
 
@@ -49,7 +52,7 @@ namespace TextRPG
         {
             while (true)
             {
-                winCounter = 0;  // 게임 시작 시 승리 카운터 초기화
+                stageCounter = 0;  // 게임 시작 시 승리 카운터 초기화
 
                 Console.Clear();
                 Console.WriteLine("\n정말 던전에 진입하시겠습니까? 끝을 보시거나, 죽기 전까지 탈출하실 수 없습니다.");
@@ -78,10 +81,32 @@ namespace TextRPG
         }
         private void AppearEnemy()
         {
-            int currentDungeonLevel = winCounter; // 임시로 집어 넣음, 원래는 던전 난이도를 집어 넣어야함
+            if (stageCounter > 10)
+            {
+                stageCounter = 10;
+            }
+
+            int currentDungeonLevel = stageCounter; // 임시로 집어 넣음, 원래는 던전 난이도를 집어 넣어야함
 
             // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기, 5.3 A : 배수 증가 매게변수 추가
             enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel, gm.Dungeon.dif);
+        }
+
+        // 5.5 A : stageCounter 처음 한번만 증가하도록 하기 위한 변수 선언
+        private void SetInitialStageCounter()
+        {
+            switch (gm.Dungeon.dif)
+            {
+                case EDungeonDifficulty.EASY:
+                    stageCounter = 1;
+                    break;
+                case EDungeonDifficulty.NORMAL:
+                    stageCounter = 2;
+                    break;
+                case EDungeonDifficulty.HARD:
+                    stageCounter = 3;
+                    break;
+            }
         }
 
         // 5.3 A : 던전 난이도 확인 추가
@@ -89,7 +114,6 @@ namespace TextRPG
         {
             int input;
 
-            // 올바른 숫자가 입력될 때까지 반복
             while (true)
             {
                 Console.WriteLine();
@@ -100,11 +124,13 @@ namespace TextRPG
                 Console.Write("\n선택: ");
                 string inputs = Console.ReadLine();
 
-                // 5.4 A input int화
                 if (int.TryParse(inputs, out input) && input >= 1 && input <= 3)
                 {
                     gm.Dungeon.dif = (EDungeonDifficulty)input;
-                    winCounter += input;
+                    if(stageCounter == 0)
+                    {
+                        SetInitialStageCounter(); // 5.5 A :난이도에 따라 초기 winCounter 설정
+                    }
                     break;
                 }
                 else
@@ -114,25 +140,22 @@ namespace TextRPG
             }
 
             Console.WriteLine($"선택된 난이도: {gm.Dungeon.dif}");
-
-            // 5.4 J => 전투 결과 창에 나올 전투 들어가기 전 체력 정보 저장
             gm.Dungeon.PrevHealth = gm.Player.Health;
         }
 
         public void BattleStart() // 전투 시작, 5.4 A 결과창 보스전 순서 조정을 위한, 보스전 트리거 BattleStart로 이동
         {
-
-            CheckForDifficulty();
-            AppearEnemy();
-            dungeonBattle();
+            Console.WriteLine($"스파르타 던전 지하 {stageCounter + 1}층");
+            Thread.Sleep(1000);
 
             if (playerInput == 1)
             {
-                if (winCounter >= 10)
+                if (stageCounter >= 10)
                 {
                     while (true) // 사용자가 유효한 선택을 할 때까지 반복
                     {
                         Console.Clear();
+                        Console.WriteLine($"승리 카운터: {stageCounter}");
                         Console.WriteLine("보스전에 도전하시겠습니까?");
                         Console.WriteLine("1. 도전");
                         Console.WriteLine("0. 마을로 돌아간다.");
@@ -141,6 +164,7 @@ namespace TextRPG
                         if (choice == "1")
                         {
                             TriggerBossBattle(); // 보스전 시작
+                            stageCounter = 0;
                             return;
                         }
                         else if (choice == "0")
@@ -154,14 +178,17 @@ namespace TextRPG
                     }
                 }
             }
+            CheckForDifficulty();
+            AppearEnemy();
+            dungeonBattle();
         }
 
         private void dungeonBattle()
         {
+            stageCounter++;
             gm.Player.DispelAllDebuff(); // 05.06 W 새로운 스테이지 시 디버프 초기화
             while ((enemies.Any(e => e.Health > 0) && gm.Player.Health > 0))
             {
-                winCounter++;                
                 int targetIndex = ChooseEnemy();
                 if (targetIndex == -1) continue;
 
@@ -402,18 +429,43 @@ namespace TextRPG
 
         private void EnemyTurn(Enemy enemy)
         {
+            // 5.6 A 적의 스킬 경고 문구 및 확률 발동 코드, 시작
+            if (skillWarnings.ContainsKey(enemy) && skillWarnings[enemy])
+            {
+                Console.WriteLine($"{enemy.Name}의 {enemy.Skills[0].Name}!");
+                string attackResult = enemy.Skills[0].CastSkill(enemy, gm.Player);
+                Console.WriteLine(attackResult);
+
+                // 스킬 발동 후, 경고 상태 초기화
+                skillWarnings[enemy] = false;
+
+                // 대기 시간 추가
+                Thread.Sleep(1500);
+
+                return;
+            }
+
+            // 5.6 A : 50%확률로 수행 테스트 용이로 50% 설정, 추후 조정 가능
+            bool shouldWarn = new Random().NextDouble() < 0.5;
+
+            if (shouldWarn)
+            {
+                // 적이 경고를 한다면, 경고 메시지만 출력하고 아무 행동도 하지 않습니다.
+                Console.WriteLine($"{enemy.Name}의 동태가 심상치 않습니다!");
+                Thread.Sleep(1500);
+
+                // 경고 상태를 true로 설정
+                skillWarnings[enemy] = true;
+                return;
+            }
+
+            // 경고 상태가 아니므로 일반 공격을 수행
             Console.WriteLine($"{enemy.Name}의 공격!");
 
+            string normalAttackResult = enemy.Attack(gm.Player);
+            Console.WriteLine(normalAttackResult);
 
-            string attackResult = enemy.Attack(gm.Player);
-            Console.WriteLine(attackResult);
-
-            Thread.Sleep(1500);
-
-            Console.WriteLine($"{enemy.Name}의 {enemy.Skills[0].Name} 스킬 시전");
-            attackResult = enemy.Skills[0].CastSkill(enemy, gm.Player); // 05.06 W 무조건 스킬 발동
-            Console.WriteLine(attackResult);
-
+            // 대기 시간 추가
             Thread.Sleep(1500);
         }
 
@@ -436,6 +488,19 @@ namespace TextRPG
                 Console.WriteLine("스파르타 던전을 지배하던 발록이 쓰러졌다!");
                 Thread.Sleep(2000);
                 creditScreen.ScreenOn();
+            }
+            // 5.5 A 스토리 퀘스트 추적
+            QuestManager questManager = GameManager.instance.QuestManager;
+            Quest currentStoryQuest = questManager.GetCurrentStoryQuest();
+
+            if (stageCounter >= currentStoryQuest.TotalProgress)
+            {
+                Console.WriteLine($"퀘스트 완료: {currentStoryQuest.QuestName}");
+                questManager.AdvanceToNextStoryQuest();
+            }
+            else
+            {
+                Console.WriteLine($"진행 중인 퀘스트: {currentStoryQuest.QuestName}, 진행도: {stageCounter}/{currentStoryQuest.TotalProgress}");
             }
 
             dungeonResultScreen.ScreenOn();
