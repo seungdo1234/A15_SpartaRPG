@@ -86,6 +86,15 @@ namespace TextRPG
             DebuffActiveHandler?.Invoke(this);
         }
 
+        public void DispelAllDebuff()
+        {
+            foreach(DeBuff deBuff in DeBuffs)
+            {
+                DebuffActiveHandler -= deBuff.ActiveDebuff;
+            }
+            DeBuffs.Clear();
+        }
+
         public virtual void CostMana(int cost)
         {
             Mana -= cost;
