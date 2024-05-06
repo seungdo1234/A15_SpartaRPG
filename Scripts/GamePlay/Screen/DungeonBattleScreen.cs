@@ -8,10 +8,12 @@ namespace TextRPG
     public class DungeonBattleScreen : Screen
     {
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
-        private int stageCounter = 0;  // 승리 횟수 카운터
+        private int stageCounter = 0;  // 5.6 A 스테이지 단계 측정 변수
         private bool returnToChooseEnemy = false; // 스킬 예외처리
         private bool BossClear = false; // 5.5 A 보스 클리어 여부
         private CreditScreen creditScreen; // 5.5 A 보스 클리어 추가, 크레딧 BattleEnd에 연결함
+        private Dictionary<Enemy, bool> skillWarnings = new Dictionary<Enemy, bool>(); // 5.6 A 스킬 발동 확률을 위한 변수
+
 
         private static DungeonBattleScreen instance;
 
@@ -427,18 +429,43 @@ namespace TextRPG
 
         private void EnemyTurn(Enemy enemy)
         {
+            // 5.6 A 적의 스킬 경고 문구 및 확률 발동 코드, 시작
+            if (skillWarnings.ContainsKey(enemy) && skillWarnings[enemy])
+            {
+                Console.WriteLine($"{enemy.Name}의 {enemy.Skills[0].Name}!");
+                string attackResult = enemy.Skills[0].CastSkill(enemy, gm.Player);
+                Console.WriteLine(attackResult);
+
+                // 스킬 발동 후, 경고 상태 초기화
+                skillWarnings[enemy] = false;
+
+                // 대기 시간 추가
+                Thread.Sleep(1500);
+
+                return;
+            }
+
+            // 5.6 A : 50%확률로 수행 테스트 용이로 50% 설정, 추후 조정 가능
+            bool shouldWarn = new Random().NextDouble() < 0.5;
+
+            if (shouldWarn)
+            {
+                // 적이 경고를 한다면, 경고 메시지만 출력하고 아무 행동도 하지 않습니다.
+                Console.WriteLine($"{enemy.Name}의 동태가 심상치 않습니다!");
+                Thread.Sleep(1500);
+
+                // 경고 상태를 true로 설정
+                skillWarnings[enemy] = true;
+                return;
+            }
+
+            // 경고 상태가 아니므로 일반 공격을 수행
             Console.WriteLine($"{enemy.Name}의 공격!");
 
+            string normalAttackResult = enemy.Attack(gm.Player);
+            Console.WriteLine(normalAttackResult);
 
-            string attackResult = enemy.Attack(gm.Player);
-            Console.WriteLine(attackResult);
-
-            Thread.Sleep(1500);
-
-            Console.WriteLine($"{enemy.Name}의 {enemy.Skills[0].Name} 스킬 시전");
-            attackResult = enemy.Skills[0].CastSkill(enemy, gm.Player); // 05.06 W 무조건 스킬 발동
-            Console.WriteLine(attackResult);
-
+            // 대기 시간 추가
             Thread.Sleep(1500);
         }
 
