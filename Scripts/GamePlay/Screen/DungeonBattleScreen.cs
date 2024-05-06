@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
+using TextRPG.Scripts;
 
 namespace TextRPG
 {
@@ -68,7 +69,6 @@ namespace TextRPG
                         return;
 
                     case "0":
-                        stageCounter = 0;
                         return;
 
                     default:
@@ -90,8 +90,8 @@ namespace TextRPG
             enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel, gm.Dungeon.dif);
         }
 
-        // 5.5 A : winCounter 처음 한번만 증가하도록 하기 위한 변수 선언
-        private void SetInitialWinCounter()
+        // 5.5 A : stageCounter 처음 한번만 증가하도록 하기 위한 변수 선언
+        private void SetInitialStageCounter()
         {
             switch (gm.Dungeon.dif)
             {
@@ -127,7 +127,7 @@ namespace TextRPG
                     gm.Dungeon.dif = (EDungeonDifficulty)input;
                     if(stageCounter == 0)
                     {
-                        SetInitialWinCounter(); // 5.5 A :난이도에 따라 초기 winCounter 설정
+                        SetInitialStageCounter(); // 5.5 A :난이도에 따라 초기 winCounter 설정
                     }
                     break;
                 }
@@ -143,7 +143,7 @@ namespace TextRPG
 
         public void BattleStart() // 전투 시작, 5.4 A 결과창 보스전 순서 조정을 위한, 보스전 트리거 BattleStart로 이동
         {
-            Console.WriteLine($"스파르타 던전 지하 {stageCounter}층");
+            Console.WriteLine($"스파르타 던전 지하 {stageCounter + 1}층");
             Thread.Sleep(1000);
 
             if (playerInput == 1)
@@ -461,6 +461,19 @@ namespace TextRPG
                 Console.WriteLine("스파르타 던전을 지배하던 발록이 쓰러졌다!");
                 Thread.Sleep(2000);
                 creditScreen.ScreenOn();
+            }
+            // 5.5 A 스토리 퀘스트 추적
+            QuestManager questManager = GameManager.instance.QuestManager;
+            Quest currentStoryQuest = questManager.GetCurrentStoryQuest();
+
+            if (stageCounter >= currentStoryQuest.TotalProgress)
+            {
+                Console.WriteLine($"퀘스트 완료: {currentStoryQuest.QuestName}");
+                questManager.AdvanceToNextStoryQuest();
+            }
+            else
+            {
+                Console.WriteLine($"진행 중인 퀘스트: {currentStoryQuest.QuestName}, 진행도: {stageCounter}/{currentStoryQuest.TotalProgress}");
             }
 
             dungeonResultScreen.ScreenOn();
