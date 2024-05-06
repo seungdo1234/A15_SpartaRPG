@@ -118,6 +118,7 @@ namespace TextRPG
             {
                 Console.WriteLine();
                 Console.WriteLine("난이도를 선택하세요:");
+                Console.WriteLine("난이도 별로 시작 층수가 상이합니다.");
                 Console.WriteLine("1. 쉬움 (EASY)");
                 Console.WriteLine("2. 보통 (NORMAL)");
                 Console.WriteLine("3. 어려움 (HARD)");
@@ -145,7 +146,7 @@ namespace TextRPG
 
         public void BattleStart() // 전투 시작, 5.4 A 결과창 보스전 순서 조정을 위한, 보스전 트리거 BattleStart로 이동
         {
-            Console.WriteLine($"스파르타 던전 지하 {stageCounter + 1}층");
+            Console.WriteLine($"스파르타 던전 입구");
             Thread.Sleep(1000);
 
             if (playerInput == 1)
@@ -179,13 +180,14 @@ namespace TextRPG
                 }
             }
             CheckForDifficulty();
+            Console.WriteLine($"스파르타 던전 {stageCounter}층");
+            Thread.Sleep(1000);
             AppearEnemy();
             dungeonBattle();
         }
 
         private void dungeonBattle()
         {
-            stageCounter++;
             gm.Player.DispelAllDebuff(); // 05.06 W 새로운 스테이지 시 디버프 초기화
             while ((enemies.Any(e => e.Health > 0) && gm.Player.Health > 0))
             {
@@ -429,6 +431,8 @@ namespace TextRPG
 
         private void EnemyTurn(Enemy enemy)
         {
+            // 5.7 A 같은 몬스터더라도 번호를 통해 구별할 수 있도록 수정
+            int enemyIndex = enemies.IndexOf(enemy) + 1;
             // 5.6 A 적의 스킬 경고 문구 및 확률 발동 코드, 시작
             if (skillWarnings.ContainsKey(enemy) && skillWarnings[enemy])
             {
@@ -451,7 +455,7 @@ namespace TextRPG
             if (shouldWarn)
             {
                 // 적이 경고를 한다면, 경고 메시지만 출력하고 아무 행동도 하지 않습니다.
-                Console.WriteLine($"{enemy.Name}의 동태가 심상치 않습니다!");
+                Console.WriteLine($"{enemyIndex}. {enemy.Name}의 동태가 심상치 않습니다!");
                 Thread.Sleep(1500);
 
                 // 경고 상태를 true로 설정
@@ -502,7 +506,7 @@ namespace TextRPG
             {
                 Console.WriteLine($"진행 중인 퀘스트: {currentStoryQuest.QuestName}, 진행도: {stageCounter}/{currentStoryQuest.TotalProgress}");
             }
-
+            stageCounter++;
             dungeonResultScreen.ScreenOn();
         
         }
