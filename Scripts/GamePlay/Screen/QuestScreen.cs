@@ -123,35 +123,44 @@ namespace TextRPG
 
                 Quest q = gm.QuestManager.GetCurrentStoryQuest();
 
-                Console.WriteLine(q.QuestName + "\n");
-                Console.WriteLine();
-                Console.WriteLine(q.QuestContent + "\n");
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"-스테이지 {q.TotalProgress} 깨기");
-                Console.ResetColor();
-
-                Console.WriteLine();
-                PrintTitle("보상");
-
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                if (q.RewardItem != null)
+                if (q == null)
                 {
-                    Console.WriteLine(q.RewardItem.ItemName);
+                    Console.WriteLine("모든 퀘스트를 완료했습니다!\n");
                 }
-                if (q.RewardGold != 0)
                 {
-                    Console.WriteLine($"{q.RewardGold} G");
-                }
-                Console.ResetColor();
-
-                Console.WriteLine();
-
-                if (q.CurrentProgress >= q.TotalProgress)
-                {
-                    Console.WriteLine("1. 보상 받기");
-                }else
-                {
+                    Console.WriteLine(q.QuestName + "\n");
                     Console.WriteLine();
+                    Console.WriteLine(q.QuestContent + "\n");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"-스테이지 {q.TotalProgress}이상 진입하기");
+                    Console.ResetColor();
+
+                    Console.WriteLine();
+                    PrintTitle("보상");
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    if (q.RewardItem != null)
+                    {
+                        Console.WriteLine(q.RewardItem.ItemName);
+                    }
+                    if (q.RewardGold != 0)
+                    {
+                        Console.WriteLine($"{q.RewardGold} G");
+                    }
+                    Console.ResetColor();
+
+                    Console.WriteLine();
+
+                    if (q.CurrentProgress >= q.TotalProgress)
+                    {
+                        Console.WriteLine("1. 보상 받기");
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                    }
+
+                    
                 }
 
                 Console.WriteLine("0. 돌아가기\n");
@@ -204,89 +213,95 @@ namespace TextRPG
                 Console.WriteLine();
 
                 Quest q = gm.QuestManager.GetCurrentMonsterQuest();
-
-                Console.WriteLine(q.QuestName + "\n");
-                Console.WriteLine();
-                Console.WriteLine(q.QuestContent + "\n");
-
-                Console.ForegroundColor= ConsoleColor.Yellow;
-                if (q.CurrentProgress >= 0)
+                if (q == null)
                 {
-                    switch (gm.QuestManager.QuestSave[1].QuestNumber)
-                    {
-                        case 0:
-                            Console.WriteLine($"-몬스터 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                            break;
-                        case 1:
-                            Console.WriteLine($"-사나운 토끼 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                            break;
-                        case 2:
-                            Console.WriteLine($"-노을의 늑대개 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                            break;
-                        case 3:
-                            Console.WriteLine($"-강을 건넌 사람 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                            break;
-                        case 4:
-                            Console.WriteLine($"-흐느끼는 유령 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                            break;
-                        case 5:
-                            Console.WriteLine($"-늘어나는 그림자 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                            break;
-                        case 6:
-                            Console.WriteLine($"-노래하는 물고기 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                            break;
-                        case 7:
-                            Console.WriteLine($"-흰머리 호랑이 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                            break;
-                        case 8:
-                            Console.WriteLine($"-외로운 불귀신 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                            break;
-                        case 9:
-                            Console.WriteLine($"-독수리 사자 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                            break;
-                        case 10:
-                            Console.WriteLine($"-녹안의 악마 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                            break;
-                        case 11:
-                            Console.WriteLine($"-BOSS 휘몰아치는 강철이 처치 ({q.CurrentProgress}/{q.TotalProgress})");
-                            break;
-                        default:
-                            break;
-                    }
+                    Console.WriteLine("모든 퀘스트를 완료했습니다!\n");
                 }
                 else
                 {
+                    Console.WriteLine(q.QuestName + "\n");
                     Console.WriteLine();
-                }
-                Console.ResetColor();
+                    Console.WriteLine(q.QuestContent + "\n");
 
-                Console.WriteLine();
-                PrintTitle("보상");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    if (q.CurrentProgress >= 0)
+                    {
+                        switch (gm.QuestManager.QuestSave[1].QuestNumber)
+                        {
+                            case 0:
+                                Console.WriteLine($"-몬스터 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                                break;
+                            case 1:
+                                Console.WriteLine($"-사나운 토끼 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                                break;
+                            case 2:
+                                Console.WriteLine($"-노을의 늑대개 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                                break;
+                            case 3:
+                                Console.WriteLine($"-강을 건넌 사람 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                                break;
+                            case 4:
+                                Console.WriteLine($"-흐느끼는 유령 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                                break;
+                            case 5:
+                                Console.WriteLine($"-늘어나는 그림자 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                                break;
+                            case 6:
+                                Console.WriteLine($"-노래하는 물고기 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                                break;
+                            case 7:
+                                Console.WriteLine($"-흰머리 호랑이 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                                break;
+                            case 8:
+                                Console.WriteLine($"-외로운 불귀신 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                                break;
+                            case 9:
+                                Console.WriteLine($"-독수리 사자 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                                break;
+                            case 10:
+                                Console.WriteLine($"-녹안의 악마 {q.TotalProgress}마리 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                                break;
+                            case 11:
+                                Console.WriteLine($"-BOSS 휘몰아치는 강철이 처치 ({q.CurrentProgress}/{q.TotalProgress})");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                    }
+                    Console.ResetColor();
 
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                if (q.RewardItem != null)
-                {
-                    Console.WriteLine(q.RewardItem.ItemName);
-                }
-                if (q.RewardGold != 0)
-                {
-                    Console.WriteLine($"{q.RewardGold} G");
-                }
-                Console.ResetColor();
+                    Console.WriteLine();
+                    PrintTitle("보상");
 
-                Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    if (q.RewardItem != null)
+                    {
+                        Console.WriteLine(q.RewardItem.ItemName);
+                    }
+                    if (q.RewardGold != 0)
+                    {
+                        Console.WriteLine($"{q.RewardGold} G");
+                    }
+                    Console.ResetColor();
 
-                if (q.CurrentProgress < 0)
-                {
-                    Console.WriteLine("1. 수락하기");
-                }
-                else if (q.CurrentProgress >= q.TotalProgress)
-                {
-                    Console.WriteLine("1. 보상 받기");
-                }
-                else
-                {
-                    Console.WriteLine("(진행중)");
+                    Console.WriteLine();
+
+                    if (q.CurrentProgress < 0)
+                    {
+                        Console.WriteLine("1. 수락하기");
+                    }
+                    else if (q.CurrentProgress >= q.TotalProgress)
+                    {
+                        Console.WriteLine("1. 보상 받기");
+                    }
+                    else
+                    {
+                        Console.WriteLine("(진행중)");
+                    }
                 }
 
                 Console.WriteLine("0. 돌아가기\n");
