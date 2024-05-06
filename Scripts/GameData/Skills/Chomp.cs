@@ -1,6 +1,4 @@
 ﻿
-using TextRPG.Scripts.Interface;
-
 namespace TextRPG
 {
     public class Chomp : Skill

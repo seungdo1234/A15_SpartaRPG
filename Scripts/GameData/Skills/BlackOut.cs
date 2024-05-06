@@ -16,6 +16,7 @@ namespace TextRPG
             DeBuff? debuff = target.DeBuffs?.Find(x => x.Caster == caster.Name); // 스킬이 아닌 시전자로 검색
             if (debuff == null) // 타겟의 디버프목록에 없을 시 새 디버프 추가 
             {
+                target.SetCrowdControl(ECrowdControlType.BLIND);
                 debuff = new Blind(Name, 1, caster.Name);
                 target.DeBuffs.Add(debuff);
                 target.DebuffActiveHandler += debuff.ActiveDebuff;

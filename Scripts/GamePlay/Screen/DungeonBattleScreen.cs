@@ -157,15 +157,16 @@ namespace TextRPG
         }
 
         private void dungeonBattle()
-        {               
+        {
+            gm.Player.DispelAllDebuff(); // 05.06 W 새로운 스테이지 시 디버프 초기화
             while ((enemies.Any(e => e.Health > 0) && gm.Player.Health > 0))
             {
-                winCounter++;
+                winCounter++;                
                 int targetIndex = ChooseEnemy();
                 if (targetIndex == -1) continue;
 
                 int actionResult = PlayerAction(enemies[targetIndex]);
-                if (actionResult == -1) continue;
+                if (actionResult == -1) continue;                    
 
                 if (!enemies.Any(e => e.Health > 0))
                 {
@@ -243,14 +244,22 @@ namespace TextRPG
                     case "0":
                         return -1;  // 다른 적을 선택하게 하기 위해 특별한 값을 반환
                     case "1":
-                        PlayerTurn(enemy);
+                        if (gm.Player.CheckCrowdControl(ECrowdControlType.STUN)) // 05.06 W 플레이어 스턴 적용
+                        {
+                            PrintNotice($"기절로 인해 행동불가\n");
+                        }
+                        else PlayerTurn(enemy);
                         return 0;
                     case "2":
-                        if (gm.Player.CheckCrowdControl(ECrowdControlType.SILENCE)) // 05.05 w 플레이어 침묵 적용
+                        if (gm.Player.CheckCrowdControl(ECrowdControlType.STUN)) // 05.06 W 플레이어 스턴 적용
+                        {
+                            PrintNotice($"기절로 인해 행동불가\n");
+                        }
+                        else if (gm.Player.CheckCrowdControl(ECrowdControlType.SILENCE)) // 05.05 w 플레이어 침묵 적용
                         {
                             PrintNotice("침묵으로 인해 스킬을 사용할 수 없습니다.\n");
                         }
-                        UseSkill(enemy);
+                        else UseSkill(enemy);
                         if (returnToChooseEnemy)
                         {
                             returnToChooseEnemy = false; // 상태 초기화
