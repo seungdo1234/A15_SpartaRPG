@@ -68,6 +68,7 @@ namespace TextRPG
                         return;
 
                     case "0":
+                        winCounter = 0;
                         return;
 
                     default:
@@ -78,10 +79,32 @@ namespace TextRPG
         }
         private void AppearEnemy()
         {
+            if (winCounter > 10)
+            {
+                winCounter = 10;
+            }
+
             int currentDungeonLevel = winCounter; // 임시로 집어 넣음, 원래는 던전 난이도를 집어 넣어야함
 
             // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기, 5.3 A : 배수 증가 매게변수 추가
             enemies = EnemyDataManager.instance.GetSpawnMonsters(currentDungeonLevel, gm.Dungeon.dif);
+        }
+
+        // 5.5 A : winCounter 처음 한번만 증가하도록 하기 위한 변수 선언
+        private void SetInitialWinCounter()
+        {
+            switch (gm.Dungeon.dif)
+            {
+                case EDungeonDifficulty.EASY:
+                    winCounter = 1;
+                    break;
+                case EDungeonDifficulty.NORMAL:
+                    winCounter = 2;
+                    break;
+                case EDungeonDifficulty.HARD:
+                    winCounter = 3;
+                    break;
+            }
         }
 
         // 5.3 A : 던전 난이도 확인 추가
@@ -89,7 +112,6 @@ namespace TextRPG
         {
             int input;
 
-            // 올바른 숫자가 입력될 때까지 반복
             while (true)
             {
                 Console.WriteLine();
@@ -100,11 +122,13 @@ namespace TextRPG
                 Console.Write("\n선택: ");
                 string inputs = Console.ReadLine();
 
-                // 5.4 A input int화
                 if (int.TryParse(inputs, out input) && input >= 1 && input <= 3)
                 {
                     gm.Dungeon.dif = (EDungeonDifficulty)input;
-                    winCounter += input;
+                    if(winCounter == 0)
+                    {
+                        SetInitialWinCounter(); // 5.5 A :난이도에 따라 초기 winCounter 설정
+                    }
                     break;
                 }
                 else
@@ -114,17 +138,13 @@ namespace TextRPG
             }
 
             Console.WriteLine($"선택된 난이도: {gm.Dungeon.dif}");
-
-            // 5.4 J => 전투 결과 창에 나올 전투 들어가기 전 체력 정보 저장
             gm.Dungeon.PrevHealth = gm.Player.Health;
         }
 
         public void BattleStart() // 전투 시작, 5.4 A 결과창 보스전 순서 조정을 위한, 보스전 트리거 BattleStart로 이동
         {
-
-            CheckForDifficulty();
-            AppearEnemy();
-            dungeonBattle();
+            Console.WriteLine($"스파르타 던전 지하 {winCounter}층");
+            Thread.Sleep(1000);
 
             if (playerInput == 1)
             {
@@ -133,6 +153,7 @@ namespace TextRPG
                     while (true) // 사용자가 유효한 선택을 할 때까지 반복
                     {
                         Console.Clear();
+                        Console.WriteLine($"승리 카운터: {winCounter}");
                         Console.WriteLine("보스전에 도전하시겠습니까?");
                         Console.WriteLine("1. 도전");
                         Console.WriteLine("0. 마을로 돌아간다.");
@@ -141,6 +162,7 @@ namespace TextRPG
                         if (choice == "1")
                         {
                             TriggerBossBattle(); // 보스전 시작
+                            winCounter = 0;
                             return;
                         }
                         else if (choice == "0")
@@ -154,14 +176,17 @@ namespace TextRPG
                     }
                 }
             }
+            CheckForDifficulty();
+            AppearEnemy();
+            dungeonBattle();
         }
 
         private void dungeonBattle()
         {
+            winCounter++;
             gm.Player.DispelAllDebuff(); // 05.06 W 새로운 스테이지 시 디버프 초기화
             while ((enemies.Any(e => e.Health > 0) && gm.Player.Health > 0))
             {
-                winCounter++;                
                 int targetIndex = ChooseEnemy();
                 if (targetIndex == -1) continue;
 
