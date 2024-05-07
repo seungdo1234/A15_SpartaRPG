@@ -53,7 +53,9 @@ namespace TextRPG
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("\n정말 던전에 진입하시겠습니까? 끝을 보시거나, 죽기 전까지 탈출하실 수 없습니다.");
+                Console.WriteLine("\n정말 던전에 진입하시겠습니까? ");
+                
+                Console.WriteLine("끝을 보시거나, 죽기 전까지 탈출하실 수 없습니다.");
                 Console.WriteLine();
                 Console.WriteLine("1. 들어간다");
                 Console.WriteLine("0. 나간다\n");

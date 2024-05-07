@@ -140,9 +140,16 @@ namespace TextRPG
         protected void PrintNotice(string notice)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write($"{notice}");
+            Console.Write(notice);
             Console.ResetColor();
         }
+
+        protected void PrintWarning(string warn)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(warn);
+            Console.ResetColor();
+        } 
 
         protected void PrintCrowdControl(Unit unit)
         {
