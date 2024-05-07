@@ -30,8 +30,8 @@ namespace TextRPG
             Thread.Sleep(500);
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("맡은 작업: 베이스 코드   ");
-            Console.Write("전투결과   ");
-            Console.WriteLine("장비&소비템\n");
+            Console.Write("전투결과 및 보상   ");
+            Console.WriteLine("장비&소비템 \n");
             Thread.Sleep(500);
 
             Console.ForegroundColor = ConsoleColor.Yellow;

@@ -25,9 +25,9 @@ namespace TextRPG
         {
             Name = name;
             Level = 1;
-            Atk = 10;
+            Atk = 10000;
             Def = 5;
-            MaxHealth = 100;
+            MaxHealth = 10;
             Health = MaxHealth;
             Gold = 10000;
             AvoidChance = 10;
@@ -193,7 +193,7 @@ namespace TextRPG
             float critRate = critStr != null ? CriticalDamage : 1f;
             int damage = GetDamagePerHit();
 
-            if (CheckCrowdControl(ECrowdControlType.BLIND) || avoidRange <= target.AvoidChance) // 회피 시 리턴
+            if (CheckCrowdControl(ECrowdControlType.BLIND) || avoidRange <= AvoidChance) // 회피 시 리턴
             {
                 return "Miss!! ";
             }
