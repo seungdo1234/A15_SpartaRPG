@@ -323,6 +323,7 @@ namespace TextRPG
             {
                 PrintNotice($"[{enemy.Name}이(가) 쓰러졌습니다!!]");
                 Console.WriteLine();
+                Thread.Sleep(750);
                 gm.QuestManager.SetMonsterQuest(enemy);
             }
 
@@ -401,6 +402,7 @@ namespace TextRPG
                     Console.Write("[");
                     PrintNotice(target.Name);
                     Console.WriteLine(" 이(가) 쓰러졌습니다.]");
+                    Thread.Sleep(750);
                     gm.QuestManager.SetMonsterQuest(target);
                 }
 
@@ -424,6 +426,7 @@ namespace TextRPG
                         Console.Write("[");
                         PrintNotice(enemy.Name);
                         Console.WriteLine(" 이(가) 쓰러졌습니다.]");
+                        Thread.Sleep(750);
                         gm.QuestManager.SetMonsterQuest(enemy);
                     }
 
@@ -446,6 +449,7 @@ namespace TextRPG
                     Console.Write("[");
                     PrintNotice(target.Name);
                     Console.WriteLine(" 이(가) 쓰러졌습니다.]");
+                    Thread.Sleep(750);
                     gm.QuestManager.SetMonsterQuest(target);
                 }
             }

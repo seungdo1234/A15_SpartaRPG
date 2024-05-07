@@ -10,7 +10,13 @@ namespace TextRPG
         public override void ActiveDebuff(Unit target)
         {
             Duration--;
-            Console.WriteLine($"{Caster}의 {Name}에 의한 실명 [남은 턴: {Duration}]");
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"{Caster}에 의해 당신은 일반공격을 맞출 수 없다. ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"[남은 턴: {Duration}]");
+            Console.ResetColor();
+
             Thread.Sleep(1500);
             if (Duration == 0)
             {

@@ -10,7 +10,15 @@ namespace TextRPG
         public override void ActiveDebuff(Unit target)
         {
             Duration--;
-            Console.WriteLine($"{Caster}의 {Name}에 의한 출혈 {target.OnDamagedDenyDef(3)} [남은 턴: {Duration}]");
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"{Caster}에 의해 당신은 피를 흘리고 있다. "); 
+            Console.ResetColor();
+            Console.Write($"{target.OnDamagedDenyDef(3)} ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"[남은 턴: {Duration}]");
+            Console.ResetColor();
+
             Thread.Sleep(1500);
             if(Duration == 0)
             {
