@@ -51,3 +51,8 @@ https://github.com/seungdo1234/A15_SpartaRPG/assets/86179438/706c4622-3ac0-48d2-
 
 --- 
 
+## :bulb: 데이터 관리
+
+![image](https://github.com/seungdo1234/A15_SpartaRPG/assets/86179438/f85603aa-7e83-478d-addd-badc9c8151fd)
+
+### [자세히 보기](https://docs.google.com/spreadsheets/d/1JU4LUEY7wGBAIdDrGL8P3WUkVxNTG1KGVufj3y9lNtM/edit#gid=292506479)   
