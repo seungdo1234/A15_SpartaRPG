@@ -112,7 +112,7 @@
         {
             Console.WriteLine();
 
-            Console.WriteLine("Battle!! - Result !");
+            PrintTitle("Battle!! - Result !");
 
             Console.WriteLine();
         }
@@ -121,20 +121,28 @@
         {
             TitleText();
 
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Victory !");
+            Console.ResetColor();
             Console.WriteLine();
+
             // 5.3 A GetSpawnMonsters에 인자 추가
             Console.WriteLine($"던전에서 몬스터 {DungeonBattleScreen.Instance.enemyNum}마리를 잡았습니다.");
             Console.WriteLine();
 
             Console.WriteLine("[캐릭터 정보]");
-            Console.WriteLine($"Lv.{prevLevel} {gm.Player.Name}-> Lv.{gm.Player.Level} {gm.Player.Name}");
+            Console.ForegroundColor= ConsoleColor.Yellow;
+            Console.WriteLine($"Lv.{prevLevel} {gm.Player.Name}-> Lv.{gm.Player.Level}");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"HP {gm.Dungeon.PrevHealth} ->  {gm.Player.Health}");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"exp {prevExp} ->  {gm.Player.Exp}");
+            Console.ResetColor();
 
             Console.WriteLine();
 
             Console.WriteLine("[던전 보상]");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"{reward.gold} Gold");
 
             if (reward.rewardEquipItem != null)
@@ -145,6 +153,7 @@
             {
                 Console.WriteLine($"{reward.rewardConsumableItem.ItemName} x 1");
             }
+            Console.ResetColor();
 
             Console.WriteLine();
 
@@ -158,7 +167,9 @@
         {
             TitleText();
 
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Retire");
+            Console.ResetColor();
 
             Console.WriteLine();
 
@@ -167,19 +178,24 @@
             if (panaltyEquipItem != null)
             {
                 Console.WriteLine();
-                Console.WriteLine("던전에서 얻은 대부분의 골드와 장비를 잃었습니다.");
+                PrintWarning("던전에서 얻은 대부분의 골드와 장비를 잃었습니다.");
+                Console.WriteLine();
 
                 Console.WriteLine("[던전 보상]");
-                Console.WriteLine($"{panaltyGold} Gold");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                PrintNotice(panaltyGold.ToString());
+                Console.WriteLine(" Gold");
                 Console.WriteLine($"{panaltyEquipItem.ItemName} x 1");
+                Console.ResetColor();
             }
 
             Console.WriteLine();
 
-            Console.WriteLine("몬스터의 일격에 당하셨습니다.");
-            Console.WriteLine("눈 앞이 깜깜해집니다...");
+            Console.WriteLine("당신은 몬스터에게 쓰러졌고, 얼마 후 마을 경비대에게 구조되었습니다.");
+            Console.WriteLine("그들은 보상으로 당신의 전리품 일부를 받아갔습니다...\n");
 
-            Console.WriteLine();
+            PrintNotice("TIP: 적정 난이도의 던전까지만 탐험하세요.");
+            Console.WriteLine("\n");
 
             Console.WriteLine("0. 마을로 귀환하기");
 

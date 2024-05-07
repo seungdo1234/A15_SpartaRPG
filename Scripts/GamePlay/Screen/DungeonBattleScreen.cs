@@ -45,8 +45,10 @@ namespace TextRPG
             while (true)
             {
                 Console.Clear();
+                PrintTitle("스파르타 던전 입구");
+
                 Console.WriteLine("\n정말 던전에 진입하시겠습니까? ");
-                PrintWarning("끝을 보시거나, 죽기 전까지 탈출하실 수 없습니다.\n");
+                PrintWarning("스테이지를 클리어하거나, 죽기 전까지 탈출하실 수 없습니다.\n\n");
                 Console.WriteLine("1. 들어간다");
                 Console.WriteLine("0. 나간다\n");
 
@@ -84,19 +86,21 @@ namespace TextRPG
 
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine();
                 Console.WriteLine("난이도를 선택하세요:");
-                Console.WriteLine("난이도 별로 시작 층수가 상이합니다.");
+                Console.WriteLine("난이도 별로 시작 층수가 상이합니다.\n");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("1. 쉬움 (EASY)");
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("2. 보통 (NORMAL)");
                 Console.ForegroundColor= ConsoleColor.Red;
                 Console.WriteLine("3. 어려움 (HARD)");
+                Console.ResetColor();
                 Console.Write("\n선택: ");
-                string inputs = Console.ReadLine();
 
-                if (int.TryParse(inputs, out input) && input >= 1 && input <= 3)
+
+                if (int.TryParse(Console.ReadLine(), out input) && input >= 1 && input <= 3)
                 {
                     gm.Dungeon.dif = (EDungeonDifficulty)input;
                     gm.Dungeon.DungeonLevelUp();
@@ -104,7 +108,7 @@ namespace TextRPG
                 }
                 else
                 {
-                    Console.WriteLine("잘못된 입력입니다. 다시 입력하세요.");
+                    SystemMessageText(EMessageType.ERROR);
                 }
             }
 
@@ -116,8 +120,7 @@ namespace TextRPG
 
         public void BattleStart() // 전투 시작, 5.4 A 결과창 보스전 순서 조정을 위한, 보스전 트리거 BattleStart로 이동
         {
-            Console.WriteLine($"스파르타 던전 입구");
-            Thread.Sleep(1000);
+            Console.Clear();
 
             if (playerInput == 1)
             {
@@ -126,10 +129,21 @@ namespace TextRPG
                     while (true) // 사용자가 유효한 선택을 할 때까지 반복
                     {
                         Console.Clear();
-                        Console.WriteLine($"승리 카운터: {gm.Dungeon.CurrentDungeonLevel}");
-                        Console.WriteLine("보스전에 도전하시겠습니까?");
+                        Console.WriteLine("당신은 어느덧 던전의 가장 깊숙한 곳에 다다랐습니다.");
+                        Thread.Sleep(500);
+                        Console.WriteLine("거대한 위압감이 느껴지는 문이 당신의 눈 앞에 보입니다");
+                        Thread.Sleep(500);
+                        Console.Write(".");
+                        Thread.Sleep(500);
+                        Console.Write(".");
+                        Thread.Sleep(500);
+                        Console.WriteLine(".");
+                        Thread.Sleep(1000);
+
+                        PrintWarning("보스전");
+                        Console.WriteLine(" 에 도전하시겠습니까?\n");
                         Console.WriteLine("1. 도전");
-                        Console.WriteLine("0. 마을로 돌아간다.");
+                        Console.WriteLine("0. ...포기한다.");
                         string choice = Console.ReadLine().ToUpper();
 
                         if (choice == "1")
@@ -148,13 +162,23 @@ namespace TextRPG
                     }
                 }
             }
+
             CheckForDifficulty();
+
+            //던전 진입 로딩화면
             PrintLogo();
-            Console.Write($"스파르타 던전,");
+            Console.Write($"스파르타 던전, ");
             PrintNotice(gm.Dungeon.CurrentDungeonLevel.ToString());
-            Console.WriteLine("층으로 진입합니다...");
+            Console.Write(" 층으로 진입합니다");
+            Thread.Sleep(500);
+            Console.Write(".");
+            Thread.Sleep(500);
+            Console.Write(".");
+            Thread.Sleep(500);
+            Console.WriteLine(".");
             Thread.Sleep(1000);
             Console.Clear();
+
             AppearEnemy();
             dungeonBattle();
         }
@@ -182,7 +206,7 @@ namespace TextRPG
                 {   
                     if (enemy.CheckCrowdControl(ECrowdControlType.STUN)) // 05.05 W 몬스터 스턴 적용
                     {
-                        PrintNotice($"{enemy.Name}는 기절로 인해 행동불가\n");
+                        PrintNotice($"{enemy.Name}는 아직 정신을 못차리고 있다..\n");
                         enemy.OnDebuffActive();
                         continue;
                     }
@@ -248,18 +272,18 @@ namespace TextRPG
                     case "1":
                         if (gm.Player.CheckCrowdControl(ECrowdControlType.STUN)) // 05.06 W 플레이어 스턴 적용
                         {
-                            PrintNotice($"기절로 인해 행동불가\n");
+                            PrintWarning($"머리가 어지러워 당신은 공격을 할 수 없었습니다...\n");
                         }
                         else PlayerTurn(enemy);
                         return 0;
                     case "2":
                         if (gm.Player.CheckCrowdControl(ECrowdControlType.STUN)) // 05.06 W 플레이어 스턴 적용
                         {
-                            PrintNotice($"기절로 인해 행동불가\n");
+                            PrintWarning($"머리가 어지러워 당신은 스킬을 사용할 수 없었습니다...\n");
                         }
                         else if (gm.Player.CheckCrowdControl(ECrowdControlType.SILENCE)) // 05.05 w 플레이어 침묵 적용
                         {
-                            PrintNotice("침묵으로 인해 스킬을 사용할 수 없습니다.\n");
+                            PrintWarning("스킬을 외치려 했으나, 당신의 입은 떨어지지 않습니다.\n");
                         }
                         else UseSkill(enemy);
                         if (returnToChooseEnemy)
@@ -285,15 +309,20 @@ namespace TextRPG
         private void PlayerTurn(Enemy enemy)
         {
             // 선택한 몬스터의 이름을 포함하여 공격 메시지 출력
-            Console.WriteLine($"{gm.Player.Name}의 {enemy.Name}를 향한 공격!");
+            PrintName(gm.Player.Name);
+            Console.Write(" 은(는) ");
+            PrintNotice(enemy.Name);
+            Console.WriteLine("를 향해 공격을 날렸습니다!");
 
+            
             string attackResult = gm.Player.Attack(enemy);
             Console.WriteLine(attackResult);
             Thread.Sleep(2000);
 
             if (enemy.Health <= 0)
             {
-                Console.WriteLine($"[{enemy.Name}이(가) 쓰러졌습니다.]");
+                PrintNotice($"[{enemy.Name}이(가) 쓰러졌습니다!!]");
+                Console.WriteLine();
                 gm.QuestManager.SetMonsterQuest(enemy);
             }
 
@@ -315,7 +344,7 @@ namespace TextRPG
 
             while (true)
             {
-                Console.SetCursorPosition(3, inputLine); // 커서를 입력 줄의 시작 위치로 설정
+                
                 string input = Console.ReadLine();
                 if (input == "0")
                 {
@@ -326,6 +355,11 @@ namespace TextRPG
                 if (!int.TryParse(input, out int selectedSkillIndex) || selectedSkillIndex < 1 || selectedSkillIndex > gm.Player.Phase) // 05.03 W Skill.Count > Phase
                 {
                     SystemMessageText(EMessageType.ERROR);
+                    Console.SetCursorPosition(3, inputLine); // 커서를 입력 줄의 시작 위치로 설정
+                    Console.WriteLine("                                 ");
+                    Console.WriteLine();
+                    Console.WriteLine("                                 ");
+                    Console.SetCursorPosition(3, inputLine); // 커서를 입력 줄의 시작 위치로 설정
                     continue;
                 }
 
@@ -334,6 +368,11 @@ namespace TextRPG
                 if (gm.Player.Mana < selectedSkill.ManaCost)
                 {
                     SystemMessageText(EMessageType.MANALESS);
+                    Console.SetCursorPosition(3, inputLine); // 커서를 입력 줄의 시작 위치로 설정
+                    Console.WriteLine("                                 ");
+                    Console.WriteLine();
+                    Console.WriteLine("                                 ");
+                    Console.SetCursorPosition(3, inputLine); // 커서를 입력 줄의 시작 위치로 설정
                     continue;
                 }
 
@@ -347,10 +386,11 @@ namespace TextRPG
         {
             if (skill.IsMultiTarget)
             {
-                Console.WriteLine("다중 대상 스킬 사용 중...");
-
                 // 첫 번째로 지정된 타겟에 스킬 적용
-                Console.WriteLine($"{gm.Player.Name}의 {target.Name}을(를) 향한 공격!");
+                PrintName(gm.Player.Name);
+                Console.Write(" 의 스킬이 ");
+                PrintNotice(target.Name);
+                Console.Write(" 에게 적중했습니다!");
                 string initialSkillResult = skill.CastSkill(gm.Player, target);
                 Console.WriteLine(initialSkillResult);
                 Thread.Sleep(1500);
@@ -358,7 +398,9 @@ namespace TextRPG
                 // 5.5 A 스킬 공격시 사망에도 퀘스트 카운팅 추적
                 if (target.Health <= 0)
                 {
-                    Console.WriteLine($"[{target.Name}이(가) 쓰러졌습니다.]");
+                    Console.Write("[");
+                    PrintNotice(target.Name);
+                    Console.WriteLine(" 이(가) 쓰러졌습니다.]");
                     gm.QuestManager.SetMonsterQuest(target);
                 }
 
@@ -369,7 +411,9 @@ namespace TextRPG
                     if (targetsHit >= skill.MaxTargetCount)
                         break;
 
-                    Console.WriteLine($"이어지는 {enemy.Name}을(를) 향한 공격!");
+                    Console.Write("이어서");
+                    PrintNotice(enemy.Name);
+                    Console.WriteLine("에게 스킬이 적중했습니다!");
                     string skillResult = skill.CastSkill(gm.Player, enemy);
                     Console.WriteLine(skillResult);
                     Thread.Sleep(1500);
@@ -377,7 +421,9 @@ namespace TextRPG
                     // 5.5 A 만약 나머지 타겟의 체력이 0 이하라면 퀘스트 진행 업데이트
                     if (enemy.Health <= 0)
                     {
-                        Console.WriteLine($"[{enemy.Name}이(가) 쓰러졌습니다.]");
+                        Console.Write("[");
+                        PrintNotice(enemy.Name);
+                        Console.WriteLine(" 이(가) 쓰러졌습니다.]");
                         gm.QuestManager.SetMonsterQuest(enemy);
                     }
 
@@ -387,14 +433,19 @@ namespace TextRPG
             else
             {
                 // 단일 대상 스킬 사용
-                Console.WriteLine($"{gm.Player.Name} {target.Name}을 향한 공격!");
+                PrintName(gm.Player.Name);
+                Console.Write(" 은 ");
+                PrintNotice(target.Name);
+                Console.WriteLine(" 을 공격했습니다!");
                 string skillResult = skill.CastSkill(gm.Player, target);
                 Console.WriteLine(skillResult);
                 Thread.Sleep(2000);
                 // 5.5 A 퀘스트 추적
                 if (target.Health <= 0)
                 {
-                    Console.WriteLine($"[{target.Name}이(가) 쓰러졌습니다.]");
+                    Console.Write("[");
+                    PrintNotice(target.Name);
+                    Console.WriteLine(" 이(가) 쓰러졌습니다.]");
                     gm.QuestManager.SetMonsterQuest(target);
                 }
             }
@@ -411,7 +462,11 @@ namespace TextRPG
             // 5.6 A 적의 스킬 경고 문구 및 확률 발동 코드, 시작
             if (skillWarnings.ContainsKey(enemy) && skillWarnings[enemy])
             {
-                Console.WriteLine($"{enemy.Name}의 {enemy.Skills[0].Name}!");
+                Console.Clear();
+                PrintNotice(enemy.Name);
+                Console.Write(" 는 스킬, ");
+                PrintWarning(enemy.Skills[0].Name);
+                Console.WriteLine(" 을(를) 사용했다!");
                 string attackResult = enemy.Skills[0].CastSkill(enemy, gm.Player);
                 Console.WriteLine(attackResult);
 
@@ -430,7 +485,8 @@ namespace TextRPG
             if (shouldWarn)
             {
                 // 적이 경고를 한다면, 경고 메시지만 출력하고 아무 행동도 하지 않습니다.
-                Console.WriteLine($"{enemyIndex}. {enemy.Name}의 동태가 심상치 않습니다!");
+                PrintWarning($"{enemyIndex}. {enemy.Name}의 동태가 심상치 않습니다!");
+                Console.WriteLine();
                 Thread.Sleep(1500);
 
                 // 경고 상태를 true로 설정
@@ -439,7 +495,8 @@ namespace TextRPG
             }
 
             // 경고 상태가 아니므로 일반 공격을 수행
-            Console.WriteLine($"{enemy.Name}의 공격!");
+            PrintNotice(enemy.Name);
+            Console.WriteLine(" 이(가) 당신을 공격합니다!");
 
             string normalAttackResult = enemy.Attack(gm.Player);
             Console.WriteLine(normalAttackResult);
@@ -451,7 +508,12 @@ namespace TextRPG
         public void TriggerBossBattle() // 5.5 A private > public
         {
             BossClear = true;
-            Console.WriteLine("보스가 등장했습니다!");
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.WriteLine("불길한 기운이 도사리고 있습니다...");
+            Thread.Sleep(500);
+            Console.WriteLine("거대한 존재의 기척이 느껴집니다.");
+            Thread.Sleep(1000);
+            Console.ResetColor();
             Enemy boss = EnemyDataManager.instance.GetBoss();  // 보스 데이터 가져오기
             enemies.Clear();
             enemies.Add(boss);  // 현재 전투 몬스터 리스트에 보스 추가
@@ -464,33 +526,29 @@ namespace TextRPG
             gm.Dungeon.DungeonResultType = isWin ? EDungeonResultType.VICTORY : EDungeonResultType.RETIRE;
             if (BossClear == true)
             {
-                Console.WriteLine("스파르타 던전을 지배하던 발록이 쓰러졌다!");
-                Thread.Sleep(2000);
+                Console.WriteLine("오랜 시간, 스파르타 던전을 지배하던 발록이 사라졌습니다.");
+                Thread.Sleep(500);
+                Console.WriteLine("...이제 스파르타 마을은 안전해진 걸까요?\n");
+                Thread.Sleep(1000);
+                Console.WriteLine(".");
+                Thread.Sleep(500);
+                Console.WriteLine(".");
+                Thread.Sleep(500);
+                Console.WriteLine(".");
+                Thread.Sleep(500);
                 creditScreen.ScreenOn();
             }
 
-            // 5.5 A 스토리 퀘스트 추적
-            QuestManager questManager = GameManager.instance.QuestManager;
-            Quest currentStoryQuest = questManager.GetCurrentStoryQuest();
-
-            if (gm.Dungeon.CurrentDungeonLevel >= currentStoryQuest.TotalProgress)
-            {
-                Console.WriteLine($"퀘스트 완료: {currentStoryQuest.QuestName}");
-                //questManager.AdvanceToNextStoryQuest();
-            }
-            else
-            {
-                Console.WriteLine($"진행 중인 퀘스트: {currentStoryQuest.QuestName}, 진행도: {gm.Dungeon.CurrentDungeonLevel}/{currentStoryQuest.TotalProgress}");
-            }
-
             dungeonResultScreen.ScreenOn();
-        
         }
 
         private void BattleLogText()
         {
             Console.Clear();
-            Console.WriteLine("=== 전투 중인 몬스터 목록 ===");
+            PrintNotice($"{gm.Dungeon.CurrentDungeonLevel} 스테이지");
+            Console.WriteLine("\n");
+
+            PrintTitle("=== 전투 중인 몬스터 목록 ===");
             for (int i = 0; i < enemies.Count; i++)
             {
                 if (enemies[i].Health > 0)
@@ -501,12 +559,22 @@ namespace TextRPG
             }
 
             Console.WriteLine();
-            Console.WriteLine("=== 내 정보 ===");
-            Console.Write($"Lv.{gm.Player.Level} {gm.Player.Name} ({gm.Player.GetPlayerClass(gm.Player.ePlayerClass)})");
+            PrintTitle("=== 내 정보 ===");
+            Console.Write("Lv.");
+            PrintNotice(gm.Player.Level.ToString());
+            PrintName(" " + gm.Player.Name);
+            Console.Write(" (");
+            PrintNotice(gm.Player.GetPlayerClass(gm.Player.ePlayerClass));
+            Console.Write(")");
             PrintCrowdControl(gm.Player);
-            Console.WriteLine($"HP {gm.Player.Health}/{gm.Player.MaxHealth}");
-            Console.WriteLine($"MP {gm.Player.Mana}/{gm.Player.MaxMana}");
+
+            Console.Write("HP ");
+            PrintNotice($"{gm.Player.Health}/{gm.Player.MaxHealth}");
             Console.WriteLine();
+            Console.Write("MP ");
+            PrintNotice($"{gm.Player.Mana}/{gm.Player.MaxMana}");
+
+            Console.WriteLine("\n");
             Console.WriteLine("\n공격할 몬스터를 선택하세요:\n");
         }
 
@@ -521,7 +589,10 @@ namespace TextRPG
                 ConsumableItem potion = dm.ConsumableItemDB.Find(p => p.ItemName == item.Key);
                 if (potion != null && item.Value > 0)
                 {
-                    Console.WriteLine($"{index}: {potion.ItemName} - {potion.Desc} (보유량: {item.Value})");
+                    Console.Write($"{index}: {potion.ItemName} - {potion.Desc} 보유량: ");
+                    PrintNotice(item.Value.ToString());
+                    Console.WriteLine();
+
                     potionOptions[index] = potion;
                     index++;
                 }
