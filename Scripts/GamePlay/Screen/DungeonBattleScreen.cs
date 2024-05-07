@@ -439,7 +439,7 @@ namespace TextRPG
                 PrintName(gm.Player.Name);
                 Console.Write(" 은 ");
                 PrintNotice(target.Name);
-                Console.WriteLine(" 을 공격했습니다!");
+                Console.WriteLine("을(를) 공격했습니다!");
                 string skillResult = skill.CastSkill(gm.Player, target);
                 Console.WriteLine(skillResult);
                 Thread.Sleep(2000);
@@ -466,7 +466,6 @@ namespace TextRPG
             // 5.6 A 적의 스킬 경고 문구 및 확률 발동 코드, 시작
             if (skillWarnings.ContainsKey(enemy) && skillWarnings[enemy])
             {
-                Console.Clear();
                 PrintNotice(enemy.Name);
                 Console.Write(" 는 스킬, ");
                 PrintWarning(enemy.Skills[0].Name);
