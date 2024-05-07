@@ -8,6 +8,7 @@ namespace TextRPG
     public class DungeonBattleScreen : Screen
     {
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
+        public int enemyNum;
         //private int stageCounter = 0;  // 5.6 A 스테이지 단계 측정 변수
         private bool returnToChooseEnemy = false; // 스킬 예외처리
         private bool BossClear = false; // 5.5 A 보스 클리어 여부
@@ -90,6 +91,8 @@ namespace TextRPG
 
             // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기, 5.3 A : 배수 증가 매게변수 추가
             enemies = EnemyDataManager.instance.GetSpawnMonsters(gm.Dungeon.CurrentDungeonLevel, gm.Dungeon.dif);
+
+            enemyNum = enemies.Count;
         }
 
         //// 5.5 A : stageCounter 처음 한번만 증가하도록 하기 위한 변수 선언
