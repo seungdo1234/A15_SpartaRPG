@@ -312,7 +312,7 @@ namespace TextRPG
             PrintName(gm.Player.Name);
             Console.Write(" 은(는) ");
             PrintNotice(enemy.Name);
-            Console.WriteLine("를 향해 공격을 날렸습니다!");
+            Console.WriteLine("을(를) 향해 공격을 날렸습니다!");
 
             
             string attackResult = gm.Player.Attack(enemy);
@@ -472,7 +472,10 @@ namespace TextRPG
                 PrintWarning(enemy.Skills[0].Name);
                 Console.WriteLine(" 을(를) 사용했다!");
                 string attackResult = enemy.Skills[0].CastSkill(enemy, gm.Player);
+                
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(attackResult);
+                Console.ResetColor();
 
                 // 스킬 발동 후, 경고 상태 초기화
                 skillWarnings[enemy] = false;

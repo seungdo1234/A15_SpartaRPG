@@ -18,10 +18,10 @@ namespace TextRPG
                 damage = target.Health;
                 result = target.OnDamagedDenyDef(damage);                
 
-                return result + "길동무가 되었다...";
+                return result + "\n벤시의 예언이 이루어졌습니다...";
             }            
 
-            return "아무일도 일어나지 않았습니다";
+            return "\n아무일도 일어나지 않았습니다";
         }
     }
 }

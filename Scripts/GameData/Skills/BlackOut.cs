@@ -11,7 +11,7 @@ namespace TextRPG
         {
             string result;
                        
-            result = $"{target.Name}에 실명 ";
+            result = $"{target.Name} 의 눈은 이제 가려집니다.";
 
             DeBuff? debuff = target.DeBuffs?.Find(x => x.Caster == caster.Name); // 스킬이 아닌 시전자로 검색
             if (debuff == null) // 타겟의 디버프목록에 없을 시 새 디버프 추가 

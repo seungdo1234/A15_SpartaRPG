@@ -20,7 +20,7 @@ namespace TextRPG
             result += critStr;
 
             // 05.05 W 디버프 연결부
-            result += $"{target.Name}에 중독 ";
+            result += $"{target.Name}의 독에 당했습니다. ";
 
             DeBuff? debuff = target.DeBuffs?.Find(x => x.Caster == caster.Name); // 스킬이 아닌 시전자로 검색
             if (debuff == null) // 타겟의 디버프목록에 없을 시 새 디버프 추가 
