@@ -42,4 +42,8 @@
 
 ## :bulb: 플레이 영상
 
+
+https://github.com/seungdo1234/A15_SpartaRPG/assets/86179438/706c4622-3ac0-48d2-ba61-0cfa4e5fcd1a
+
+
 ---
