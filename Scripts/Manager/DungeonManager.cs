@@ -37,12 +37,21 @@ namespace TextRPG
             PlayerRewards = new PlayerRewards();
         }
 
-        /*
-        public void DungeonLevelUp(EDungeonDifficulty dif)
+        
+        public void DungeonLevelUp()
         {
             CurrentDungeonLevel += (int)dif;
+
+            if(CurrentDungeonLevel > MaxDungeonLevel)
+            {
+                CurrentDungeonLevel = MaxDungeonLevel;
+            }
         }
-        */
+        public void DungeonInit()
+        {
+            RewardInit();
+            CurrentDungeonLevel = 0;
+        }
 
     }
 }
