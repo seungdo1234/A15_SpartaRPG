@@ -9,7 +9,6 @@ namespace TextRPG
     {
         private List<Enemy> enemies;  // 여러 몬스터를 저장할 리스트
         public int enemyNum;
-        //private int stageCounter = 0;  // 5.6 A 스테이지 단계 측정 변수
         private bool returnToChooseEnemy = false; // 스킬 예외처리
         private bool BossClear = false; // 5.5 A 보스 클리어 여부
         private CreditScreen creditScreen; // 5.5 A 보스 클리어 추가, 크레딧 BattleEnd에 연결함
@@ -19,10 +18,7 @@ namespace TextRPG
         private static DungeonBattleScreen instance;
 
 
-        private DungeonResultScreen dungeonResultScreen;
-
-        //public delegate void TurnChange(); // 05.05 W 턴 전환용 핸들러
-        //public event TurnChange? TurnChangeHandler;        
+        private DungeonResultScreen dungeonResultScreen;      
 
         public static DungeonBattleScreen Instance
         {
@@ -44,20 +40,13 @@ namespace TextRPG
             creditScreen = new CreditScreen();
         }
 
-        //public void OnTurnChange()
-        //{
-        //    TurnChangeHandler?.Invoke();
-        //}
-
         public override void ScreenOn()
         {
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("\n정말 던전에 진입하시겠습니까? ");
-                
-                Console.WriteLine("끝을 보시거나, 죽기 전까지 탈출하실 수 없습니다.");
-                Console.WriteLine();
+                PrintWarning("끝을 보시거나, 죽기 전까지 탈출하실 수 없습니다.\n");
                 Console.WriteLine("1. 들어간다");
                 Console.WriteLine("0. 나간다\n");
 
@@ -82,35 +71,11 @@ namespace TextRPG
         }
         private void AppearEnemy()
         {
-            //if (stageCounter > 10)
-            //{
-            //    stageCounter = 10;
-            //}
-
-            //int currentDungeonLevel = stageCounter; // 임시로 집어 넣음, 원래는 던전 난이도를 집어 넣어야함
-
-            // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기, 5.3 A : 배수 증가 매게변수 추가
+            // 몬스터 데이터 매니저에서 몬스터 리스트 가져오기, 5.3 A : 배수 증가 매개변수 추가
             enemies = EnemyDataManager.instance.GetSpawnMonsters(gm.Dungeon.CurrentDungeonLevel, gm.Dungeon.dif);
 
             enemyNum = enemies.Count;
         }
-
-        //// 5.5 A : stageCounter 처음 한번만 증가하도록 하기 위한 변수 선언
-        //private void SetInitialStageCounter()
-        //{
-        //    switch (gm.Dungeon.dif)
-        //    {
-        //        case EDungeonDifficulty.EASY:
-        //            stageCounter = 1;
-        //            break;
-        //        case EDungeonDifficulty.NORMAL:
-        //            stageCounter = 2;
-        //            break;
-        //        case EDungeonDifficulty.HARD:
-        //            stageCounter = 3;
-        //            break;
-        //    }
-        //}
 
         // 5.3 A : 던전 난이도 확인 추가
         private void CheckForDifficulty()
@@ -122,8 +87,11 @@ namespace TextRPG
                 Console.WriteLine();
                 Console.WriteLine("난이도를 선택하세요:");
                 Console.WriteLine("난이도 별로 시작 층수가 상이합니다.");
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("1. 쉬움 (EASY)");
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("2. 보통 (NORMAL)");
+                Console.ForegroundColor= ConsoleColor.Red;
                 Console.WriteLine("3. 어려움 (HARD)");
                 Console.Write("\n선택: ");
                 string inputs = Console.ReadLine();
@@ -131,10 +99,6 @@ namespace TextRPG
                 if (int.TryParse(inputs, out input) && input >= 1 && input <= 3)
                 {
                     gm.Dungeon.dif = (EDungeonDifficulty)input;
-                    //if(stageCounter == 0)
-                    //{
-                    //    SetInitialStageCounter(); // 5.5 A :난이도에 따라 초기 winCounter 설정
-                    //}
                     gm.Dungeon.DungeonLevelUp();
                     break;
                 }
@@ -144,7 +108,9 @@ namespace TextRPG
                 }
             }
 
-            Console.WriteLine($"선택된 난이도: {gm.Dungeon.dif}");
+            Console.Write($"선택된 난이도:");
+            PrintNotice(gm.Dungeon.dif.ToString());
+            Console.WriteLine();
             gm.Dungeon.PrevHealth = gm.Player.Health;
         }
 
@@ -183,8 +149,12 @@ namespace TextRPG
                 }
             }
             CheckForDifficulty();
-            Console.WriteLine($"스파르타 던전 {gm.Dungeon.CurrentDungeonLevel}층");
+            PrintLogo();
+            Console.Write($"스파르타 던전,");
+            PrintNotice(gm.Dungeon.CurrentDungeonLevel.ToString());
+            Console.WriteLine("층으로 진입합니다...");
             Thread.Sleep(1000);
+            Console.Clear();
             AppearEnemy();
             dungeonBattle();
         }
@@ -434,6 +404,8 @@ namespace TextRPG
 
         private void EnemyTurn(Enemy enemy)
         {
+            Console.Clear();
+
             // 5.7 A 같은 몬스터더라도 번호를 통해 구별할 수 있도록 수정
             int enemyIndex = enemies.IndexOf(enemy) + 1;
             // 5.6 A 적의 스킬 경고 문구 및 확률 발동 코드, 시작
@@ -476,7 +448,7 @@ namespace TextRPG
             Thread.Sleep(1500);
         }
 
-        public void TriggerBossBattle() // 5.5 A 프라이베잇 > 퍼블릭
+        public void TriggerBossBattle() // 5.5 A private > public
         {
             BossClear = true;
             Console.WriteLine("보스가 등장했습니다!");
