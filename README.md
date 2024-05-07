@@ -30,20 +30,24 @@
 
 ---
 
+## :bulb: 플레이 영상
+
+
+https://github.com/seungdo1234/A15_SpartaRPG/assets/86179438/706c4622-3ac0-48d2-ba61-0cfa4e5fcd1a
+
+
+---
+
 ## :bulb: 깃 컨벤션
 ![image](https://github.com/seungdo1234/A15_SpartaRPG/assets/86179438/5c83be13-05a5-4319-9a03-7ce9ffd0063c)
 
 ---
 
-## :bulb: 작업 내용
+## :bulb: 와이어프레임
 
-     
+![image](https://github.com/seungdo1234/A15_SpartaRPG/assets/86179438/661e7deb-632e-43fa-92b4-dc9c8401c50b)
+### [자세히 보기](https://www.figma.com/file/bzqnrootGMMBC5wV58HqzA?embed_host=notion&kind=file&node-id=0-1&t=It9daI3HWF4Pn4QZ-0&type=whiteboard&viewer=1)   
+
+
 --- 
 
-## :bulb: 플레이 영상
-
-
-https://github.com/seungdo1234/A15_SpartaRPG/assets/86179438/63968a06-30c8-4859-ae36-f1a47fbb3769
-
-
----
