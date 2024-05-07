@@ -14,10 +14,15 @@ namespace TextRPG
             float critRate = critStr != null ? caster.CriticalDamage : 1f;
             float skillRate = ((float)target.Health / target.MaxHealth) > 0.2f ? 1.2f : 0;
             int damage = caster.GetDamagePerHit();
+            string targetType = target.GetType().Name;
 
             if (skillRate == 0)
             {
-                damage = target.Health;
+                if(targetType == "Boss")
+                {
+                    damage = (int)(target.MaxHealth * 0.05f);
+                }
+                else damage = target.Health;
                 result = target.OnDamagedDenyDef(damage);
                 result += critStr;
 
