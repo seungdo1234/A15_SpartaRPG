@@ -76,7 +76,13 @@ namespace TextRPG.Scripts
         {
             List<Quest> storyLog = new List<Quest>();
             if (QuestSave[2].QuestNumber != -1)
-                storyLog = StoryQuest.GetRange(QuestSave[2].CurrentProgress, QuestSave[2].QuestNumber);
+            {
+                if (QuestSave[2].QuestNumber < StoryQuest.Count)
+                    storyLog = StoryQuest.GetRange(QuestSave[2].CurrentProgress, QuestSave[2].QuestNumber + 1);
+                else
+                    storyLog.AddRange(StoryQuest);
+            }
+                
             return storyLog;
         }
 
@@ -84,7 +90,16 @@ namespace TextRPG.Scripts
         {
             List<Quest> monsterLog = new List<Quest>();
             if (QuestSave[3].QuestNumber != -1)
-                monsterLog = MonsterQuest.GetRange(QuestSave[3].CurrentProgress, QuestSave[3].QuestNumber);
+            {
+                if (QuestSave[3].QuestNumber < StoryQuest.Count)
+                {
+                    monsterLog = MonsterQuest.GetRange(QuestSave[3].CurrentProgress, QuestSave[3].QuestNumber + 1);
+                }else
+                {
+                    monsterLog.AddRange(StoryQuest);
+                }
+            }
+                
             return monsterLog;
         }
 
