@@ -493,19 +493,7 @@ namespace TextRPG
                 Thread.Sleep(2000);
                 creditScreen.ScreenOn();
             }
-            // 5.5 A 스토리 퀘스트 추적
-            QuestManager questManager = GameManager.instance.QuestManager;
-            Quest currentStoryQuest = questManager.GetCurrentStoryQuest();
-
-            if (stageCounter >= currentStoryQuest.TotalProgress)
-            {
-                Console.WriteLine($"퀘스트 완료: {currentStoryQuest.QuestName}");
-                //questManager.AdvanceToNextStoryQuest();
-            }
-            else
-            {
-                Console.WriteLine($"진행 중인 퀘스트: {currentStoryQuest.QuestName}, 진행도: {stageCounter}/{currentStoryQuest.TotalProgress}");
-            }
+            
             stageCounter++;
             dungeonResultScreen.ScreenOn();
         
