@@ -68,7 +68,7 @@ namespace TextRPG
             float critRate = critStr != null ? CriticalDamage : 1f;                        
             int damage = GetDamagePerHit();
 
-            if (CheckCrowdControl(ECrowdControlType.BLIND) || avoidRange <= AvoidChance) // 회피 시 리턴 05.05 W 실명 추가
+            if (CheckCrowdControl(ECrowdControlType.BLIND) || avoidRange <= target.AvoidChance) // 회피 시 리턴 05.05 W 실명 추가
             {
                 return "Miss!!";
             }
