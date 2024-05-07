@@ -135,6 +135,11 @@ namespace TextRPG
 
         public void ExpUp(int exp) // 경험치 상승
         {
+            if(Level >= 10) // 예외처리
+            {
+                return;
+            }
+
             // 4.30 J => 경험치 상승 수정
             Exp += exp;
 
@@ -148,6 +153,10 @@ namespace TextRPG
 
         private void LevelUp() // 레벨업 
         {
+            if(Level >= 10)
+            {
+                Exp = 0;
+            }
             Atk += 0.5f;
             Def += 1;
             UnlockSkills();
