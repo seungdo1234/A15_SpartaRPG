@@ -127,6 +127,7 @@ namespace TextRPG
                 {
                     Console.WriteLine("모든 퀘스트를 완료했습니다!\n");
                 }
+                else
                 {
                     Console.WriteLine(q.QuestName + "\n");
                     Console.WriteLine();
